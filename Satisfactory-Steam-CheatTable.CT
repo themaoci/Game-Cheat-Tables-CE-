@@ -146,7 +146,7 @@ unregistersymbol(items_aob)
     </CheatEntry>
     <CheatEntry>
       <ID>12</ID>
-      <Description>"No Milestone Cost"</Description>
+      <Description>"No Milestone Cost (Not work?)"</Description>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>[ENABLE]
 
@@ -447,6 +447,151 @@ FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+40: 48 3B DF   
           <ID>0</ID>
         </Hotkey>
       </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>16</ID>
+      <Description>"No Milestone Cost (work)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : FactoryGame-Win64-Shipping.exe
+  Version: 0.7.0-CL211839
+  Date   : 2023-01-24
+  Author : PROTON
+
+  Remove Milestone Cost
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+ 
+ 
+aobscanmodule(MilestoneCost,FactoryGameSteam-FactoryGame-Win64-Shipping.dll,48 63 9F 90 00 00 00 48 8B) // should be unique
+alloc(newmem,$1000,MilestoneCost)
+
+label(code)
+label(return)
+
+newmem:
+  mov [rdi+00000090],(int)0
+
+code:
+  movsxd  rbx,dword ptr [rdi+00000090]
+  jmp return
+
+MilestoneCost:
+  jmp newmem
+  nop 2
+return:
+registersymbol(MilestoneCost)
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+MilestoneCost:
+  db 48 63 9D 88 00 00 00 48
+
+unregistersymbol(MilestoneCost)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+9A
+
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+7A: E8 C1 6C 2F 00           - call FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetPrivateStaticClass
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+7F: 48 8B 4D 10              - mov rcx,[rbp+10]
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+83: 48 8B D0                 - mov rdx,rax
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+86: FF 15 4C 93 44 00        - call qword ptr [FactoryGame-FactoryGame-Win64-Shipping.dll.rdata+2178]
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+8C: 84 C0                    - test al,al
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+8E: 75 07                    - jne FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+97
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+90: E8 4B FD BC FF           - call FactoryGame-FactoryGame-Win64-Shipping.dll.uedbg+1B80
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+95: 90                       - nop 
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+96: CC                       - int 3 
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+97: 48 89 37                 - mov [rdi],rsi
+// ---------- INJECTING HERE ----------
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+9A: 48 63 9D 88 00 00 00     - movsxd  rbx,dword ptr [rbp+00000088]
+// ---------- DONE INJECTING  ----------
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+A1: 48 8B AD 80 00 00 00     - mov rbp,[rbp+00000080]
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+A8: 89 5F 08                 - mov [rdi+08],ebx
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+AB: 85 DB                    - test ebx,ebx
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+AD: 75 10                    - jne FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+BF
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+AF: 48 8B AC 24 78 01 00 00  - mov rbp,[rsp+00000178]
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+B7: 89 77 0C                 - mov [rdi+0C],esi
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+BA: E9 D0 00 00 00           - jmp FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+18F
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+BF: 45 33 C0                 - xor r8d,r8d
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+C2: 8B D3                    - mov edx,ebx
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+C4: 48 8B CF                 - mov rcx,rdi
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>22</ID>
+      <Description>"Instant Crafting Speed"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : FactoryGame-Win64-Shipping.exe
+  Version: 0.7.0-CL211839
+  Date   : 2023-01-24
+  Author : PROTON
+
+  Set Crafting Speed to 1.0
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+ 
+ 
+aobscanmodule(InstantCraftingSpeed,FactoryGameSteam-FactoryGame-Win64-Shipping.dll,F3 0F 11 91 ? ? 00 00 eb 0d c7 81) // should be unique
+alloc(newmem,$1000,InstantCraftingSpeed)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [rcx+0000032C],(float)1.0
+  jmp return
+
+InstantCraftingSpeed:
+  jmp newmem
+  nop 3
+return:
+registersymbol(InstantCraftingSpeed)
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+InstantCraftingSpeed:
+  db F3 0F 11 91 2C 03 00 00
+
+unregistersymbol(InstantCraftingSpeed)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+1A
+
+FactoryGame-FactoryGame-Win64-Shipping.UFGGameUI::NativeTick+6C: CC                             - int 3 
+FactoryGame-FactoryGame-Win64-Shipping.UFGGameUI::NativeTick+6D: CC                             - int 3 
+FactoryGame-FactoryGame-Win64-Shipping.UFGGameUI::NativeTick+6E: CC                             - int 3 
+FactoryGame-FactoryGame-Win64-Shipping.UFGGameUI::NativeTick+6F: CC                             - int 3 
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick: 40 53                          - push rbx
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+2: 48 83 EC 20                    - sub rsp,20
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+6: 80 B9 74 02 00 00 00           - cmp byte ptr [rcx+00000274],00
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+D: 48 8B D9                       - mov rbx,rcx
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+10: 74 12                          - je FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+24
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+12: F3 0F 58 91 7C 02 00 00        - addss xmm2,[rcx+0000027C]
+// ---------- INJECTING HERE ----------
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+1A: F3 0F 11 91 7C 02 00 00        - movss [rcx+0000027C],xmm2
+// ---------- DONE INJECTING  ----------
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+22: EB 0D                          - jmp FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+31
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+24: C7 81 7C 02 00 00 00 00 00 00  - mov [rcx+0000027C],00000000
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+2E: 0F 57 D2                       - xorps xmm2,xmm2
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+31: 0F 2F 91 78 02 00 00           - comiss xmm2,[rcx+00000278]
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+38: 72 4A                          - jb FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+84
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+3A: 48 8B 01                       - mov rax,[rcx]
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+3D: FF 90 90 02 00 00              - call qword ptr [rax+00000290]
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+43: 48 8B C8                       - mov rcx,rax
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+46: 48 8B 10                       - mov rdx,[rax]
+FactoryGame-FactoryGame-Win64-Shipping.UFGManufacturingButton::NativeTick+49: FF 92 58 01 00 00              - call qword ptr [rdx+00000158]
+}
+</AssemblerScript>
     </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
