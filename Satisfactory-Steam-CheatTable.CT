@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Player"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(playerbase_aob,FactoryGameSteam-Engine-Win64-Shipping.dll,48 8B 01 48 8B 5C 24 50 48 8B 74 24 58 48 83 C4 40 5F 48 FF A0 E8 06 00 00)
+alloc(newmem,$1000,playerbase_aob)
+
+label(code)
+label(return)
+
+registersymbol(Player_Ptr)
+label(Player_Ptr)
+newmem:
+mov rax,Player_Ptr
+mov [rax],rcx
+code:
+mov rax,[rcx]
+mov rbx,[rsp+50]
+jmp return
+Player_Ptr:
+dd 0
+playerbase_aob:
+jmp newmem
+nop 3
+return:
+registersymbol(playerbase_aob)
+
+[DISABLE]
+
+playerbase_aob:
+db 48 8B 01 48 8B 5C 24 50
+unregistersymbol(Player_Ptr)
+unregistersymbol(playerbase_aob)
+dealloc(newmem)
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"Infinite Health"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(health_aob,FactoryGameSteam-FactoryGame-Win64-Shipping.dll,F3 0F 10 81 64 01 00 00)
+alloc(newmem,$1000,"FactoryGameSteam-FactoryGame-Win64-Shipping.dll"+2029B0)
+
+label(code)
+label(return)
+
+newmem:
+push rdi
+push rax
+mov rax,Player_Ptr
+mov rdi,[rcx+20]
+cmp [rax],rdi
+jne @f
+mov [rcx+00000164],(float)200
+code:
+pop rax
+pop rdi
+movss xmm0,[rcx+00000164]
+jmp return
+
+health_aob:
+jmp newmem
+nop 3
+return:
+registersymbol(health_aob)
+
+[DISABLE]
+
+health_aob:
+db F3 0F 10 81 64 01 00 00
+
+unregistersymbol(health_aob)
+dealloc(newmem)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"Easy Kills"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(onehitkill_aob,FactoryGameSteam-Engine-Win64-Shipping.dll,48 89 6C 24 20 4C 8B C6 0F)
+alloc(newmem,$1000,onehitkill_aob)
+
+label(code)
+label(return)
+
+newmem:
+cmp [Player_Ptr],rdi
+je @f
+push (float)99999
+movss xmm6,[rsp]
+add rsp,8
+code:
+mov [rsp+20],rbp
+jmp return
+
+onehitkill_aob:
+jmp newmem
+return:
+registersymbol(onehitkill_aob)
+
+[DISABLE]
+
+onehitkill_aob:
+db 48 89 6C 24 20
+
+unregistersymbol(onehitkill_aob)
+dealloc(newmem)
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Infinite Items"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(items_aob,FactoryGameSteam-FactoryGame-Win64-Shipping.dll,41 2B C7 42 89 44 31 28 48 8D 4D 17 48 8B 9F A8 01 00 00)
+
+items_aob:
+nop 3
+registersymbol(items_aob)
+
+[DISABLE]
+
+items_aob:
+db 41 2B C7
+
+unregistersymbol(items_aob)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>12</ID>
+      <Description>"No Milestone Cost"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+aobscanmodule(milestone_AOB,FactoryGameSteam-FactoryGame-Win64-Shipping.dll,48 63 9D 88 00 00 00) // should be unique
+alloc(newmem,$1000,milestone_AOB)
+
+define(midjumpmem, FactoryGameSteam-FactoryGame-Win64-Shipping.dll+560)
+fullaccess(midjumpmem, $1000)
+
+label(code)
+label(return)
+
+newmem:
+  mov [rbp+88],0
+code:
+  movsxd  rbx,dword ptr [rbp+00000088]
+  jmp return
+
+midjumpmem:
+jmp newmem
+
+milestone_AOB:
+  jmp midjumpmem
+  nop 2
+return:
+registersymbol(milestone_AOB)
+
+[DISABLE]
+
+milestone_AOB:
+  db 48 63 9D 88 00 00 00
+
+unregistersymbol(milestone_AOB)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+9A
+FactoryGameSteam-FactoryGame-Win64-Shipping.UFGReplicationGraph::InitGlobalActorClassSettings+B45 - 0F85 DA020000         - jne FactoryGameSteam-FactoryGame-Win64-Shipping.UFGReplicationGraph::InitGlobalActorClassSettings+E25
+
+FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetCost+7A: E8 C1 6C 2F 00           - call FactoryGame-FactoryGame-Win64-Shipping.UFGSchematic::GetPrivateStaticClass
+FactoryG
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Increase Inventory Capacity"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(inventorysize_aob,FactoryGameSteam-FactoryGame-Win64-Shipping.dll,40 53 48 83 EC 20 48 8B D9 8B 89 38 04 00 00 80 BB C0 01 00 00 03)
+alloc(newmem,$1000,"FactoryGameSteam-FactoryGame-Win64-Shipping.dll"+9D8E09)
+
+label(code)
+label(return)
+
+newmem:
+
+mov eax,c8
+code:
+cmp eax,[rbx+0000043C]
+jmp return
+
+inventorysize_aob+39:
+jmp newmem
+nop
+return:
+registersymbol(inventorysize_aob)
+
+[DISABLE]
+
+inventorysize_aob+39:
+db 3B 83 3C 04 00 00
+
+unregistersymbol(inventorysize_aob)
+dealloc(newmem)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Infinite Consumables"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(items2_aob,FactoryGameSteam-FactoryGame-Win64-Shipping.dll,44 29 6C 39 28 4C 8B 8E A8 01 00 00)
+
+
+items2_aob:
+nop 5
+registersymbol(items2_aob)
+
+[DISABLE]
+
+items2_aob:
+db 44 29 6C 39 28
+
+unregistersymbol(items2_aob)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Instant Pod Return"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(podreturn_aob,FactoryGameSteam-FactoryGame-Win64-Shipping.dll,F3 0F 10 B3 f8 03 00 00)
+alloc(newmem,$1000,podreturn_aob)
+
+label(code)
+label(return)
+
+newmem:
+cmp [rbx+000003f8],(float)1
+jng @f
+mov [rbx+000003f8],(float)1
+code:
+movss xmm6,[rbx+000003f8]
+jmp return
+
+podreturn_aob:
+jmp newmem
+nop 3
+return:
+registersymbol(podreturn_aob)
+
+[DISABLE]
+
+podreturn_aob:
+db F3 0F 10 B3 f8 03 00 00
+
+unregistersymbol(podreturn_aob)
+dealloc(newmem)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"Easy Crafting"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(easycraft1_aob,FactoryGameSteam-FactoryGame-Win64-Shipping.dll,48 8B 5C 24 58 41 8B C7)
+alloc(newmem,$1000,easycraft1_aob)
+
+label(code)
+label(return)
+
+newmem:
+mov r15d,#10000
+code:
+mov rbx,[rsp+58]
+jmp return
+
+easycraft1_aob:
+jmp newmem
+return:
+registersymbol(easycraft1_aob)
+
+[DISABLE]
+
+easycraft1_aob:
+db 48 8B 5C 24 58
+
+unregistersymbol(easycraft1_aob)
+dealloc(newmem)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"Freeze Time of Day"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+
+aobscanmodule(timer_AOB,FactoryGameSteam-FactoryGame-Win64-Shipping.dll,F3 ?? ?? ?? F3 ?? ?? ?? ?? ?? ?? ?? 48 83 ?? ?? C3 0F 2F) // should be unique
+alloc(re_timer,4)
+registersymbol(re_timer)
+
+re_timer:
+  readmem(timer_AOB,4)
+
+timer_AOB:
+  xorps xmm0,xmm0
+  nop
+registersymbol(timer_AOB)
+
+[DISABLE]
+
+timer_AOB:
+  readmem(re_timer,4) //db F3 0F 59 C1
+
+unregistersymbol(timer_AOB)
+unregistersymbol(re_timer)
+dealloc(re_timer)
+
+{
+// ORIGINAL CODE - INJECTION POINT: FactoryGame-FactoryGame-Win64-Shipping.AFGTimeOfDaySubsystem::GetGameDeltaTime+8A
+FactoryGameSteam-FactoryGame-Win64-Shipping.AFGTimeOfDaySubsystem::GetGameDeltaTime+8A - F3 0F59 C1            - mulss xmm0,xmm1
+
+
+FactoryGame-FactoryGame-Win64-Shipping.AFGTimeOfDaySubsystem::GetGameDeltaTime+5B: 73 48                    - jae FactoryGame-FactoryGame-Win64-Shipping.AFGTimeOfDaySubsystem::GetGameDeltaTime+A5
+FactoryGame-FactoryGame-Win64-Shipping.AFGTimeOfDaySubsystem::GetGameDeltaTime+5D: 0F 2F D3                 - c
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>315857</ID>
+      <Description>"No Building Restrictions"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+aobscanmodule(buildAnywhere_AOB,FactoryGameSteam-FactoryGame-Win64-Shipping.dll,48 63 ?? ?? ?? ?? ?? 48 8D ?? ?? 48 3B ?? 74 ?? 0F 1F ?? ?? ?? ?? ?? 48 8B ?? E8) // should be unique
+alloc(newmem,$1000,buildAnywhere_AOB)
+
+define(midjumpmem, FactoryGameSteam-FactoryGame-Win64-Shipping.dll+5C0)
+fullaccess(midjumpmem, $1000)
+
+label(code_build)
+label(bVal)
+label(return)
+registersymbol(code_build)
+
+newmem:
+  movsxd rax,dword ptr [bVal]
+  jmp return
+
+newmem+20:
+code_build:
+  readmem(buildAnywhere_AOB,7) //movsxd  rax,dword ptr [rcx+00000340]
+  jmp return
+
+align 10 CC
+
+bVal:
+  dd #0
+
+midjumpmem:
+jmp newmem
+
+buildAnywhere_AOB:
+  jmp midjumpmem
+  nop 2
+return:
+registersymbol(buildAnywhere_AOB)
+
+[DISABLE]
+
+buildAnywhere_AOB:
+  readmem(code_build,7) //db 48 63 81 40 03 00 00
+
+unregistersymbol(buildAnywhere_AOB)
+unregistersymbol(code_build)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+19
+FactoryGameSteam-FactoryGame-Win64-Shipping.AFGBuildableSubsystem::TickFactoryActors+551 - 66 90                 - nop 2
+
+FactoryGame-FactoryGame-Win64-Shipping.AFGPassthroughHologram::BuildMeshes+DC: CC                    - int 3 
+FactoryGame-FactoryGame-Win64-Shipping.AFGPassthroughHologram::BuildMeshes+DD: CC                    - int 3 
+FactoryGame-FactoryGame-Win64-Shipping.AFGPassthroughHologram::BuildMeshes+DE: CC                    - int 3 
+FactoryGame-FactoryGame-Win64-Shipping.AFGPassthroughHologram::BuildMeshes+DF: CC                    - int 3 
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct: 48 89 5C 24 08        - mov [rsp+08],rbx
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+5: 48 89 74 24 10        - mov [rsp+10],rsi
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+A: 57                    - push rdi
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+B: 48 83 EC 20           - sub rsp,20
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+F: 48 8B 99 38 03 00 00  - mov rbx,[rcx+00000338]
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+16: 48 8B F1              - mov rsi,rcx
+// ---------- INJECTING HERE ----------
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+19: 48 63 81 40 03 00 00  - movsxd  rax,dword ptr [rcx+00000340]
+// ---------- DONE INJECTING  ----------
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+20: 48 8D 3C C3           - lea rdi,[rbx+rax*8]
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+24: 48 3B DF              - cmp rbx,rdi
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+27: 74 1C                 - je FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+45
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+29: 0F 1F 80 00 00 00 00  - nop dword ptr [rax+00000000]
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+30: 48 8B 0B              - mov rcx,[rbx]
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+33: E8 F8 F1 DC FF        - call FactoryGame-FactoryGame-Win64-Shipping.UFGConstructDisqualifier::GetIsSoftDisqualifier
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+38: 84 C0                 - test al,al
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+3A: 74 54                 - je FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+90
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+3C: 48 83 C3 08           - add rbx,08
+FactoryGame-FactoryGame-Win64-Shipping.AFGHologram::CanConstruct+40: 48 3B DF              - cmp rbx,rdi
+}
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>17</Key>
+            <Key>99</Key>
+          </Keys>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
