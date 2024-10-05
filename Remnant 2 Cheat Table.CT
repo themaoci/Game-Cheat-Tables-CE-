@@ -1,0 +1,1047 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"Enable Mods"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobplayerpawn,Remnant2-Win64-Shipping.exe,48 8B 81 D0 02 00 00 48 85 C0 75 * 48 8B * * 06 00 00 C3) // should be unique
+alloc(newmem,$1000,aobplayerpawn)
+label(code)
+label(return)
+label(player)
+registersymbol(player)
+
+newmem:
+code:
+  mov rax,[rcx+2D0]
+  push rax
+  pop [player]
+  jmp return
+
+newmem+400:
+player:
+dq 0
+
+aobplayerpawn:
+  jmp newmem
+  nop 2
+return:
+registersymbol(aobplayerpawn)
+
+[DISABLE]
+aobplayerpawn:
+  db 48 8B 81 D0 02 00 00
+dealloc(newmem)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>0</ID>
+          <Description>"Modify Damage Received"</Description>
+          <Options moHideChildren="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(aobnodamageflag,Remnant2-Win64-Shipping.exe,FF 52 38 84 C0 0F 84 * * 00 00 * * * * * * * * * E8 * * * * * 8B * * * 85) // should be unique
+alloc(newmem,$1000,aobnodamageflag)
+label(code)
+label(return)
+label(nodamageflag)
+registersymbol(nodamageflag)
+
+newmem:
+  cmp [nodamageflag],1
+  jne code
+  mov rax,player
+  mov rax,[rax]
+  cmp rax,rcx
+  ja code
+  lea rax,[rax+2000]
+  cmp rax,rcx
+  jb code
+  xor al,al
+  jmp skipcode
+code:
+  call qword ptr [rdx+38]
+  test al,al
+skipcode:
+  jmp return
+
+newmem+200:
+nodamageflag:
+dd 0
+
+aobnodamageflag:
+  jmp newmem
+return:
+registersymbol(aobnodamageflag)
+
+[DISABLE]
+aobnodamageflag:
+  db FF 52 38 84 C0
+dealloc(newmem)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>32</ID>
+              <Description>"No Damage"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+nodamageflag:
+dd 1
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+
+
+nodamageflag:
+dd 0
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"Modify Health"</Description>
+          <Options moHideChildren="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//0F 2F B7 * * 00 00 0F 83 * * 00 00 * 8B * * * 00 00 * 8D * * * 00 00
+aobscanmodule(aobhealth,Remnant2-Win64-Shipping.exe,0F 2F B7 * * 00 00 0F 83 * * 00 00 * 8B * * * 00 00 * 8D * * * 00 00) // should be unique
+alloc(newmem,$1000,aobhealth)
+label(code)
+label(return)
+label(health)
+registersymbol(health)
+
+newmem:
+  push rax
+  push rbx
+  lea rbx,[rdi+860]
+  cmp [health],1
+  jne @f
+  mov rax,player
+  cmp [rax],rdi
+  jne @f
+  mov [rbx],(float)9999999
+code:
+  comiss xmm6,[rbx]
+  pop rbx
+  pop rax
+  jmp return
+
+newmem+200:
+health:
+dd 0
+
+aobhealth:
+  jmp newmem
+  nop 2
+return:
+registersymbol(aobhealth)
+
+[DISABLE]
+
+aobhealth:
+  db 0F 2F B7 60 08 00 00
+dealloc(newmem)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>33</ID>
+              <Description>"Infinite Health"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+health:
+dd 1
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+
+health:
+dd 0
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"Modify Skill Cooldown"</Description>
+          <Options moHideChildren="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(aobcooldown,Remnant2-Win64-Shipping.exe,48 8B 85 * * 00 00 * 8D * * 41 0F 2F F8 F3 0F 11 71 08 73 * F3 0F 10 * * * * * EB * F3 0F 58 F7) // should be unique
+alloc(newmem,$1000,aobcooldown)
+label(code)
+label(return)
+label(cooldown)
+registersymbol(cooldown)
+
+newmem:
+  cmp [cooldown],1
+  jne @f
+  push rax
+  mov rax,player
+  cmp [rax],rbp
+  pop rax
+  jne code
+  comiss xmm7,[newmem+304]
+  jbe code
+  movss xmm7,[newmem+300]
+
+code:
+  comiss xmm7,xmm8
+  movss [rcx+08],xmm6
+  jmp return
+
+newmem+200:
+cooldown:
+dd 0
+
+newmem+300:
+dd (float)0.1
+dd (float)1
+
+aobcooldown+0B:
+  jmp newmem
+  nop 4
+return:
+registersymbol(aobcooldown)
+
+[DISABLE]
+
+aobcooldown+0B:
+  db 41 0F 2F F8 F3 0F 11 71 08
+dealloc(newmem)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>34</ID>
+              <Description>"Instant Skill Cooldown"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+cooldown:
+dd 1
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+
+cooldown:
+dd 0
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"Modify Weapon"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(aobgetweaponpointer,Remnant2-Win64-Shipping.exe,75 * 48 8B B1 * * 00 00 * 85 * 74 * * 8B * * 89 * 24 * * 8B * * * 00 00 E8) // should be unique
+alloc(newmem,$1000,aobgetweaponpointer)
+label(code)
+label(return)
+label(weapon_ptr)
+registersymbol(weapon_ptr)
+
+newmem:
+  mov rsi,[rcx+5A8]
+  push rax
+  mov rax,player
+  cmp [rax],rsi
+  pop rax
+  jne code
+  mov [weapon_ptr],rcx
+code:
+  jmp return
+
+newmem+400:
+weapon_ptr:
+dq 0
+
+aobgetweaponpointer+2:
+  jmp newmem
+  nop 2
+return:
+registersymbol(aobgetweaponpointer)
+
+[DISABLE]
+aobgetweaponpointer+2:
+  db 48 8B B1 A8 05 00 00
+dealloc(newmem)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>12</ID>
+              <Description>"Automatic Weapon"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+aobscanmodule(aobisautomaticweapon,Remnant2-Win64-Shipping.exe,49 0F 44 C7 80 3C 38 00 74 * 80 * * * 00 00 00 74 * 80 * * * 00 00 00) // should be unique
+alloc(newmem,$1000,aobisautomaticweapon)
+label(code)
+label(return)
+
+
+newmem:
+  cmove rax,r15
+  push rdx
+  mov rdx,weapon_ptr
+  cmp [rdx],rdi
+  pop rdx
+  jne code
+  cmp rsp,0
+  jmp skipcode
+code:
+  cmp byte ptr [rax+rdi],00
+skipcode:
+  jmp return
+
+
+aobisautomaticweapon:
+  jmp newmem
+  nop 3
+return:
+registersymbol(aobisautomaticweapon)
+
+[DISABLE]
+
+aobisautomaticweapon:
+  db 49 0F 44 C7 80 3C 38 00
+dealloc(newmem)
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>13</ID>
+              <Description>"Rapid Fire"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+aobscanmodule(aobrapidfire,Remnant2-Win64-Shipping.exe,F3 0F 10 8F * * 00 00 F3 0F 5E * F3 0F 11 * * * 00 00 EB) // should be unique
+alloc(newmem,$1000,aobrapidfire)
+label(code)
+label(return)
+
+newmem:
+  movss xmm1,[rdi+958]
+  push rax
+  mov rax,weapon_ptr
+  cmp [rax],rdi
+  pop rax
+  jne code
+  movss xmm1,[newmem+300]
+code:
+  jmp return
+
+
+newmem+300:
+dd (float)0.025
+
+aobrapidfire:
+  jmp newmem
+  nop 3
+return:
+registersymbol(aobrapidfire)
+
+[DISABLE]
+
+aobrapidfire:
+  db F3 0F 10 8F 58 09 00 00
+dealloc(newmem)
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>15</ID>
+          <Description>"Modify Damage Done"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(aobdmgcrit,Remnant2-Win64-Shipping.exe,F3 0F 11 47 2C E8 * * * * * * * 48 8B CD * * * E8) // should be unique
+alloc(newmem,$1000,aobdmgcrit)
+label(code)
+label(return)
+label(critical dmg dmgmul_f)
+registersymbol(critical dmg dmgmul_f)
+
+newmem:
+  movss [rdi+2C],xmm0
+  push rax
+  test rbp,rbp
+  je code
+  mov rax,player
+  mov rax,[rax]
+  cmp [rbp+20],rax
+  jne code
+  cmp [critical],1
+  jne @f
+  mov [rdi+2C],(float)10000
+@@:
+  lea rax,[dmgmul_f]
+  mov eax,[rax]
+  cmp eax,0
+  jle @f
+  mov [rdi+24],eax
+
+@@:
+  cmp [dmg],1
+  jne @f
+  mov [rdi+24],(float)10000
+
+code:
+  pop rax
+  jmp return
+
+newmem+200:
+critical:
+dd 0
+dmg:
+dd 0
+dmgmul_f:
+dd 0
+
+aobdmgcrit:
+  jmp newmem
+return:
+registersymbol(aobdmgcrit)
+
+[DISABLE]
+
+aobdmgcrit:
+  db F3 0F 11 47 2C
+dealloc(newmem)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>35</ID>
+              <Description>"Critical Chance"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+critical:
+dd 1
+ 
+ 
+[DISABLE]
+
+critical:
+dd 0
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>36</ID>
+              <Description>"Easy Kills"</Description>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+
+dmg:
+dd 1
+ 
+ 
+[DISABLE]
+
+dmg:
+dd 0
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>37</ID>
+              <Description>"Damage Multiplier"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>dmgmul_f</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>16</ID>
+          <Description>"Modify Player Speed"</Description>
+          <Options moHideChildren="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(aobplayerspeed,Remnant2-Win64-Shipping.exe,F3 0F 10 4B 64 EB * F3 0F 10 * * * * * 48 8B * 28 * 8B * F3 0F 59 * * * * 48 8B * FF 90) // should be unique
+alloc(newmem,$1000,aobplayerspeed)
+label(code)
+label(return)
+label(playerspeed_f)
+registersymbol(playerspeed_f)
+
+newmem:
+  movss xmm1,[rbx+64]
+  push rax
+  cmp [playerspeed_f],0
+  je code
+  mov rax,player
+  mov rax,[rax]
+  cmp rax,rbx
+  je @f
+  cmp rax,[rbx+20]
+  jne code
+@@:
+  mulss xmm1,[playerspeed_f]
+code:
+  pop rax
+  jmp return
+
+newmem+200:
+playerspeed_f:
+dd 0
+
+aobplayerspeed:
+  jmp newmem
+return:
+registersymbol(aobplayerspeed)
+
+[DISABLE]
+
+aobplayerspeed:
+  db F3 0F 10 4B 64
+dealloc(newmem)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>39</ID>
+              <Description>"Player Speed"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>playerspeed_f</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"Modfiy Movement Speed"</Description>
+          <Options moHideChildren="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(aobmovespeed,Remnant2-Win64-Shipping.exe,45 0F 57 C0 0F 28 F8 44 0F 2F 83 * * 00 00 0F 83 * * 00 00) // should be unique
+alloc(newmem,$1000,aobmovespeed)
+label(code)
+label(return)
+label(speed_f)
+registersymbol(speed_f)
+
+newmem:
+  cmp [speed_f],0
+  je code
+  push rax
+  mov rax,player
+  mov rax,[rax]
+  cmp [rbx+20],rax
+  pop rax
+  jne code
+  mulss xmm0,[speed_f]
+code:
+  xorps xmm8,xmm8
+  movaps xmm7,xmm0
+  jmp return
+
+newmem+200:
+speed_f:
+dd 0
+
+aobmovespeed:
+  jmp newmem
+  nop 2
+return:
+registersymbol(aobmovespeed)
+
+[DISABLE]
+
+aobmovespeed:
+  db 45 0F 57 C0 0F 28 F8
+dealloc(newmem)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>40</ID>
+              <Description>"Movement Speed"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>speed_f</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Infinite Stamina"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobstamina,Remnant2-Win64-Shipping.exe,0F 28 * E8 * * * * 84 C0 0F 84 * * 00 00 * 8B * 28 * 8B * * * 00 00) // should be unique
+aobstamina+8:
+  db 30 C0
+registersymbol(aobstamina)
+
+[DISABLE]
+aobstamina+8:
+  db 84 C0
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Infinite Ammo"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobammo,Remnant2-Win64-Shipping.exe,F7 DD * 8B * * * FF FF 8B * FF 90 * * 00 00) // should be unique
+aobammo:
+  db 31 ED
+registersymbol(aobammo)
+
+[DISABLE]
+aobammo:
+  db F7 DD
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"No Reload"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobreload,Remnant2-Win64-Shipping.exe,29 68 54 * * * 8B * * * FF FF 8B * FF 90 * * 00 00) // should be unique
+aobreload:
+  db 0F 1F 00
+registersymbol(aobreload)
+
+[DISABLE]
+aobreload:
+  db 29 68 54
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Infinite Weapon Mod Ammo"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobweaponcharges,Remnant2-Win64-Shipping.exe,2C 01 88 * * * 00 00 0F 85 * * 00 00 80 * * * 00 00 02) // should be unique
+aobweaponcharges:
+  db 2C 00
+registersymbol(aobweaponcharges)
+
+[DISABLE]
+aobweaponcharges:
+  db 2C 01
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8</ID>
+      <Description>"Instant Reload"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobinstantreload,Remnant2-Win64-Shipping.exe,F3 0F 10 B7 * * 00 00 * 85 * 74 * 80 * * * 00 00 00) // should be unique
+alloc(newmem,$1000,aobinstantreload)
+label(code)
+label(return)
+
+newmem:
+code:
+  movss xmm6,[newmem+300]
+  jmp return
+
+newmem+300:
+dd (float)100
+
+aobinstantreload:
+  jmp newmem
+  nop 3
+return:
+registersymbol(aobinstantreload)
+
+[DISABLE]
+
+aobinstantreload:
+  db F3 0F 10 B7 BC 08 00 00
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"Perfect Accuracy"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobaccuracy,Remnant2-Win64-Shipping.exe,F3 0F 59 70 28 F3 0F 58 * * * 00 00) // should be unique
+aobaccuracy:
+  db 0F 57 F6 66 90
+registersymbol(aobaccuracy)
+
+[DISABLE]
+aobaccuracy:
+  db F3 0F 59 70 28
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"No Recoil"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobrecoil,Remnant2-Win64-Shipping.exe,F2 0F 58 F1 F2 0F 59 F0 66 0F 5A CE E8) // should be unique
+aobrecoil:
+  db 0F 57 D2 66 0F 57 F6 90
+registersymbol(aobrecoil)
+
+[DISABLE]
+aobrecoil:
+  db F2 0F 58 F1 F2 0F 59 F0
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>14</ID>
+      <Description>"100% Drop Rate"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobdroprate,Remnant2-Win64-Shipping.exe,63 00 00 00 66 0F 6E C0 0F 5B C0 F3 0F 59 * F3 0F 2C) // should be unique
+aobdroprate+4:
+  db 66 0F 57 C0
+registersymbol(aobdroprate)
+
+[DISABLE]
+aobdroprate+4:
+  db 66 0F 6E C0
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"Enable Scraps Mods"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobgetitemquantity,Remnant2-Win64-Shipping.exe,44 8B C7 48 8D 55 * * 8B * E8 * * * * * 8B * * * 89 * * 85 * 74) // should be unique
+alloc(newmem,$1000,aobgetitemquantity)
+label(code)
+label(return)
+label(getitemquantity)
+registersymbol(getitemquantity)
+
+newmem:
+  mov [getitemquantity],1
+code:
+  db 44 8B C7 48 8D 55 A0
+  jmp return
+
+newmem+400:
+getitemquantity:
+dd 0
+
+aobgetitemquantity:
+  jmp newmem
+  nop 2
+return:
+registersymbol(aobgetitemquantity)
+
+[DISABLE]
+aobgetitemquantity:
+  db 44 8B C7 48 8D 55 A0
+dealloc(newmem)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"Edit Scraps"</Description>
+          <Options moHideChildren="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(aobitem,Remnant2-Win64-Shipping.exe,48 8B 4B 18 48 85 C9 74 * 45 85 FF 78 * 0F B6 41 28 * 3B * 75 * * * 2C) // should be unique
+alloc(newmem,$1000,aobitem)
+label(code)
+label(return)
+label(scraps)
+registersymbol(scraps)
+
+newmem:
+  mov rcx,[rbx+18]
+  test r15d,r15d
+  jns code
+  test rcx,rcx
+  je code
+  push rdx
+  mov rdx,getitemquantity
+  cmp [rdx],1
+  jne @f
+  mov [rdx],0
+  mov edx,[scraps]
+  cmp edx,0
+  jle @f
+  cmp [rbx+14],-1
+  jne @f
+  cmp qword ptr [rbx+20],0
+  jne @f
+  cmp [rcx+2C],#100
+  jl @f
+  mov [scraps],0
+  mov [rcx+2C],edx
+@@:
+  pop rdx
+code:
+  test rcx,rcx
+  jmp return
+
+newmem+200:
+scraps:
+dd 0
+
+aobitem:
+  jmp newmem
+  nop 2
+return:
+registersymbol(aobitem)
+
+[DISABLE]
+
+aobitem:
+  db 48 8B 4B 18 48 85 C9
+dealloc(newmem)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>41</ID>
+              <Description>"Scraps"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>scraps</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>18</ID>
+      <Description>"Consumables Do NOT Decrease"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobitemdec,Remnant2-Win64-Shipping.exe,48 8B 81 * * 00 00 48 85 C0 74 * 89 50 2C * 8B * * * 00 00 * 85 * 74) // should be unique
+alloc(newmem,$1000,aobitemdec)
+label(code)
+label(return)
+
+newmem:
+  push rbx
+  lea rbx,[rcx+2D8]
+  mov rax,[rbx]
+  test rax,rax
+  je code
+  cmp edx,0
+  jle code
+  cmp [rbx-20],#1
+  jle code
+  cmp [rbx-20],#99999
+  ja code
+  cmp edx,[rax+2C]
+  jge code
+  mov edx,[rax+2C]
+
+
+code:
+  pop rbx
+  jmp return
+
+newmem+300:
+dq 10000
+dq 7fffffffffff
+
+aobitemdec:
+  jmp newmem
+  nop 2
+return:
+registersymbol(aobitemdec)
+
+[DISABLE]
+
+aobitemdec:
+  db 48 8B 81 D8 02 00 00
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>17</ID>
+      <Description>"Infinite Dragon Hearts"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobdragonhearts,Remnant2-Win64-Shipping.exe,66 0F 6E CB 0F 5B C9 F3 0F 58 * F3 0F 2C D8) // should be unique
+aobdragonhearts+7:
+  db BB DE 03 00 00 0F 1F 00
+registersymbol(aobdragonhearts)
+
+[DISABLE]
+aobdragonhearts+7:
+  db F3 0F 58 C1 F3 0F 2C D8
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"No Crafting and Upgrade Requirements"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobupgradereq,Remnant2-Win64-Shipping.exe,E8 * * * * * 8B * * 8B * * 8B * * 8B * E8 * * * * 84 C0 74 * * 01 EB * 32 C0 * 8B * 24) // should be unique
+aobupgradereq+1E:
+  db B0 01
+registersymbol(aobupgradereq)
+
+[DISABLE]
+aobupgradereq+1E:
+  db 32 C0
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>22</ID>
+      <Description>"Modify Archetype XP "</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobexp,Remnant2-Win64-Shipping.exe,8B 89 C8 00 00 00 41 03 CF 89 * * * 00 00) // should be unique
+alloc(newmem,$1000,aobexp)
+label(code)
+label(return)
+label(exp expmul_f)
+registersymbol(exp expmul_f)
+
+newmem:
+  mov ecx,[rcx+000000C8]
+  cmp [expmul_f],0
+  je @f
+  push r15
+  fild [rsp]
+  fmul [expmul_f]
+  fistp [rsp]
+  pop r15
+
+@@:
+  cmp [exp],1
+  jne @f
+  mov r15d,#99999999
+  xor ecx,ecx
+
+code:
+  jmp return
+
+newmem+200:
+exp:
+dd 0
+expmul_f:
+dd 0
+
+aobexp:
+  jmp newmem
+  nop
+return:
+registersymbol(aobexp)
+
+[DISABLE]
+aobexp:
+  db 8B 89 C8 00 00 00
+dealloc(newmem)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>42</ID>
+          <Description>"Infinite Archetype XP"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+
+exp:
+dd 1
+ 
+ 
+[DISABLE]
+
+exp:
+dd 0
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>43</ID>
+          <Description>"Archetype XP"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>expmul_f</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>30</ID>
+      <Description>"Ghost Mode"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobstealthmode,Remnant2-Win64-Shipping.exe,0F 84 * * 00 00 * 89 * * * 81 * * * 00 00 * 89 * * 0F 29 * * E8) // should be unique
+aobstealthmode:
+  db 90 E9
+registersymbol(aobstealthmode)
+
+[DISABLE]
+aobstealthmode:
+  db 0F 84
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>29</ID>
+      <Description>"Infinite Buff Duration"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobbuffduration,Remnant2-Win64-Shipping.exe,75 * * * * FF * * * 00 00 F3 0F 58 * * * 00 00 F3 0F 10) // should be unique
+aobbuffduration+0B:
+  db F3 0F 10
+registersymbol(aobbuffduration)
+
+[DISABLE]
+aobbuffduration+0B:
+  db F3 0F 58
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>31</ID>
+      <Description>"Edit Total Trait Points."</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(aobtraitpoints,Remnant2-Win64-Shipping.exe,8B B1 * * 00 00 * 8B * * * * * * * * E8 * * * * * 8B * * 8B * FF) // should be unique
+alloc(newmem,$1000,aobtraitpoints)
+label(code)
+label(return)
+label(trait_points)
+registersymbol(trait_points)
+
+newmem:
+  lea rsi,[rcx+D4]
+  push rdx
+  mov edx,[trait_points]
+  cmp edx,0
+  jl code
+  mov [rsi],edx
+  mov [trait_points],-1
+code:
+  pop rdx
+  mov esi,[rsi]
+  jmp return
+
+newmem+200:
+trait_points:
+dd -1
+
+aobtraitpoints:
+  jmp newmem
+  nop
+return:
+registersymbol(aobtraitpoints)
+
+[DISABLE]
+aobtraitpoints:
+  db 8B B1 D4 00 00 00
+dealloc(newmem)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>44</ID>
+          <Description>"Total Trait Points"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>trait_points</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
