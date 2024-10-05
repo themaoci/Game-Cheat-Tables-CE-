@@ -1,0 +1,2170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>8091</ID>
+      <Description>"Unlimited Health"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-30
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(healthh,NMS.exe,8B 83 98 0D 00 00) // should be unique
+alloc(newmem,$1000,healthh)
+
+label(code)
+label(return)
+
+newmem:
+mov [rbx+00000D98], #100
+code:
+  mov eax,[rbx+00000D98]
+  jmp return
+
+healthh:
+  jmp newmem
+  nop
+return:
+registersymbol(healthh)
+
+[DISABLE]
+
+healthh:
+  db 8B 83 98 0D 00 00
+
+unregistersymbol(healthh)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+AD597B
+
+"NMS.exe"+AD5949: F3 0F 10 1D C3 91 65 01        -  movss xmm3,[NMS.exe+212EB14]
+"NMS.exe"+AD5951: E8 FA 2F B7 FF                 -  call NMS.exe+648950
+"NMS.exe"+AD5956: F3 0F 11 03                    -  movss [rbx],xmm0
+"NMS.exe"+AD595A: 48 8B CE                       -  mov rcx,rsi
+"NMS.exe"+AD595D: E8 FE 13 00 00                 -  call NMS.exe+AD6D60
+"NMS.exe"+AD5962: 48 8B 1D 1F CD BA 01           -  mov rbx,[NMS.exe+2682688]
+"NMS.exe"+AD5969: 41 BD FF FF FF FF              -  mov r13d,FFFFFFFF
+"NMS.exe"+AD596F: 44 89 AD 98 06 00 00           -  mov [rbp+00000698],r13d
+"NMS.exe"+AD5976: 45 85 E4                       -  test r12d,r12d
+"NMS.exe"+AD5979: 75 10                          -  jne NMS.exe+AD598B
+// ---------- INJECTING HERE ----------
+"NMS.exe"+AD597B: 8B 83 98 0D 00 00              -  mov eax,[rbx+00000D98]
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+AD5981: F3 0F 10 35 07 07 38 01        -  movss xmm6,[NMS.exe+1E56090]
+"NMS.exe"+AD5989: EB 79                          -  jmp NMS.exe+AD5A04
+"NMS.exe"+AD598B: 41 83 FC 04                    -  cmp r12d,04
+"NMS.exe"+AD598F: 75 35                          -  jne NMS.exe+AD59C6
+"NMS.exe"+AD5991: 44 89 6C 24 20                 -  mov [rsp+20],r13d
+"NMS.exe"+AD5996: 45 33 C9                       -  xor r9d,r9d
+"NMS.exe"+AD5999: 41 8D 54 24 59                 -  lea edx,[r12+59]
+"NMS.exe"+AD599E: 45 8B C4                       -  mov r8d,r12d
+"NMS.exe"+AD59A1: 48 8D 8B 90 0C 00 00           -  lea rcx,[rbx+00000C90]
+"NMS.exe"+AD59A8: E8 73 EB D8 FF                 -  call NMS.exe+864520
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8093</ID>
+      <Description>"Unlimited Stamina"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-30
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(staminaa,NMS.exe,00 F3 0F 10 8B A4 30 00 00) // should be unique
+alloc(newmem,$1000,staminaa)
+
+label(code)
+label(return)
+
+newmem:
+mov [rdi+00002CB4], (float)1
+xorps xmm0,xmm0
+code:
+  movss xmm1,[rbx+000030A4]
+  jmp return
+
+staminaa+01:
+  jmp newmem
+  nop
+  nop
+  nop
+return:
+registersymbol(staminaa)
+
+[DISABLE]
+
+staminaa+01:
+  db F3 0F 10 8B A4 30 00 00
+
+unregistersymbol(staminaa)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+12BC2E5
+
+"NMS.exe"+12BC2A1: E8 AA BE 28 00                 -  call NMS.exe+1548150
+"NMS.exe"+12BC2A6: F3 0F 59 05 26 93 B9 00        -  mulss xmm0,[NMS.exe+1E555D4]
+"NMS.exe"+12BC2AE: F3 0F 58 05 96 96 B9 00        -  addss xmm0,dword ptr [NMS.exe+1E5594C]
+"NMS.exe"+12BC2B6: F3 44 0F 10 65 F0              -  movss xmm12,[rbp-10]
+"NMS.exe"+12BC2BC: F3 44 0F 59 E0                 -  mulss xmm12,xmm0
+"NMS.exe"+12BC2C1: F3 44 0F 11 65 F0              -  movss [rbp-10],xmm12
+"NMS.exe"+12BC2C7: F3 0F 10 05 25 C1 E6 00        -  movss xmm0,[NMS.exe+21283F4]
+"NMS.exe"+12BC2CF: F3 44 0F 10 9D 98 0F 00 00     -  movss xmm11,[rbp+00000F98]
+"NMS.exe"+12BC2D8: F3 41 0F 59 C3                 -  mulss xmm0,xmm11
+"NMS.exe"+12BC2DD: F3 0F 5E 85 90 0F 00 00        -  divss xmm0,[rbp+00000F90]
+// ---------- INJECTING HERE ----------
+"NMS.exe"+12BC2E5: F3 0F 10 8B A4 30 00 00        -  movss xmm1,[rbx+000030A4]
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+12BC2ED: F3 0F 5C C8                    -  subss xmm1,xmm0
+"NMS.exe"+12BC2F1: F3 0F 11 8B A4 30 00 00        -  movss [rbx+000030A4],xmm1
+"NMS.exe"+12BC2F9: 44 0F 2F F9                    -  comiss xmm15,xmm1
+"NMS.exe"+12BC2FD: 72 5E                          -  jb NMS.exe+12BC35D
+"NMS.exe"+12BC2FF: 4C 89 AB A0 30 00 00           -  mov [rbx+000030A0],r13
+"NMS.exe"+12BC306: 44 88 AD FC 05 00 00           -  mov [rbp+000005FC],r13l
+"NMS.exe"+12BC30D: 4C 89 B5 F0 05 00 00           -  mov [rbp+000005F0],r14
+"NMS.exe"+12BC314: C7 85 F8 05 00 00 29 FF C9 2A  -  mov [rbp+000005F8],2AC9FF29
+"NMS.exe"+12BC31E: 44 89 74 24 38                 -  mov [rsp+38],r14d
+"NMS.exe"+12BC323: 4C 89 74 24 30                 -  mov [rsp+30],r14
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8094</ID>
+      <Description>"Unlimited Jetpack"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-30
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(jetpackk,NMS.exe,F3 0F 5C C1 F3 0F 11 83 B4 19 00 00 EB) // should be unique
+
+jetpackk:
+  nop
+  nop
+  nop
+  nop
+
+registersymbol(jetpackk)
+
+[DISABLE]
+
+jetpackk:
+  db F3 0F 5C C1 F3 0F 11 83 B4 19 00 00
+
+unregistersymbol(jetpackk)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+12BB730
+
+"NMS.exe"+12BB6F8: F3 0F 10 0D A0 A7 B9 00        -  movss xmm1,[NMS.exe+1E55EA0]
+"NMS.exe"+12BB700: F3 0F 5C C8                    -  subss xmm1,xmm0
+"NMS.exe"+12BB704: F3 0F 59 D2                    -  mulss xmm2,xmm2
+"NMS.exe"+12BB708: F3 0F 59 CA                    -  mulss xmm1,xmm2
+"NMS.exe"+12BB70C: F3 0F 10 05 A4 C9 E6 00        -  movss xmm0,[NMS.exe+21280B8]
+"NMS.exe"+12BB714: F3 0F 5C C3                    -  subss xmm0,xmm3
+"NMS.exe"+12BB718: F3 0F 59 C8                    -  mulss xmm1,xmm0
+"NMS.exe"+12BB71C: F3 0F 58 CB                    -  addss xmm1,xmm3
+"NMS.exe"+12BB720: F3 0F 59 8D 98 0F 00 00        -  mulss xmm1,[rbp+00000F98]
+"NMS.exe"+12BB728: F3 0F 10 83 B4 19 00 00        -  movss xmm0,[rbx+000019B4]
+// ---------- INJECTING HERE ----------
+"NMS.exe"+12BB730: F3 0F 5C C1                    -  subss xmm0,xmm1
+"NMS.exe"+12BB734: F3 0F 11 83 B4 19 00 00        -  movss [rbx+000019B4],xmm0
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+12BB73C: EB 08                          -  jmp NMS.exe+12BB746
+"NMS.exe"+12BB73E: F3 0F 10 83 B4 19 00 00        -  movss xmm0,[rbx+000019B4]
+"NMS.exe"+12BB746: 44 0F 2F F8                    -  comiss xmm15,xmm0
+"NMS.exe"+12BB74A: 72 59                          -  jb NMS.exe+12BB7A5
+"NMS.exe"+12BB74C: F3 0F 10 85 90 0F 00 00        -  movss xmm0,[rbp+00000F90]
+"NMS.exe"+12BB754: 41 0F 2F C7                    -  comiss xmm0,xmm15
+"NMS.exe"+12BB758: 76 4B                          -  jna NMS.exe+12BB7A5
+"NMS.exe"+12BB75A: C6 85 DC 05 00 00 01           -  mov byte ptr [rbp+000005DC],01
+"NMS.exe"+12BB761: 33 C0                          -  xor eax,eax
+"NMS.exe"+12BB763: 48 89 85 D0 05 00 00           -  mov [rbp+000005D0],rax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8386</ID>
+      <Description>"Hover Resource"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-30
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(resourcc,NMS.exe,44 8B 5F 18 89 44 24 5C) // should be unique
+alloc(newmem,$1000,resourcc)
+
+label(code)
+label(return)
+
+newmem:
+cmp rsi, 0
+jne code
+mov [rdi+18], #999
+code:
+  mov r11d,[rdi+18]
+  mov [rsp+5C],eax
+  jmp return
+
+resourcc:
+  jmp newmem
+  nop
+  nop
+  nop
+return:
+registersymbol(resourcc)
+
+[DISABLE]
+
+resourcc:
+  db 44 8B 5F 18 89 44 24 5C
+
+unregistersymbol(resourcc)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+A9C484
+
+"NMS.exe"+A9C459: 0F 84 AC 01 00 00        -  je NMS.exe+A9C60B
+"NMS.exe"+A9C45F: 48 8B 47 08              -  mov rax,[rdi+08]
+"NMS.exe"+A9C463: 48 81 C1 68 68 00 00     -  add rcx,00006868
+"NMS.exe"+A9C46A: 8B 37                    -  mov esi,[rdi]
+"NMS.exe"+A9C46C: F3 0F 10 47 20           -  movss xmm0,[rdi+20]
+"NMS.exe"+A9C471: 89 74 24 40              -  mov [rsp+40],esi
+"NMS.exe"+A9C475: 49 89 43 B0              -  mov [r11-50],rax
+"NMS.exe"+A9C479: 48 8B 47 10              -  mov rax,[rdi+10]
+"NMS.exe"+A9C47D: 49 89 43 B8              -  mov [r11-48],rax
+"NMS.exe"+A9C481: 8B 47 1C                 -  mov eax,[rdi+1C]
+// ---------- INJECTING HERE ----------
+"NMS.exe"+A9C484: 44 8B 5F 18              -  mov r11d,[rdi+18]
+"NMS.exe"+A9C488: 89 44 24 5C              -  mov [rsp+5C],eax
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+A9C48C: 48 8B 47 24              -  mov rax,[rdi+24]
+"NMS.exe"+A9C490: 48 89 44 24 64           -  mov [rsp+64],rax
+"NMS.exe"+A9C495: F3 0F 11 44 24 60        -  movss [rsp+60],xmm0
+"NMS.exe"+A9C49B: 44 89 5C 24 58           -  mov [rsp+58],r11d
+"NMS.exe"+A9C4A0: E8 FB 14 FF FF           -  call NMS.exe+A8D9A0
+"NMS.exe"+A9C4A5: 48 3B C7                 -  cmp rax,rdi
+"NMS.exe"+A9C4A8: 75 15                    -  jne NMS.exe+A9C4BF
+"NMS.exe"+A9C4AA: 44 2B 9B 80 68 00 00     -  sub r11d,[rbx+00006880]
+"NMS.exe"+A9C4B1: 44 89 5C 24 58           -  mov [rsp+58],r11d
+"NMS.exe"+A9C4B6: 45 85 DB                 -  test r11d,r11d
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8389</ID>
+      <Description>"Unlimited Laser Beam"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-30
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(miningbeam,NMS.exe,75 1C 66 0F 6E C7) // should be unique
+
+miningbeam:
+db  EB 1C
+registersymbol(miningbeam)
+
+[DISABLE]
+
+miningbeam:
+  db 75 1C 66 0F 6E C7
+
+unregistersymbol(miningbeam)
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+129ED37
+
+"NMS.exe"+129ED13: E9 06 FE FF FF              -  jmp NMS.exe+129EB1E
+"NMS.exe"+129ED18: 41 8B 47 18                 -  mov eax,[r15+18]
+"NMS.exe"+129ED1C: 2B BC 9E 30 12 00 00        -  sub edi,[rsi+rbx*4+00001230]
+"NMS.exe"+129ED23: 3B C7                       -  cmp eax,edi
+"NMS.exe"+129ED25: 0F 4C F8                    -  cmovl edi,eax
+"NMS.exe"+129ED28: 85 C0                       -  test eax,eax
+"NMS.exe"+129ED2A: 74 E5                       -  je NMS.exe+129ED11
+"NMS.exe"+129ED2C: 85 FF                       -  test edi,edi
+"NMS.exe"+129ED2E: 0F 84 3E FE FF FF           -  je NMS.exe+129EB72
+"NMS.exe"+129ED34: 45 84 ED                    -  test r13l,r13l
+// ---------- INJECTING HERE ----------
+"NMS.exe"+129ED37: 75 1C                       -  jne NMS.exe+129ED55
+"NMS.exe"+129ED39: 66 0F 6E C7                 -  movd xmm0,edi
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+129ED3D: 0F 5B C0                    -  cvtdq2ps xmm0,xmm0
+"NMS.exe"+129ED40: FF 15 D2 71 97 00           -  call qword ptr [NMS.exe+1C15F18]
+"NMS.exe"+129ED46: F3 0F 2C C0                 -  cvttss2si eax,xmm0
+"NMS.exe"+129ED4A: 41 29 47 18                 -  sub [r15+18],eax
+"NMS.exe"+129ED4E: 01 BC 9E 30 12 00 00        -  add [rsi+rbx*4+00001230],edi
+"NMS.exe"+129ED55: B8 04 00 00 00              -  mov eax,00000004
+"NMS.exe"+129ED5A: E9 BF FD FF FF              -  jmp NMS.exe+129EB1E
+"NMS.exe"+129ED5F: CC                          -  int 3 
+"NMS.exe"+129ED60: 40 53                       -  push rbx
+"NMS.exe"+129ED62: 48 83 EC 30                 -  sub rsp,30
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1575</ID>
+      <Description>"Full Life Support"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2017-08-13
+  Author : STN
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(lifesupport,NMS.exe,66 0F 6E 43 18 66) // should be unique
+alloc(newmem,$1000,"NMS.exe"+776255)
+
+label(code)
+label(return)
+
+newmem:
+  movd xmm0,[rbx+1C]
+  movd [rbx+18], xmm0
+code:
+  movd xmm0,[rbx+18]
+  jmp return
+
+lifesupport:
+  jmp newmem
+return:
+registersymbol(lifesupport)
+
+[DISABLE]
+
+lifesupport:
+  db 66 0F 6E 43 18
+
+unregistersymbol(lifesupport)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+776255
+
+"NMS.exe"+77623C: 75 17                    -  jne NMS.exe+776255
+"NMS.exe"+77623E: 48 85 FF                 -  test rdi,rdi
+"NMS.exe"+776241: 74 05                    -  je NMS.exe+776248
+"NMS.exe"+776243: 48 8B DF                 -  mov rbx,rdi
+"NMS.exe"+776246: EB 08                    -  jmp NMS.exe+776250
+"NMS.exe"+776248: 48 85 C0                 -  test rax,rax
+"NMS.exe"+77624B: 74 2C                    -  je NMS.exe+776279
+"NMS.exe"+77624D: 48 8B D8                 -  mov rbx,rax
+"NMS.exe"+776250: 48 85 DB                 -  test rbx,rbx
+"NMS.exe"+776253: 74 24                    -  je NMS.exe+776279
+// ---------- INJECTING HERE ----------
+"NMS.exe"+776255: 66 0F 6E 43 18           -  movd xmm0,[rbx+18]
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+77625A: 66 0F 6E 4B 1C           -  movd xmm1,[rbx+1C]
+"NMS.exe"+77625F: 48 8B 7C 24 38           -  mov rdi,[rsp+38]
+"NMS.exe"+776264: 48 8B 5C 24 30           -  mov rbx,[rsp+30]
+"NMS.exe"+776269: 0F 5B C0                 -  cvtdq2ps xmm0,xmm0
+"NMS.exe"+77626C: 0F 5B C9                 -  cvtdq2ps xmm1,xmm1
+"NMS.exe"+77626F: F3 0F 5E C1              -  divss xmm0,xmm1
+"NMS.exe"+776273: 48 83 C4 20              -  add rsp,20
+"NMS.exe"+776277: 5E                       -  pop rsi
+"NMS.exe"+776278: C3                       -  ret 
+"NMS.exe"+776279: 48 8B 5C 24 30           -  mov rbx,[rsp+30]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8397</ID>
+      <Description>"Full Protection"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-31
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(enviropr,NMS.exe,F3 0F 10 2B 48 8B B5 C8 00 00 00) // should be unique
+alloc(newmem,$1000,enviropr)
+
+label(code)
+label(return)
+
+newmem:
+mov [rbx], 0
+code:
+  movss xmm5,[rbx]
+  mov rsi,[rbp+000000C8]
+  jmp return
+
+enviropr:
+  jmp newmem
+  nop
+  nop
+  nop
+  nop
+  nop
+  nop
+return:
+registersymbol(enviropr)
+
+[DISABLE]
+
+enviropr:
+  db F3 0F 10 2B 48 8B B5 C8 00 00 00
+
+unregistersymbol(enviropr)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+12EE295
+
+"NMS.exe"+12EE263: 21 44 B7 08                    -  and [rdi+rsi*4+08],eax
+"NMS.exe"+12EE267: 8B 44 B7 08                    -  mov eax,[rdi+rsi*4+08]
+"NMS.exe"+12EE26B: 41 23 C6                       -  and eax,r14d
+"NMS.exe"+12EE26E: 0F 84 89 00 00 00              -  je NMS.exe+12EE2FD
+"NMS.exe"+12EE274: 0F 2F F9                       -  comiss xmm7,xmm1
+"NMS.exe"+12EE277: 0F 82 80 00 00 00              -  jb NMS.exe+12EE2FD
+"NMS.exe"+12EE27D: F3 0F 10 05 BF C2 38 01        -  movss xmm0,[NMS.exe+267A544]
+"NMS.exe"+12EE285: F3 0F 5C 43 18                 -  subss xmm0,[rbx+18]
+"NMS.exe"+12EE28A: 43 0F 2F 04 07                 -  comiss xmm0,[r15+r8]
+"NMS.exe"+12EE28F: 0F 86 D4 00 00 00              -  jbe NMS.exe+12EE369
+// ---------- INJECTING HERE ----------
+"NMS.exe"+12EE295: F3 0F 10 2B                    -  movss xmm5,[rbx]
+"NMS.exe"+12EE299: 48 8B B5 C8 00 00 00           -  mov rsi,[rbp+000000C8]
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+12EE2A0: 44 0F 2F C5                    -  comiss xmm8,xmm5
+"NMS.exe"+12EE2A4: 0F 86 C6 00 00 00              -  jbe NMS.exe+12EE370
+"NMS.exe"+12EE2AA: 48 8B 0D D7 43 39 01           -  mov rcx,[NMS.exe+2682688]
+"NMS.exe"+12EE2B1: 48 8D 04 0B                    -  lea rax,[rbx+rcx]
+"NMS.exe"+12EE2B5: 48 03 CB                       -  add rcx,rbx
+"NMS.exe"+12EE2B8: F3 42 0F 10 9C 08 A0 EB 11 00  -  movss xmm3,[rax+r9+0011EBA0]
+"NMS.exe"+12EE2C2: F3 0F 10 94 31 A0 EB 11 00     -  movss xmm2,[rcx+rsi+0011EBA0]
+"NMS.exe"+12EE2CB: 41 8B D4                       -  mov edx,r12d
+"NMS.exe"+12EE2CE: 48 8B CF                       -  mov rcx,rdi
+"NMS.exe"+12EE2D1: E8 6A 08 00 00                 -  call NMS.exe+12EEB40
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1618</ID>
+      <Description>"One-Hit Kills"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-07-27
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(easykillz,NMS.exe,89 8E C4 01 00 00 B3) // should be unique
+alloc(newmem,$1000,easykillz)
+
+label(code)
+label(return)
+
+newmem:
+mov ecx, #999999999
+code:
+  mov [rsi+000001C4],ecx
+  jmp return
+
+easykillz:
+  jmp newmem
+  nop
+return:
+registersymbol(easykillz)
+
+[DISABLE]
+
+easykillz:
+  db 89 8E C4 01 00 00
+
+unregistersymbol(easykillz)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+F9D795
+
+"NMS.exe"+F9D771: E8 AA 86 A7 FF           -  call NMS.exe+A15E20
+"NMS.exe"+F9D776: 48 85 C0                 -  test rax,rax
+"NMS.exe"+F9D779: 74 06                    -  je NMS.exe+F9D781
+"NMS.exe"+F9D77B: 4C 39 78 30              -  cmp [rax+30],r15
+"NMS.exe"+F9D77F: 75 1A                    -  jne NMS.exe+F9D79B
+"NMS.exe"+F9D781: 8B 8E C4 01 00 00        -  mov ecx,[rsi+000001C4]
+"NMS.exe"+F9D787: 41 03 CD                 -  add ecx,r13d
+"NMS.exe"+F9D78A: 8B 86 C0 01 00 00        -  mov eax,[rsi+000001C0]
+"NMS.exe"+F9D790: 3B C1                    -  cmp eax,ecx
+"NMS.exe"+F9D792: 0F 4C C8                 -  cmovl ecx,eax
+// ---------- INJECTING HERE ----------
+"NMS.exe"+F9D795: 89 8E C4 01 00 00        -  mov [rsi+000001C4],ecx
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+F9D79B: B3 01                    -  mov bl,01
+"NMS.exe"+F9D79D: 88 9D 00 01 00 00        -  mov [rbp+00000100],bl
+"NMS.exe"+F9D7A3: 8B 8E C0 01 00 00        -  mov ecx,[rsi+000001C0]
+"NMS.exe"+F9D7A9: 85 C9                    -  test ecx,ecx
+"NMS.exe"+F9D7AB: 7E 54                    -  jle NMS.exe+F9D801
+"NMS.exe"+F9D7AD: 2B 8E C4 01 00 00        -  sub ecx,[rsi+000001C4]
+"NMS.exe"+F9D7B3: 41 8B C7                 -  mov eax,r15d
+"NMS.exe"+F9D7B6: 0F 49 C1                 -  cmovns eax,ecx
+"NMS.exe"+F9D7B9: 85 C0                    -  test eax,eax
+"NMS.exe"+F9D7BB: 7F 44                    -  jg NMS.exe+F9D801
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1465</ID>
+      <Description>"Decode All Words"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(words,NMS.exe,EB 02 32 C9 84 C9)
+label(wordyy)
+registersymbol(wordyy)
+words:
+wordyy:
+  db 90 90 B1 01
+
+
+[DISABLE]
+wordyy:
+  db EB 02 32 C9
+unregistersymbol(wordyy)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+892E6C
+
+"NMS.exe"+892E4C: 0F 1F 40 00           -  nop [rax+00]
+"NMS.exe"+892E50: 4C 39 00              -  cmp [rax],r8
+"NMS.exe"+892E53: 75 06                 -  jne NMS.exe+892E5B
+"NMS.exe"+892E55: 48 39 50 08           -  cmp [rax+08],rdx
+"NMS.exe"+892E59: 74 0B                 -  je NMS.exe+892E66
+"NMS.exe"+892E5B: 48 83 C0 18           -  add rax,18
+"NMS.exe"+892E5F: 48 3B C1              -  cmp rax,rcx
+"NMS.exe"+892E62: 74 0A                 -  je NMS.exe+892E6E
+"NMS.exe"+892E64: EB EA                 -  jmp NMS.exe+892E50
+"NMS.exe"+892E66: 41 0F B6 4C 04 10     -  movzx ecx,byte ptr [r12+rax+10]
+// ---------- INJECTING HERE ----------
+"NMS.exe"+892E6C: EB 02                 -  jmp NMS.exe+892E70
+"NMS.exe"+892E6E: 32 C9                 -  xor cl,cl
+"NMS.exe"+892E70: 84 C9                 -  test cl,cl
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+892E72: 0F 84 A3 00 00 00     -  je NMS.exe+892F1B
+"NMS.exe"+892E78: 48 8D 05 1D 4B AB 00  -  lea rax,[NMS.exe+134799C]
+"NMS.exe"+892E7F: 48 89 45 A0           -  mov [rbp-60],rax
+"NMS.exe"+892E83: 48 8D 05 0E 4B AB 00  -  lea rax,[NMS.exe+1347998]
+"NMS.exe"+892E8A: 48 89 45 A8           -  mov [rbp-58],rax
+"NMS.exe"+892E8E: 48 8D 05 2B 4B AB 00  -  lea rax,[NMS.exe+13479C0]
+"NMS.exe"+892E95: 48 89 45 B0           -  mov [rbp-50],rax
+"NMS.exe"+892E99: 48 8D 1D 5E C7 A9 00  -  lea rbx,[NMS.exe+132F5FE]
+"NMS.exe"+892EA0: 48 89 5D B8           -  mov [rbp-48],rbx
+"NMS.exe"+892EA4: 48 8D 05 0D 4B AB 00  -  lea rax,[NMS.exe+13479B8]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8391</ID>
+      <Description>"No Sentinels"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-30
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(sentinel,NMS.exe,41 39 BD A8 29 29 00) // should be unique
+alloc(newmem,$1000,sentinel)
+
+label(code)
+label(return)
+
+newmem:
+mov [r13+002929A8], 0
+code:
+  cmp [r13+002929A8],edi
+  jmp return
+
+sentinel:
+  jmp newmem
+  nop
+  nop
+return:
+registersymbol(sentinel)
+
+[DISABLE]
+
+sentinel:
+  db 41 39 BD A8 29 29 00
+
+unregistersymbol(sentinel)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+AD4265
+
+"NMS.exe"+AD4219: F3 44 0F 10 3D DE 1A 38 01  -  movss xmm15,[NMS.exe+1E55D00]
+"NMS.exe"+AD4222: C7 45 8C 00 00 80 3F        -  mov [rbp-74],3F800000
+"NMS.exe"+AD4229: 40 88 BE 00 29 0C 00        -  mov [rsi+000C2900],dil
+"NMS.exe"+AD4230: F3 44 0F 10 2D E7 39 38 01  -  movss xmm13,[NMS.exe+1E57C20]
+"NMS.exe"+AD4239: F3 0F 10 05 67 20 38 01     -  movss xmm0,[NMS.exe+1E562A8]
+"NMS.exe"+AD4241: F3 0F 11 45 D4              -  movss [rbp-2C],xmm0
+"NMS.exe"+AD4246: F3 0F 10 05 32 1E 38 01     -  movss xmm0,[NMS.exe+1E56080]
+"NMS.exe"+AD424E: F3 0F 11 45 D0              -  movss [rbp-30],xmm0
+"NMS.exe"+AD4253: F3 44 0F 10 25 44 1F 38 01  -  movss xmm12,[NMS.exe+1E561A0]
+"NMS.exe"+AD425C: F3 44 0F 10 35 FF 1E 38 01  -  movss xmm14,[NMS.exe+1E56164]
+// ---------- INJECTING HERE ----------
+"NMS.exe"+AD4265: 41 39 BD A8 29 29 00        -  cmp [r13+002929A8],edi
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+AD426C: 7E 0D                       -  jle NMS.exe+AD427B
+"NMS.exe"+AD426E: 41 38 BD 80 29 29 00        -  cmp [r13+00292980],dil
+"NMS.exe"+AD4275: 0F 85 29 05 00 00           -  jne NMS.exe+AD47A4
+"NMS.exe"+AD427B: F3 44 0F 10 05 08 F5 65 01  -  movss xmm8,[NMS.exe+213378C]
+"NMS.exe"+AD4284: 4C 8B E7                    -  mov r12,rdi
+"NMS.exe"+AD4287: 48 8B 05 FA E3 BA 01        -  mov rax,[NMS.exe+2682688]
+"NMS.exe"+AD428E: 48 8D 55 80                 -  lea rdx,[rbp-80]
+"NMS.exe"+AD4292: 48 8B 88 98 1D 29 00        -  mov rcx,[rax+00291D98]
+"NMS.exe"+AD4299: E8 C2 7D B1 FF              -  call NMS.exe+5EC060
+"NMS.exe"+AD429E: F3 0F 10 15 46 F4 65 01     -  movss xmm2,[NMS.exe+21336EC]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8393</ID>
+      <Description>"Unlimited Ship Fuel"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-31
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(launchthrs,NMS.exe,44 8B 43 18 44 3B C0) // should be unique
+alloc(newmem,$1000,launchthrs)
+
+label(code)
+label(return)
+
+newmem:
+mov [rbx+18], #999
+code:
+  mov r8d,[rbx+18]
+  cmp r8d,eax
+  jmp return
+
+launchthrs:
+  jmp newmem
+  nop
+  nop
+return:
+registersymbol(launchthrs)
+
+[DISABLE]
+
+launchthrs:
+  db 44 8B 43 18 44 3B C0
+
+unregistersymbol(launchthrs)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+1460402
+
+"NMS.exe"+14603DC: E8 DF 44 40 FF              -  call NMS.exe+8648C0
+"NMS.exe"+14603E1: 48 8B D8                    -  mov rbx,rax
+"NMS.exe"+14603E4: 48 85 F6                    -  test rsi,rsi
+"NMS.exe"+14603E7: 48 8B CD                    -  mov rcx,rbp
+"NMS.exe"+14603EA: 48 0F 45 DE                 -  cmovne rbx,rsi
+"NMS.exe"+14603EE: E8 7D 4F FF FF              -  call NMS.exe+1455370
+"NMS.exe"+14603F3: 48 8B 7C 24 60              -  mov rdi,[rsp+60]
+"NMS.exe"+14603F8: 48 8B 74 24 58              -  mov rsi,[rsp+58]
+"NMS.exe"+14603FD: 48 85 DB                    -  test rbx,rbx
+"NMS.exe"+1460400: 74 4A                       -  je NMS.exe+146044C
+// ---------- INJECTING HERE ----------
+"NMS.exe"+1460402: 44 8B 43 18                 -  mov r8d,[rbx+18]
+"NMS.exe"+1460406: 44 3B C0                    -  cmp r8d,eax
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+1460409: 7C 41                       -  jl NMS.exe+146044C
+"NMS.exe"+146040B: F3 0F 10 1D 61 57 9F 00     -  movss xmm3,[NMS.exe+1E55B74]
+"NMS.exe"+1460413: 41 8B C8                    -  mov ecx,r8d
+"NMS.exe"+1460416: 2B C8                       -  sub ecx,eax
+"NMS.exe"+1460418: 48 C7 44 24 30 00 00 00 00  -  mov qword ptr [rsp+30],00000000
+"NMS.exe"+1460421: 89 4B 18                    -  mov [rbx+18],ecx
+"NMS.exe"+1460424: 48 8B D3                    -  mov rdx,rbx
+"NMS.exe"+1460427: 48 8B 0D 5A 22 22 01        -  mov rcx,[NMS.exe+2682688]
+"NMS.exe"+146042E: F3 0F 10 15 DA DD CC 00     -  movss xmm2,[NMS.exe+212E210]
+"NMS.exe"+1460436: 48 81 C1 50 5E 29 00        -  add rcx,00295E50
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8399</ID>
+      <Description>"No Reload"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-31
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(neloadd,NMS.exe,41 2B C4 41 89 84 B6 30 12 00 00) // should be unique
+
+neloadd:
+  nop
+  nop
+  nop
+
+registersymbol(neloadd)
+
+[DISABLE]
+
+neloadd:
+  db 41 2B C4 41 89 84 B6 30 12 00 00
+
+unregistersymbol(neloadd)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+12A1613
+
+"NMS.exe"+12A15D7: F3 0F 2C 85 DC 00 00 00     -  cvttss2si eax,[rbp+000000DC]
+"NMS.exe"+12A15DF: 89 9D 90 03 00 00           -  mov [rbp+00000390],ebx
+"NMS.exe"+12A15E5: F3 44 0F 10 8D E0 00 00 00  -  movss xmm9,[rbp+000000E0]
+"NMS.exe"+12A15EE: 85 C0                       -  test eax,eax
+"NMS.exe"+12A15F0: F3 0F 7F 45 40              -  movdqu [rbp+40],xmm0
+"NMS.exe"+12A15F5: F3 0F 7F 4D 50              -  movdqu [rbp+50],xmm1
+"NMS.exe"+12A15FA: 44 8B 44 B5 40              -  mov r8d,[rbp+rsi*4+40]
+"NMS.exe"+12A15FF: 0F 9F 85 98 03 00 00        -  setg byte ptr [rbp+00000398]
+"NMS.exe"+12A1606: E8 85 2A 5C FF              -  call NMS.exe+864090
+"NMS.exe"+12A160B: 41 8B 84 B6 30 12 00 00     -  mov eax,[r14+rsi*4+00001230]
+// ---------- INJECTING HERE ----------
+"NMS.exe"+12A1613: 41 2B C4                    -  sub eax,r12d
+"NMS.exe"+12A1616: 41 89 84 B6 30 12 00 00     -  mov [r14+rsi*4+00001230],eax
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+12A161E: 85 C0                       -  test eax,eax
+"NMS.exe"+12A1620: 0F 8F 18 FD FF FF           -  jg NMS.exe+12A133E
+"NMS.exe"+12A1626: 49 8B 06                    -  mov rax,[r14]
+"NMS.exe"+12A1629: 8B D6                       -  mov edx,esi
+"NMS.exe"+12A162B: 49 8B CE                    -  mov rcx,r14
+"NMS.exe"+12A162E: FF 50 50                    -  call qword ptr [rax+50]
+"NMS.exe"+12A1631: 48 85 C0                    -  test rax,rax
+"NMS.exe"+12A1634: 0F 84 0B 01 00 00           -  je NMS.exe+12A1745
+"NMS.exe"+12A163A: 48 8B 0D 47 10 3E 01        -  mov rcx,[NMS.exe+2682688]
+"NMS.exe"+12A1641: 48 8D 50 08                 -  lea rdx,[rax+08]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8096</ID>
+      <Description>"Infinite Units"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-30
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(moneyy,NMS.exe,8B B9 A4 0D 00 00) // should be unique
+alloc(newmem,$1000,moneyy)
+
+label(code)
+label(return)
+
+newmem:
+mov [rcx+00000DA4], #999999999
+code:
+  mov edi,[rcx+00000DA4]
+  jmp return
+
+moneyy:
+  jmp newmem
+  nop
+return:
+registersymbol(moneyy)
+
+[DISABLE]
+
+moneyy:
+  db 8B B9 A4 0D 00 00
+
+unregistersymbol(moneyy)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+AA393D
+
+"NMS.exe"+AA3911: E8 1A 3D BC FF              -  call NMS.exe+667630
+"NMS.exe"+AA3916: 48 8B D0                    -  mov rdx,rax
+"NMS.exe"+AA3919: 45 33 C0                    -  xor r8d,r8d
+"NMS.exe"+AA391C: 49 8B CE                    -  mov rcx,r14
+"NMS.exe"+AA391F: E8 BC 74 B4 FF              -  call NMS.exe+5EADE0
+"NMS.exe"+AA3924: 4C 8B F0                    -  mov r14,rax
+"NMS.exe"+AA3927: 41 BD 01 00 00 00           -  mov r13d,00000001
+"NMS.exe"+AA392D: 48 85 C0                    -  test rax,rax
+"NMS.exe"+AA3930: 0F 84 5E 12 00 00           -  je NMS.exe+AA4B94
+"NMS.exe"+AA3936: 48 8B 0D 4B ED BD 01        -  mov rcx,[NMS.exe+2682688]
+// ---------- INJECTING HERE ----------
+"NMS.exe"+AA393D: 8B B9 A4 0D 00 00           -  mov edi,[rcx+00000DA4]
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+AA3943: 89 7D 80                    -  mov [rbp-80],edi
+"NMS.exe"+AA3946: B8 40 00 00 00              -  mov eax,00000040
+"NMS.exe"+AA394B: 65 48 8B 0C 25 58 00 00 00  -  mov rcx,gs:[00000058]
+"NMS.exe"+AA3954: 48 8B 11                    -  mov rdx,[rcx]
+"NMS.exe"+AA3957: 8B 0C 10                    -  mov ecx,[rax+rdx]
+"NMS.exe"+AA395A: 39 0D A8 E7 10 02           -  cmp [NMS.exe+2BB2108],ecx
+"NMS.exe"+AA3960: 7E 31                       -  jle NMS.exe+AA3993
+"NMS.exe"+AA3962: 48 8D 0D 9F E7 10 02        -  lea rcx,[NMS.exe+2BB2108]
+"NMS.exe"+AA3969: E8 D2 64 E4 00              -  call NMS.exe+18E9E40
+"NMS.exe"+AA396E: 83 3D 93 E7 10 02 FF        -  cmp dword ptr [NMS.exe+2BB2108],-01
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8404</ID>
+      <Description>"Unlimited Plasma Launcher"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-31
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(plasmalan,NMS.exe,41 FF 4F 18 4C 8D 4D 80) // should be unique
+
+plasmalan:
+  nop
+  nop
+  nop
+nop
+registersymbol(plasmalan)
+
+[DISABLE]
+
+plasmalan:
+  db 41 FF 4F 18 4C 8D 4D 80
+
+unregistersymbol(plasmalan)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+12A12BE
+
+"NMS.exe"+12A1293: 48 63 CB                          -  movsxd  rcx,ebx
+"NMS.exe"+12A1296: 33 C0                             -  xor eax,eax
+"NMS.exe"+12A1298: F3 AA                             - repe  stosb 
+"NMS.exe"+12A129A: 0F 28 05 7F 5E BB 00              -  movaps xmm0,[NMS.exe+1E57120]
+"NMS.exe"+12A12A1: 4C 8D 4D D0                       -  lea r9,[rbp-30]
+"NMS.exe"+12A12A5: 41 0F 28 D5                       -  movaps xmm2,xmm13
+"NMS.exe"+12A12A9: 0F 29 45 D0                       -  movaps [rbp-30],xmm0
+"NMS.exe"+12A12AD: 48 8D 54 24 60                    -  lea rdx,[rsp+60]
+"NMS.exe"+12A12B2: 48 8D 8D A8 03 00 00              -  lea rcx,[rbp+000003A8]
+"NMS.exe"+12A12B9: E8 02 4F 70 FF                    -  call NMS.exe+9A61C0
+// ---------- INJECTING HERE ----------
+"NMS.exe"+12A12BE: 41 FF 4F 18                       -  dec [r15+18]
+"NMS.exe"+12A12C2: 4C 8D 4D 80                       -  lea r9,[rbp-80]
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+12A12C6: F3 0F 2C 85 0C 01 00 00           -  cvttss2si eax,[rbp+0000010C]
+"NMS.exe"+12A12CE: 48 8B 55 A0                       -  mov rdx,[rbp-60]
+"NMS.exe"+12A12D2: C7 45 60 23 00 00 00              -  mov [rbp+60],00000023
+"NMS.exe"+12A12D9: C7 45 64 21 00 00 00              -  mov [rbp+64],00000021
+"NMS.exe"+12A12E0: 66 0F 6F 05 D8 55 BB 00           -  movdqa xmm0,[NMS.exe+1E568C0]
+"NMS.exe"+12A12E8: 66 0F 6F 0D 50 58 BB 00           -  movdqa xmm1,[NMS.exe+1E56B40]
+"NMS.exe"+12A12F0: 85 C0                             -  test eax,eax
+"NMS.exe"+12A12F2: F3 44 0F 2C BD 08 01 00 00        -  cvttss2si r15d,[rbp+00000108]
+"NMS.exe"+12A12FB: 48 8B C6                          -  mov rax,rsi
+"NMS.exe"+12A12FE: F3 0F 2C 9D FC 00 00 00           -  cvttss2si ebx,[rbp+000000FC]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8401</ID>
+      <Description>"No Overheating"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-31
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(nooverheat,NMS.exe,F3 0F 10 8B A0 11 00 00) // should be unique
+alloc(newmem,$1000,nooverheat)
+
+label(code)
+label(return)
+
+newmem:
+mov [rbx+000011A0], 0
+code:
+  movss xmm1,[rbx+000011A0]
+  jmp return
+
+nooverheat:
+  jmp newmem
+  nop
+  nop
+  nop
+return:
+registersymbol(nooverheat)
+
+[DISABLE]
+
+nooverheat:
+  db F3 0F 10 8B A0 11 00 00
+
+unregistersymbol(nooverheat)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+515706
+
+"NMS.exe"+5156E0: 40 53                    -  push rbx
+"NMS.exe"+5156E2: 48 83 EC 20              -  sub rsp,20
+"NMS.exe"+5156E6: 48 63 81 E8 04 00 00     -  movsxd  rax,dword ptr [rcx+000004E8]
+"NMS.exe"+5156ED: 48 8B D9                 -  mov rbx,rcx
+"NMS.exe"+5156F0: 48 8D 0D 19 10 83 01     -  lea rcx,[NMS.exe+1D46710]
+"NMS.exe"+5156F7: 83 3C 81 01              -  cmp dword ptr [rcx+rax*4],01
+"NMS.exe"+5156FB: 75 1E                    -  jne NMS.exe+51571B
+"NMS.exe"+5156FD: 48 8B 03                 -  mov rax,[rbx]
+"NMS.exe"+515700: 48 8B CB                 -  mov rcx,rbx
+"NMS.exe"+515703: FF 50 38                 -  call qword ptr [rax+38]
+// ---------- INJECTING HERE ----------
+"NMS.exe"+515706: F3 0F 10 8B A0 11 00 00  -  movss xmm1,[rbx+000011A0]
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+51570E: F3 0F 5E C8              -  divss xmm1,xmm0
+"NMS.exe"+515712: 0F 28 C1                 -  movaps xmm0,xmm1
+"NMS.exe"+515715: 48 83 C4 20              -  add rsp,20
+"NMS.exe"+515719: 5B                       -  pop rbx
+"NMS.exe"+51571A: C3                       -  ret 
+"NMS.exe"+51571B: 0F 57 C0                 -  xorps xmm0,xmm0
+"NMS.exe"+51571E: 48 83 C4 20              -  add rsp,20
+"NMS.exe"+515722: 5B                       -  pop rbx
+"NMS.exe"+515723: C3                       -  ret 
+"NMS.exe"+515724: CC                       -  int 3 
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8395</ID>
+      <Description>"Ship Scanner"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-31
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(scanne,NMS.exe,F3 0F 10 46 0C 0F 2F C7 0F 83) // should be unique
+alloc(newmem,$1000,scanne)
+
+label(code)
+label(return)
+
+newmem:
+mov [rsi+0C], (float)1
+code:
+  movss xmm0,[rsi+0C]
+  jmp return
+
+scanne:
+  jmp newmem
+return:
+registersymbol(scanne)
+
+[DISABLE]
+
+scanne:
+  db F3 0F 10 46 0C
+
+unregistersymbol(scanne)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+12B69C2
+
+"NMS.exe"+12B699C: 75 16                          -  jne NMS.exe+12B69B4
+"NMS.exe"+12B699E: 49 8B 8D 60 01 00 00           -  mov rcx,[r13+00000160]
+"NMS.exe"+12B69A5: 48 8B 01                       -  mov rax,[rcx]
+"NMS.exe"+12B69A8: BA 20 00 00 00                 -  mov edx,00000020
+"NMS.exe"+12B69AD: FF 50 08                       -  call qword ptr [rax+08]
+"NMS.exe"+12B69B0: 84 C0                          -  test al,al
+"NMS.exe"+12B69B2: 75 09                          -  jne NMS.exe+12B69BD
+"NMS.exe"+12B69B4: 40 84 FF                       -  test dil,dil
+"NMS.exe"+12B69B7: 0F 84 E0 06 00 00              -  je NMS.exe+12B709D
+"NMS.exe"+12B69BD: 48 8B 74 24 50                 -  mov rsi,[rsp+50]
+// ---------- INJECTING HERE ----------
+"NMS.exe"+12B69C2: F3 0F 10 46 0C                 -  movss xmm0,[rsi+0C]
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+12B69C7: 0F 2F C7                       -  comiss xmm0,xmm7
+"NMS.exe"+12B69CA: 0F 83 0E 02 00 00              -  jae NMS.exe+12B6BDE
+"NMS.exe"+12B69D0: 80 3D 7C F4 E6 00 00           -  cmp byte ptr [NMS.exe+2125E53],00
+"NMS.exe"+12B69D7: 0F 85 01 02 00 00              -  jne NMS.exe+12B6BDE
+"NMS.exe"+12B69DD: C6 85 38 02 00 00 00           -  mov byte ptr [rbp+00000238],00
+"NMS.exe"+12B69E4: C7 85 40 02 00 00 74 34 EB 41  -  mov [rbp+00000240],41EB3474
+"NMS.exe"+12B69EE: F3 0F 10 05 AA F4 B9 00        -  movss xmm0,[NMS.exe+1E55EA0]
+"NMS.exe"+12B69F6: F3 0F 11 85 30 02 00 00        -  movss [rbp+00000230],xmm0
+"NMS.exe"+12B69FE: 48 8D 05 53 96 B7 00           -  lea rax,[NMS.exe+1E30058]
+"NMS.exe"+12B6A05: 48 89 85 48 02 00 00           -  mov [rbp+00000248],rax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1635</ID>
+      <Description>"No Ship Overheat"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-07-27
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(shipoverha,NMS.exe,F3 41 0F 58 8C 86 44 17 00 00) // should be unique
+alloc(newmem,$1000,shipoverha)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+//  addss xmm1,dword ptr [r14+rax*4+00001744]
+  jmp return
+
+shipoverha:
+  jmp newmem
+  nop
+  nop
+  nop
+  nop
+  nop
+return:
+registersymbol(shipoverha)
+
+[DISABLE]
+
+shipoverha:
+  db F3 41 0F 58 8C 86 44 17 00 00
+
+unregistersymbol(shipoverha)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+139CC16
+
+"NMS.exe"+139CBF1: 4C 63 E0                             -  movsxd  r12,eax
+"NMS.exe"+139CBF4: 49 C1 E4 06                          -  shl r12,06
+"NMS.exe"+139CBF8: 49 8B 06                             -  mov rax,[r14]
+"NMS.exe"+139CBFB: 49 8B CE                             -  mov rcx,r14
+"NMS.exe"+139CBFE: FF 50 38                             -  call qword ptr [rax+38]
+"NMS.exe"+139CC01: 49 63 86 AC 00 00 00                 -  movsxd  rax,dword ptr [r14+000000AC]
+"NMS.exe"+139CC08: 41 0F 2F C5                          -  comiss xmm0,xmm13
+"NMS.exe"+139CC0C: 76 1E                                -  jna NMS.exe+139CC2C
+"NMS.exe"+139CC0E: 41 0F 28 CA                          -  movaps xmm1,xmm10
+"NMS.exe"+139CC12: F3 0F 5E C8                          -  divss xmm1,xmm0
+// ---------- INJECTING HERE ----------
+"NMS.exe"+139CC16: F3 41 0F 58 8C 86 44 17 00 00        -  addss xmm1,dword ptr [r14+rax*4+00001744]
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+139CC20: F3 41 0F 11 8C 86 44 17 00 00        -  movss [r14+rax*4+00001744],xmm1
+"NMS.exe"+139CC2A: EB 0C                                -  jmp NMS.exe+139CC38
+"NMS.exe"+139CC2C: 41 C7 84 86 44 17 00 00 00 00 80 3F  -  mov [r14+rax*4+00001744],3F800000
+"NMS.exe"+139CC38: 49 63 86 AC 00 00 00                 -  movsxd  rax,dword ptr [r14+000000AC]
+"NMS.exe"+139CC3F: F3 41 0F 10 84 86 44 17 00 00        -  movss xmm0,[r14+rax*4+00001744]
+"NMS.exe"+139CC49: 41 0F 2F C1                          -  comiss xmm0,xmm9
+"NMS.exe"+139CC4D: 0F 82 48 01 00 00                    -  jb NMS.exe+139CD9B
+"NMS.exe"+139CC53: 42 80 BC 30 7C 17 00 00 00           -  cmp byte ptr [rax+r14+0000177C],00
+"NMS.exe"+139CC5C: 0F 85 14 01 00 00                    -  jne NMS.exe+139CD76
+"NMS.exe"+139CC62: BE CA 12 EC BD                       -  mov esi,BDEC12CA
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1637</ID>
+      <Description>"Ship Health"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-07-27
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(shipheal,NMS.exe,8B 48 18 EB 03 41 8B CD) // should be unique
+alloc(newmem,$1000,shipheal)
+
+label(code)
+label(return)
+
+newmem:
+  mov ecx,[rax+1C]
+code:
+  mov [rax+18],ecx
+  jmp shipheal+8
+
+shipheal:
+  jmp newmem
+return:
+registersymbol(shipheal)
+
+[DISABLE]
+
+shipheal:
+  db 8B 48 18 EB 03
+
+unregistersymbol(shipheal)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+13C4E6F
+
+"NMS.exe"+13C4E49: 41 8D 51 5B              -  lea edx,[r9+5B]
+"NMS.exe"+13C4E4D: 45 8D 41 04              -  lea r8d,[r9+04]
+"NMS.exe"+13C4E51: 49 8D 8F 30 0C 00 00     -  lea rcx,[r15+00000C30]
+"NMS.exe"+13C4E58: E8 63 01 41 FF           -  call NMS.exe+7D4FC0
+"NMS.exe"+13C4E5D: 48 85 C0                 -  test rax,rax
+"NMS.exe"+13C4E60: 74 12                    -  je NMS.exe+13C4E74
+"NMS.exe"+13C4E62: F3 0F 10 40 20           -  movss xmm0,[rax+20]
+"NMS.exe"+13C4E67: 41 0F 2E C1              -  ucomiss xmm0,xmm9
+"NMS.exe"+13C4E6B: 7A 07                    -  jp NMS.exe+13C4E74
+"NMS.exe"+13C4E6D: 75 05                    -  jne NMS.exe+13C4E74
+// ---------- INJECTING HERE ----------
+"NMS.exe"+13C4E6F: 8B 48 18                 -  mov ecx,[rax+18]
+"NMS.exe"+13C4E72: EB 03                    -  jmp NMS.exe+13C4E77
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+13C4E74: 41 8B CD                 -  mov ecx,r13d
+"NMS.exe"+13C4E77: 66 0F 6E C1              -  movd xmm0,ecx
+"NMS.exe"+13C4E7B: 0F 5B C0                 -  cvtdq2ps xmm0,xmm0
+"NMS.exe"+13C4E7E: F3 0F 5E C6              -  divss xmm0,xmm6
+"NMS.exe"+13C4E82: F3 41 0F 5F C1           -  maxss xmm0,xmm9
+"NMS.exe"+13C4E87: F3 0F 5D C7              -  minss xmm0,xmm7
+"NMS.exe"+13C4E8B: 45 33 C0                 -  xor r8d,r8d
+"NMS.exe"+13C4E8E: BA F8 01 00 00           -  mov edx,000001F8
+"NMS.exe"+13C4E93: 8B 0E                    -  mov ecx,[rsi]
+"NMS.exe"+13C4E95: 41 0F 2F C1              -  comiss xmm0,xmm9
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1638</ID>
+      <Description>"Bypass Atlas Locks"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-07-27
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(atlaslock,NMS.exe,83 79 28 00 7E 12) // should be unique
+
+atlaslock:
+db 90 90 90 90
+registersymbol(atlaslock)
+
+[DISABLE]
+
+atlaslock:
+  db 83 79 28 00 7E 12
+
+unregistersymbol(atlaslock)
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+F1FA9E
+
+"NMS.exe"+F1FA7D: CC                       -  int 3 
+"NMS.exe"+F1FA7E: CC                       -  int 3 
+"NMS.exe"+F1FA7F: CC                       -  int 3 
+"NMS.exe"+F1FA80: 48 83 EC 28              -  sub rsp,28
+"NMS.exe"+F1FA84: 48 8B 15 4D CD 67 01     -  mov rdx,[NMS.exe+259C7D8]
+"NMS.exe"+F1FA8B: 48 3B 51 38              -  cmp rdx,[rcx+38]
+"NMS.exe"+F1FA8F: 75 2C                    -  jne NMS.exe+F1FABD
+"NMS.exe"+F1FA91: 48 8B 05 48 CD 67 01     -  mov rax,[NMS.exe+259C7E0]
+"NMS.exe"+F1FA98: 48 3B 41 40              -  cmp rax,[rcx+40]
+"NMS.exe"+F1FA9C: 75 1F                    -  jne NMS.exe+F1FABD
+// ---------- INJECTING HERE ----------
+"NMS.exe"+F1FA9E: 83 79 28 00              -  cmp dword ptr [rcx+28],00
+"NMS.exe"+F1FAA2: 7E 12                    -  jle NMS.exe+F1FAB6
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+F1FAA4: 48 3B 11                 -  cmp rdx,[rcx]
+"NMS.exe"+F1FAA7: 75 06                    -  jne NMS.exe+F1FAAF
+"NMS.exe"+F1FAA9: 48 3B 41 08              -  cmp rax,[rcx+08]
+"NMS.exe"+F1FAAD: 74 07                    -  je NMS.exe+F1FAB6
+"NMS.exe"+F1FAAF: B0 01                    -  mov al,01
+"NMS.exe"+F1FAB1: 48 83 C4 28              -  add rsp,28
+"NMS.exe"+F1FAB5: C3                       -  ret 
+"NMS.exe"+F1FAB6: 33 C0                    -  xor eax,eax
+"NMS.exe"+F1FAB8: 48 83 C4 28              -  add rsp,28
+"NMS.exe"+F1FABC: C3                       -  ret 
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8084</ID>
+      <Description>"Unlimited Hyperdrive"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-08-17
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(hyperdr,NMS.exe,41 FF 4E 18 89 B7 C4 00 00 00) // should be unique
+
+hyperdr:
+  nop
+  nop
+  nop
+  nop
+
+registersymbol(hyperdr)
+
+[DISABLE]
+
+hyperdr:
+  db 41 FF 4E 18 89 B7 C4 00 00 00
+
+unregistersymbol(hyperdr)
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+139FA99
+
+"NMS.exe"+139FA6A: 89 74 24 20              -  mov [rsp+20],esi
+"NMS.exe"+139FA6E: 45 33 C9                 -  xor r9d,r9d
+"NMS.exe"+139FA71: 4C 8D 85 E0 02 00 00     -  lea r8,[rbp+000002E0]
+"NMS.exe"+139FA78: 48 8B D3                 -  mov rdx,rbx
+"NMS.exe"+139FA7B: E8 40 B0 43 FF           -  call NMS.exe+7DAAC0
+"NMS.exe"+139FA80: 41 0F 28 CC              -  movaps xmm1,xmm12
+"NMS.exe"+139FA84: F3 0F 5E 8D 7C 04 00 00  -  divss xmm1,[rbp+0000047C]
+"NMS.exe"+139FA8C: F3 0F 10 87 C4 00 00 00  -  movss xmm0,[rdi+000000C4]
+"NMS.exe"+139FA94: 0F 2F C1                 -  comiss xmm0,xmm1
+"NMS.exe"+139FA97: 76 0A                    -  jna NMS.exe+139FAA3
+// ---------- INJECTING HERE ----------
+"NMS.exe"+139FA99: 41 FF 4E 18              -  dec [r14+18]
+"NMS.exe"+139FA9D: 89 B7 C4 00 00 00        -  mov [rdi+000000C4],esi
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+139FAA3: 49 8B 07                 -  mov rax,[r15]
+"NMS.exe"+139FAA6: BA 06 00 00 00           -  mov edx,00000006
+"NMS.exe"+139FAAB: 49 8B CF                 -  mov rcx,r15
+"NMS.exe"+139FAAE: FF 50 10                 -  call qword ptr [rax+10]
+"NMS.exe"+139FAB1: 0F 2F 05 58 C3 9C 00     -  comiss xmm0,[NMS.exe+1D6BE10]
+"NMS.exe"+139FAB8: 77 16                    -  ja NMS.exe+139FAD0
+"NMS.exe"+139FABA: 49 8B 07                 -  mov rax,[r15]
+"NMS.exe"+139FABD: BA 2B 00 00 00           -  mov edx,0000002B
+"NMS.exe"+139FAC2: 49 8B CF                 -  mov rcx,r15
+"NMS.exe"+139FAC5: FF 50 08                 -  call qword ptr [rax+08]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8402</ID>
+      <Description>"Free Crafting"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-31
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(frecraft,NMS.exe,43 0F AF 44 E7 14) // should be unique
+alloc(newmem,$1000,frecraft)
+
+label(code)
+label(return)
+
+newmem:
+mov [r15+r12*8+14], 0
+code:
+  imul eax,[r15+r12*8+14]
+  jmp return
+
+frecraft:
+  jmp newmem
+  nop
+return:
+registersymbol(frecraft)
+
+[DISABLE]
+
+frecraft:
+  db 43 0F AF 44 E7 14
+
+unregistersymbol(frecraft)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+A9002B
+
+"NMS.exe"+A90005: 8B 13                       -  mov edx,[rbx]
+"NMS.exe"+A90007: 49 8D 8D 90 0C 00 00        -  lea rcx,[r13+00000C90]
+"NMS.exe"+A9000E: E8 ED D3 DC FF              -  call NMS.exe+85D400
+"NMS.exe"+A90013: 03 F0                       -  add esi,eax
+"NMS.exe"+A90015: 48 83 C3 04                 -  add rbx,04
+"NMS.exe"+A90019: 48 FF C7                    -  inc rdi
+"NMS.exe"+A9001C: 49 3B FE                    -  cmp rdi,r14
+"NMS.exe"+A9001F: 75 DF                       -  jne NMS.exe+A90000
+"NMS.exe"+A90021: 89 74 24 58                 -  mov [rsp+58],esi
+"NMS.exe"+A90025: 8B 85 70 02 00 00           -  mov eax,[rbp+00000270]
+// ---------- INJECTING HERE ----------
+"NMS.exe"+A9002B: 43 0F AF 44 E7 14           -  imul eax,[r15+r12*8+14]
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+A90031: 89 44 24 5C                 -  mov [rsp+5C],eax
+"NMS.exe"+A90035: 80 BD 78 02 00 00 00        -  cmp byte ptr [rbp+00000278],00
+"NMS.exe"+A9003C: 74 42                       -  je NMS.exe+A90080
+"NMS.exe"+A9003E: 8B 05 50 26 BF 01           -  mov eax,[NMS.exe+2682694]
+"NMS.exe"+A90044: 83 F8 05                    -  cmp eax,05
+"NMS.exe"+A90047: 77 14                       -  ja NMS.exe+A9005D
+"NMS.exe"+A90049: B9 29 00 00 00              -  mov ecx,00000029
+"NMS.exe"+A9004E: 0F A3 C1                    -  bt ecx,eax
+"NMS.exe"+A90051: 73 0A                       -  jae NMS.exe+A9005D
+"NMS.exe"+A90053: F3 0F 10 0D 29 81 69 01     -  movss xmm1,[NMS.exe+2128184]
+
+
+
+
+
+
+NMS.exe+A8FE90 - 48 8B C4              - mov rax,rsp
+NMS.exe+A8FE93 - 4C 89 48 20           - mov [rax+20],r9
+NMS.exe+A8FE97 - 4C 89 40 18           - mov [rax+18],r8
+NMS.exe+A8FE9B - 48 89 50 10           - mov [rax+10],rdx
+NMS.exe+A8FE9F - 89 48 08              - mov [rax+08],ecx
+NMS.exe+A8FEA2 - 55                    - push rbp
+NMS.exe+A8FEA3 - 53                    - push rbx
+NMS.exe+A8FEA4 - 56                    - push rsi
+NMS.exe+A8FEA5 - 57                    - push rdi
+NMS.exe+A8FEA6 - 41 54                 - push r12
+NMS.exe+A8FEA8 - 41 55                 - push r13
+NMS.exe+A8FEAA - 41 56                 - push r14
+NMS.exe+A8FEAC - 41 57                 - push r15
+NMS.exe+A8FEAE - 48 8D A8 B8FDFFFF     - lea rbp,[rax-00000248]
+NMS.exe+A8FEB5 - 48 81 EC 08030000     - sub rsp,00000308 { 776
+NMS.exe+A8FEBC - 48 C7 45 60 FEFFFFFF  - mov qword ptr [rbp+60],FFFFFFFE { -2
+NMS.exe+A8FEC4 - 0F29 70 A8            - movaps [rax-58],xmm6
+NMS.exe+A8FEC8 - 49 8B F1              - mov rsi,r9
+NMS.exe+A8FECB - 4D 8B F0              - mov r14,r8
+NMS.exe+A8FECE - 4C 8B E2              - mov r12,rdx
+NMS.exe+A8FED1 - 8B D1                 - mov edx,ecx
+NMS.exe+A8FED3 - 33 DB                 - xor ebx,ebx
+NMS.exe+A8FED5 - 8B FB                 - mov edi,ebx
+NMS.exe+A8FED7 - 48 89 5D A8           - mov [rbp-58],rbx
+NMS.exe+A8FEDB - 0F57 C0               - xorps xmm0,xmm0
+NMS.exe+A8FEDE - F3 0F7F 45 B0         - movdqu [rbp-50],xmm0
+NMS.exe+A8FEE3 - 41 B1 01              - mov r9l,01 { 1
+NMS.exe+A8FEE6 - 4C 8D 45 A8           - lea r8,[rbp-58]
+NMS.exe+A8FEEA - E8 6116DDFF           - call NMS.exe+861550
+NMS.exe+A8FEEF - 48 89 5C 24 70        - mov [rsp+70],rbx
+NMS.exe+A8FEF4 - 0F57 C0               - xorps xmm0,xmm0
+NMS.exe+A8FEF7 - F3 0F7F 44 24 78      - movdqu [rsp+78],xmm0
+NMS.exe+A8FEFD - 48 89 5D 68           - mov [rbp+68],rbx
+NMS.exe+A8FF01 - F3 0F7F 45 70         - movdqu [rbp+70],xmm0
+NMS.exe+A8FF06 - C6 44 24 21 01        - mov byte ptr [rsp+21],01 { 1
+NMS.exe+A8FF0B - 88 5C 24 20           - mov [rsp+20],bl
+NMS.exe+A8FF0F - 48 89 5D A0           - mov [rbp-60],rbx
+NMS.exe+A8FF13 - 4C 8B 6D A8           - mov r13,[rbp-58]
+NMS.exe+A8FF17 - 0F57 F6               - xorps xmm6,xmm6
+NMS.exe+A8FF1A - EB 08                 - jmp NMS.exe+A8FF24
+NMS.exe+A8FF1C - 0F1F 40 00            - nop [rax+00]
+NMS.exe+A8FF20 - 48 8B 5D A0           - mov rbx,[rbp-60]
+NMS.exe+A8FF24 - 8D 47 01              - lea eax,[rdi+01]
+NMS.exe+A8FF27 - 89 45 98              - mov [rbp-68],eax
+NMS.exe+A8FF2A - 44 8B C0              - mov r8d,eax
+NMS.exe+A8FF2D - 48 8D 15 6CE43701     - lea rdx,[NMS.exe+1E0E3A0] { ("REQ%02d")
+NMS.exe+A8FF34 - 48 8D 4D F0           - lea rcx,[rbp-10]
+NMS.exe+A8FF38 - E8 F361BDFF           - call NMS.exe+666130
+NMS.exe+A8FF3D - 48 8D 55 F0           - lea rdx,[rbp-10]
+NMS.exe+A8FF41 - 48 8D 8D B0000000     - lea rcx,[rbp+000000B0]
+NMS.exe+A8FF48 - E8 E376BDFF           - call NMS.exe+667630
+NMS.exe+A8FF4D - 48 8B D0              - mov rdx,rax
+NMS.exe+A8FF50 - 45 33 C0              - xor r8d,r8d
+NMS.exe+A8FF53 - 49 8B CC              - mov rcx,r12
+NMS.exe+A8FF56 - E8 85AEB5FF           - call NMS.exe+5EADE0
+NMS.exe+A8FF5B - 4C 8B F8              - mov r15,rax
+NMS.exe+A8FF5E - 48 89 44 24 30        - mov [rsp+30],rax
+NMS.exe+A8FF63 - 48 85 C0              - test rax,rax
+NMS.exe+A8FF66 - 0F84 C1030000         - je NMS.exe+A9032D
+NMS.exe+A8FF6C - 48 8B 48 50           - mov rcx,[rax+50]
+NMS.exe+A8FF70 - C6 41 20 01           - mov byte ptr [rcx+20],01 { 1
+NMS.exe+A8FF74 - 41 8B 4E 08           - mov ecx,[r14+08]
+NMS.exe+A8FF78 - 3B F9                 - cmp edi,ecx
+NMS.exe+A8FF7A - 0F8D 89040000         - jnl NMS.exe+A90409
+NMS.exe+A8FF80 - 4C 8D 24 5B           - lea r12,[rbx+rbx*2]
+NMS.exe+A8FF84 - 4D 8B 3E              - mov r15,[r14]
+NMS.exe+A8FF87 - 33 C9                 - xor ecx,ecx
+NMS.exe+A8FF89 - 89 4C 24 40           - mov [rsp+40],ecx
+NMS.exe+A8FF8D - 48 89 4C 24 48        - mov [rsp+48],rcx
+NMS.exe+A8FF92 - 48 89 4C 24 50        - mov [rsp+50],rcx
+NMS.exe+A8FF97 - 89 4C 24 58           - mov [rsp+58],ecx
+NMS.exe+A8FF9B - 48 C7 44 24 5C 64000000 - mov qword ptr [rsp+5C],00000064 { 100
+NMS.exe+A8FFA4 - 48 C7 44 24 64 FFFFFFFF - mov qword ptr [rsp+64],FFFFFFFF { -1
+NMS.exe+A8FFAD - 4B 8B 04 E7           - mov rax,[r15+r12*8]
+NMS.exe+A8FFB1 - 48 89 44 24 48        - mov [rsp+48],rax
+NMS.exe+A8FFB6 - 4B 8B 44 E7 08        - mov rax,[r15+r12*8+08]
+NMS.exe+A8FFBB - 48 89 44 24 50        - mov [rsp+50],rax
+NMS.exe+A8FFC0 - 43 8B 44 E7 10        - mov eax,[r15+r12*8+10]
+NMS.exe+A8FFC5 - 89 44 24 40           - mov [rsp+40],eax
+NMS.exe+A8FFC9 - 8B F1                 - mov esi,ecx
+NMS.exe+A8FFCB - 8B F9                 - mov edi,ecx
+NMS.exe+A8FFCD - 4C 8B 75 B0           - mov r14,[rbp-50]
+NMS.exe+A8FFD1 - 4D 2B F5              - sub r14,r13
+NMS.exe+A8FFD4 - 49 83 C6 03           - add r14,03 { 3
+NMS.exe+A8FFD8 - 49 C1 EE 02           - shr r14,02 { 2
+NMS.exe+A8FFDC - 4C 3B 6D B0           - cmp r13,[rbp-50]
+NMS.exe+A8FFE0 - 4C 0F47 F1            - cmova r14,rcx
+NMS.exe+A8FFE4 - 49 8B DD              - mov rbx,r13
+NMS.exe+A8FFE7 - 4C 8B 2D 9A26BF01     - mov r13,[NMS.exe+2682688] { (1DF22F90010)
+NMS.exe+A8FFEE - 4D 85 F6              - test r14,r14
+NMS.exe+A8FFF1 - 74 2E                 - je NMS.exe+A90021
+NMS.exe+A8FFF3 - 0F1F 40 00            - nop [rax+00]
+NMS.exe+A8FFF7 - 66 0F1F 84 00 00000000  - nop [rax+rax+00000000]
+NMS.exe+A90000 - 4C 8D 44 24 40        - lea r8,[rsp+40]
+NMS.exe+A90005 - 8B 13                 - mov edx,[rbx]
+NMS.exe+A90007 - 49 8D 8D 900C0000     - lea rcx,[r13+00000C90]
+NMS.exe+A9000E - E8 EDD3DCFF           - call NMS.exe+85D400
+NMS.exe+A90013 - 03 F0                 - add esi,eax
+NMS.exe+A90015 - 48 83 C3 04           - add rbx,04 { 4
+NMS.exe+A90019 - 48 FF C7              - inc rdi
+NMS.exe+A9001C - 49 3B FE              - cmp rdi,r14
+NMS.exe+A9001F - 75 DF                 - jne NMS.exe+A90000
+NMS.exe+A90021 - 89 74 24 58           - mov [rsp+58],esi
+NMS.exe+A90025 - 8B 85 70020000        - mov eax,[rbp+00000270]
+NMS.exe+A9002B - 43 0FAF 44 E7 14      - imul eax,[r15+r12*8+14]
+NMS.exe+A90031 - 89 44 24 5C           - mov [rsp+5C],eax
+NMS.exe+A90035 - 80 BD 78020000 00     - cmp byte ptr [rbp+00000278],00 { 0
+NMS.exe+A9003C - 74 42                 - je NMS.exe+A90080
+NMS.exe+A9003E - 8B 05 5026BF01        - mov eax,[NMS.exe+2682694] { (3)
+NMS.exe+A90044 - 83 F8 05              - cmp eax,05 { 5
+NMS.exe+A90047 - 77 14                 - ja NMS.exe+A9005D
+NMS.exe+A90049 - B9 29000000           - mov ecx,00000029 { 41
+NMS.exe+A9004E - 0FA3 C1               - bt ecx,eax
+NMS.exe+A90051 - 73 0A                 - jae NMS.exe+A9005D
+NMS.exe+A90053 - F3 0F10 0D 29816901   - movss xmm1,[NMS.exe+2128184] { (0.50)
+NMS.exe+A9005B - EB 08                 - jmp NMS.exe+A90065
+NMS.exe+A9005D - F3 0F10 0D 1B816901   - movss xmm1,[NMS.exe+2128180] { (0.50)
+NMS.exe+A90065 - 66 43 0F6E 44 E7 14   - movd xmm0,[r15+r12*8+14]
+NMS.exe+A9006C - 0F5B C0               - cvtdq2ps xmm0,xmm0
+NMS.exe+A9006F - F3 0F59 C1            - mulss xmm0,xmm1
+NMS.exe+A90073 - E8 BA660F01           - call NMS.exe+1B86732 { -&gt;-&gt;ucrtbase.ceilf
+NMS.exe+A90078 - F3 0F2C C0            - cvttss2si eax,xmm0
+NMS.exe+A9007C - 89 44 24 5C           - mov [rsp+5C],eax
+NMS.exe+A90080 - 41 BE 01000000        - mov r14d,00000001 { 1
+NMS.exe+A90086 - 44 89 75 88           - mov [rbp-78],r14d
+NMS.exe+A9008A - 48 8B BD 80020000     - mov rdi,[rbp+00000280]
+NMS.exe+A90091 - 48 85 FF              - test rdi,rdi
+NMS.exe+A90094 - 0F84 17010000         - je NMS.exe+A901B1
+NMS.exe+A9009A - 49 8B 8D B0592900     - mov rcx,[r13+002959B0]
+NMS.exe+A900A1 - E8 4A84FAFF           - call NMS.exe+A384F0
+NMS.exe+A900A6 - 48 8B F0              - mov rsi,rax
+NMS.exe+A900A9 - 48 85 C0              - test rax,rax
+NMS.exe+A900AC - 0F84 FF000000         - je NMS.exe+A901B1
+NMS.exe+A900B2 - 48 8B 0F              - mov rcx,[rdi]
+NMS.exe+A900B5 - 8B 80 80030000        - mov eax,[rax+00000380]
+NMS.exe+A900BB - 89 45 90              - mov [rbp-70],eax
+NMS.exe+A900BE - 48 8B BE 84030000     - mov rdi,[rsi+00000384]
+NMS.exe+A900C5 - 8B 85 50020000        - mov eax,[rbp+00000250]
+NMS.exe+A900CB - 89 86 80030000        - mov [rsi+00000380],eax
+NMS.exe+A900D1 - 48 89 8E 84030000     - mov [rsi+00000384],rcx
+NMS.exe+A900D8 - 45 32 ED              - xor r13l,r13l
+NMS.exe+A900DB - 48 8B 16              - mov rdx,[rsi]
+NMS.exe+A900DE - 48 8B CE              - mov rcx,rsi
+NMS.exe+A900E1 - FF 92 C8000000        - call qword ptr [rdx+000000C8]
+NMS.exe+A900E7 - 48 8B D8              - mov rbx,rax
+NMS.exe+A900EA - 48 85 C0              - test rax,rax
+NMS.exe+A900ED - 0F84 A2000000         - je NMS.exe+A90195
+NMS.exe+A900F3 - 48 8D 8D D0000000     - lea rcx,[rbp+000000D0]
+NMS.exe+A900FA - E8 614AA8FF           - call NMS.AK::MemoryMgr::SetPoolName+8000
+NMS.exe+A900FF - 90                    - nop
+NMS.exe+A90100 - 4C 8D 85 D0000000     - lea r8,[rbp+000000D0]
+NMS.exe+A90107 - 48 8B D3              - mov rdx,rbx
+NMS.exe+A9010A - E8 419D5600           - call NMS.exe+FF9E50
+NMS.exe+A9010F - 48 8B 9D 18010000     - mov rbx,[rbp+00000118]
+NMS.exe+A90116 - 4C 8B B5 20010000     - mov r14,[rbp+00000120]
+NMS.exe+A9011D - 49 3B DE              - cmp rbx,r14
+NMS.exe+A90120 - 74 63                 - je NMS.exe+A90185
+NMS.exe+A90122 - 0F10 03               - movups xmm0,[rbx]
+NMS.exe+A90125 - 0F11 45 30            - movups [rbp+30],xmm0
+NMS.exe+A90129 - 0F10 4B 10            - movups xmm1,[rbx+10]
+NMS.exe+A9012D - 0F11 4D 40            - movups [rbp+40],xmm1
+NMS.exe+A90131 - 0F10 43 20            - movups xmm0,[rbx+20]
+NMS.exe+A90135 - 0F11 45 50            - movups [rbp+50],xmm0
+NMS.exe+A90139 - 48 8B 0D 4825BF01     - mov rcx,[NMS.exe+2682688] { (1DF22F90010)
+NMS.exe+A90140 - 48 83 C1 60           - add rcx,60 { 96
+NMS.exe+A90144 - 48 8D 55 38           - lea rdx,[rbp+38]
+NMS.exe+A90148 - E8 A3274D00           - call NMS.exe+F628F0
+NMS.exe+A9014D - 48 85 C0              - test rax,rax
+NMS.exe+A90150 - 74 2A                 - je NMS.exe+A9017C
+NMS.exe+A90152 - 80 B8 6A020000 00     - cmp byte ptr [rax+0000026A],00 { 0
+NMS.exe+A90159 - 74 21                 - je NMS.exe+A9017C
+NMS.exe+A9015B - 48 8B 88 78020000     - mov rcx,[rax+00000278]
+NMS.exe+A90162 - 48 8B 01              - mov rax,[rcx]
+NMS.exe+A90165 - 4B 39 04 E7           - cmp [r15+r12*8],rax
+NMS.exe+A90169 - 75 11                 - jne NMS.exe+A9017C
+NMS.exe+A9016B - 48 8B 41 08           - mov rax,[rcx+08]
+NMS.exe+A9016F - 4B 39 44 E7 08        - cmp [r15+r12*8+08],rax
+NMS.exe+A90174 - 75 06                 - jne NMS.exe+A9017C
+NMS.exe+A90176 - 0F2F 75 50            - comiss xmm6,[rbp+50]
+NMS.exe+A9017A - 73 06                 - jae NMS.exe+A90182
+NMS.exe+A9017C - 48 83 C3 30           - add rbx,30 { 48
+NMS.exe+A90180 - EB 9B                 - jmp NMS.exe+A9011D
+NMS.exe+A90182 - 41 B5 01              - mov r13l,01 { 1
+NMS.exe+A90185 - 48 8D 8D D0000000     - lea rcx,[rbp+000000D0]
+NMS.exe+A9018C - E8 8FE9ABFF           - call NMS.exe+54EB20
+NMS.exe+A90191 - 44 8B 75 88           - mov r14d,[rbp-78]
+NMS.exe+A90195 - 8B 45 90              - mov eax,[rbp-70]
+NMS.exe+A90198 - 89 86 80030000        - mov [rsi+00000380],eax
+NMS.exe+A9019E - 48 89 BE 84030000     - mov [rsi+00000384],rdi
+NMS.exe+A901A5 - 45 84 ED              - test r13l,r13l
+NMS.exe+A901A8 - B8 02000000           - mov eax,00000002 { 2
+NMS.exe+A901AD - 44 0F45 F0            - cmovne r14d,eax
+NMS.exe+A901B1 - 45 8B C6              - mov r8d,r14d
+NMS.exe+A901B4 - 48 8D 54 24 40        - lea rdx,[rsp+40]
+NMS.exe+A901B9 - 48 8B 4C 24 30        - mov rcx,[rsp+30]
+NMS.exe+A901BE - E8 7D18F7FF           - call NMS.exe+A01A40
+NMS.exe+A901C3 - 33 C0                 - xor eax,eax
+NMS.exe+A901C5 - 48 89 45 C0           - mov [rbp-40],rax
+NMS.exe+A901C9 - 48 89 45 C8           - mov [rbp-38],rax
+NMS.exe+A901CD - 8B F8                 - mov edi,eax
+NMS.exe+A901CF - 8B D0                 - mov edx,eax
+NMS.exe+A901D1 - 4C 8D 3D C0E13701     - lea r15,[NMS.exe+1E0E398] { ("BLANKER")
+NMS.exe+A901D8 - 0F1F 84 00 00000000   - nop [rax+rax+00000000]
+NMS.exe+A901E0 - 42 0FB6 0C 3A         - movzx ecx,byte ptr [rdx+r15]
+NMS.exe+A901E5 - 88 4C 15 C0           - mov [rbp+rdx-40],cl
+NMS.exe+A901E9 - 8D 41 9F              - lea eax,[rcx-61]
+NMS.exe+A901EC - 3C 19                 - cmp al,19 { 25
+NMS.exe+A901EE - 77 07                 - ja NMS.exe+A901F7
+NMS.exe+A901F0 - 80 E9 20              - sub cl,20 { 32
+NMS.exe+A901F3 - 88 4C 15 C0           - mov [rbp+rdx-40],cl
+NMS.exe+A901F7 - FF C7                 - inc edi
+NMS.exe+A901F9 - 48 FF C2              - inc rdx
+NMS.exe+A901FC - 83 FF 08              - cmp edi,08 { 8
+NMS.exe+A901FF - 72 DF                 - jb NMS.exe+A901E0
+NMS.exe+A90201 - 83 FF 10              - cmp edi,10 { 16
+NMS.exe+A90204 - 4C 8B 7C 24 30        - mov r15,[rsp+30]
+NMS.exe+A90209 - 7D 18                 - jnl NMS.exe+A90223
+NMS.exe+A9020B - B8 10000000           - mov eax,00000010 { 16
+NMS.exe+A90210 - 2B C7                 - sub eax,edi
+NMS.exe+A90212 - 48 63 C8              - movsxd  rcx,eax
+NMS.exe+A90215 - 48 63 C7              - movsxd  rax,edi
+NMS.exe+A90218 - 48 8D 7D C0           - lea rdi,[rbp-40]
+NMS.exe+A9021C - 48 03 F8              - add rdi,rax
+NMS.exe+A9021F - 33 C0                 - xor eax,eax
+NMS.exe+A90221 - F3 AA                 - repe stosb
+NMS.exe+A90223 - 0F28 45 C0            - movaps xmm0,[rbp-40]
+NMS.exe+A90227 - 66 0F7F 44 24 30      - movdqa [rsp+30],xmm0
+NMS.exe+A9022D - 48 8D 54 24 30        - lea rdx,[rsp+30]
+NMS.exe+A90232 - 48 8D 4D 30           - lea rcx,[rbp+30]
+NMS.exe+A90236 - E8 F573BDFF           - call NMS.exe+667630
+NMS.exe+A9023B - 4C 8B C0              - mov r8,rax
+NMS.exe+A9023E - 48 8D 55 00           - lea rdx,[rbp+00]
+NMS.exe+A90242 - 49 8B 8F B0000000     - mov rcx,[r15+000000B0]
+NMS.exe+A90249 - E8 5280BBFF           - call NMS.exe+6482A0
+NMS.exe+A9024E - 48 8D 95 80000000     - lea rdx,[rbp+00000080]
+NMS.exe+A90255 - 49 8B 8F B0000000     - mov rcx,[r15+000000B0]
+NMS.exe+A9025C - E8 5FF7BAFF           - call NMS.exe+63F9C0
+NMS.exe+A90261 - 48 8B D0              - mov rdx,rax
+NMS.exe+A90264 - 48 8D 4D 00           - lea rcx,[rbp+00]
+NMS.exe+A90268 - E8 13F7BAFF           - call NMS.exe+63F980
+NMS.exe+A9026D - 84 C0                 - test al,al
+NMS.exe+A9026F - 75 1F                 - jne NMS.exe+A90290
+NMS.exe+A90271 - 48 8D 4D 00           - lea rcx,[rbp+00]
+NMS.exe+A90275 - E8 B6D8BAFF           - call NMS.exe+63DB30
+NMS.exe+A9027A - 48 8B 78 18           - mov rdi,[rax+18]
+NMS.exe+A9027E - 48 85 FF              - test rdi,rdi
+NMS.exe+A90281 - 74 0D                 - je NMS.exe+A90290
+NMS.exe+A90283 - 48 8B 07              - mov rax,[rdi]
+NMS.exe+A90286 - 48 8B CF              - mov rcx,rdi
+NMS.exe+A90289 - FF 50 08              - call qword ptr [rax+08]
+NMS.exe+A9028C - 85 C0                 - test eax,eax
+NMS.exe+A9028E - 74 07                 - je NMS.exe+A90297
+NMS.exe+A90290 - 48 8D 3D 7906C001     - lea rdi,[NMS.exe+2690910] { (8)
+NMS.exe+A90297 - 48 89 7C 24 30        - mov [rsp+30],rdi
+NMS.exe+A9029C - 48 8D 4C 24 70        - lea rcx,[rsp+70]
+NMS.exe+A902A1 - E8 9ADBBAFF           - call NMS.exe+63DE40
+NMS.exe+A902A6 - 84 C0                 - test al,al
+NMS.exe+A902A8 - 74 27                 - je NMS.exe+A902D1
+NMS.exe+A902AA - 48 8B 4C 24 78        - mov rcx,[rsp+78]
+NMS.exe+A902AF - E8 0CDABAFF           - call NMS.exe+63DCC0
+NMS.exe+A902B4 - 48 89 38              - mov [rax],rdi
+NMS.exe+A902B7 - 48 8B 54 24 78        - mov rdx,[rsp+78]
+NMS.exe+A902BC - 4C 8B C2              - mov r8,rdx
+NMS.exe+A902BF - 48 8D 4C 24 70        - lea rcx,[rsp+70]
+NMS.exe+A902C4 - E8 17C9B7FF           - call NMS.exe+60CBE0
+NMS.exe+A902C9 - 48 83 44 24 78 08     - add qword ptr [rsp+78],08 { 8
+NMS.exe+A902CF - EB 14                 - jmp NMS.exe+A902E5
+NMS.exe+A902D1 - 4C 8D 44 24 30        - lea r8,[rsp+30]
+NMS.exe+A902D6 - 48 8B 54 24 78        - mov rdx,[rsp+78]
+NMS.exe+A902DB - 48 8D 4C 24 70        - lea rcx,[rsp+70]
+NMS.exe+A902E0 - E8 7B380200           - call NMS.exe+AB3B60
+NMS.exe+A902E5 - 8B 44 24 5C           - mov eax,[rsp+5C]
+NMS.exe+A902E9 - 39 44 24 58           - cmp [rsp+58],eax
+NMS.exe+A902ED - 7D 15                 - jnl NMS.exe+A90304
+NMS.exe+A902EF - 41 83 FE 02           - cmp r14d,02 { 2
+NMS.exe+A902F3 - 74 0F                 - je NMS.exe+A90304
+NMS.exe+A902F5 - 48 8B 47 50           - mov rax,[rdi+50]
+NMS.exe+A902F9 - C6 40 20 00           - mov byte ptr [rax+20],00 { 0
+NMS.exe+A902FD - C6 44 24 21 00        - mov byte ptr [rsp+21],00 { 0
+NMS.exe+A90302 - EB 08                 - jmp NMS.exe+A9030C
+NMS.exe+A90304 - 48 8B 47 50           - mov rax,[rdi+50]
+NMS.exe+A90308 - C6 40 20 01           - mov byte ptr [rax+20],01 { 1
+NMS.exe+A9030C - 49 8B 47 50           - mov rax,[r15+50]
+NMS.exe+A90310 - C6 40 20 00           - mov byte ptr [rax+20],00 { 0
+NMS.exe+A90314 - 48 8B B5 68020000     - mov rsi,[rbp+00000268]
+NMS.exe+A9031B - 4C 8B B5 60020000     - mov r14,[rbp+00000260]
+NMS.exe+A90322 - 4C 8B 6D A8           - mov r13,[rbp-58]
+NMS.exe+A90326 - 4C 8B A5 58020000     - mov r12,[rbp+00000258]
+NMS.exe+A9032D - 0FB6 5C 24 20         - movzx ebx,byte ptr [rsp+20]
+NMS.exe+A90332 - 8B 7D 98              - mov edi,[rbp-68]
+NMS.exe+A90335 - 48 FF 45 A0           - inc [rbp-60]
+NMS.exe+A90339 - 4D 85 FF              - test r15,r15
+NMS.exe+A9033C - 0F85 DEFBFFFF         - jne NMS.exe+A8FF20
+NMS.exe+A90342 - 80 7C 24 21 00        - cmp byte ptr [rsp+21],00 { 0
+NMS.exe+A90347 - 75 4E                 - jne NMS.exe+A90397
+NMS.exe+A90349 - 84 DB                 - test bl,bl
+NMS.exe+A9034B - 74 4A                 - je NMS.exe+A90397
+NMS.exe+A9034D - 49 8B FF              - mov rdi,r15
+NMS.exe+A90350 - 48 8B 54 24 70        - mov rdx,[rsp+70]
+NMS.exe+A90355 - 4C 8B 44 24 78        - mov r8,[rsp+78]
+NMS.exe+A9035A - 4C 2B C2              - sub r8,rdx
+NMS.exe+A9035D - 49 83 C0 07           - add r8,07 { 7
+NMS.exe+A90361 - 49 C1 E8 03           - shr r8,03 { 3
+NMS.exe+A90365 - 48 3B 54 24 78        - cmp rdx,[rsp+78]
+NMS.exe+A9036A - 4D 0F47 C7            - cmova r8,r15
+NMS.exe+A9036E - 4D 85 C0              - test r8,r8
+NMS.exe+A90371 - 74 24                 - je NMS.exe+A90397
+NMS.exe+A90373 - 0F1F 40 00            - nop [rax+00]
+NMS.exe+A90377 - 66 0F1F 84 00 00000000  - nop [rax+rax+00000000]
+NMS.exe+A90380 - 48 8B 02              - mov rax,[rdx]
+NMS.exe+A90383 - 48 8B 48 50           - mov rcx,[rax+50]
+NMS.exe+A90387 - 44 88 79 20           - mov [rcx+20],r15l
+NMS.exe+A9038B - 48 8D 52 08           - lea rdx,[rdx+08]
+NMS.exe+A9038F - 48 FF C7              - inc rdi
+NMS.exe+A90392 - 49 3B F8              - cmp rdi,r8
+NMS.exe+A90395 - 75 E9                 - jne NMS.exe+A90380
+NMS.exe+A90397 - 41 8B FF              - mov edi,r15d
+NMS.exe+A9039A - 66 0F1F 44 00 00      - nop [rax+rax+00]
+
+
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8403</ID>
+      <Description>"Easy Crafting (Base Building)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : NMS.exe
+  Version: 
+  Date   : 2018-12-31
+
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(frecraft,NMS.exe,43 0F AF 44 E7 14) // should be unique
+alloc(newmem,$1000,frecraft)
+
+label(code)
+label(return)
+
+newmem:
+mov [r15+r12*8+14], 1
+code:
+  imul eax,[r15+r12*8+14]
+  jmp return
+
+frecraft:
+  jmp newmem
+  nop
+return:
+registersymbol(frecraft)
+
+[DISABLE]
+
+frecraft:
+  db 43 0F AF 44 E7 14
+
+unregistersymbol(frecraft)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+A9002B
+
+"NMS.exe"+A90005: 8B 13                       -  mov edx,[rbx]
+"NMS.exe"+A90007: 49 8D 8D 90 0C 00 00        -  lea rcx,[r13+00000C90]
+"NMS.exe"+A9000E: E8 ED D3 DC FF              -  call NMS.exe+85D400
+"NMS.exe"+A90013: 03 F0                       -  add esi,eax
+"NMS.exe"+A90015: 48 83 C3 04                 -  add rbx,04
+"NMS.exe"+A90019: 48 FF C7                    -  inc rdi
+"NMS.exe"+A9001C: 49 3B FE                    -  cmp rdi,r14
+"NMS.exe"+A9001F: 75 DF                       -  jne NMS.exe+A90000
+"NMS.exe"+A90021: 89 74 24 58                 -  mov [rsp+58],esi
+"NMS.exe"+A90025: 8B 85 70 02 00 00           -  mov eax,[rbp+00000270]
+// ---------- INJECTING HERE ----------
+"NMS.exe"+A9002B: 43 0F AF 44 E7 14           -  imul eax,[r15+r12*8+14]
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+A90031: 89 44 24 5C                 -  mov [rsp+5C],eax
+"NMS.exe"+A90035: 80 BD 78 02 00 00 00        -  cmp byte ptr [rbp+00000278],00
+"NMS.exe"+A9003C: 74 42                       -  je NMS.exe+A90080
+"NMS.exe"+A9003E: 8B 05 50 26 BF 01           -  mov eax,[NMS.exe+2682694]
+"NMS.exe"+A90044: 83 F8 05                    -  cmp eax,05
+"NMS.exe"+A90047: 77 14                       -  ja NMS.exe+A9005D
+"NMS.exe"+A90049: B9 29 00 00 00              -  mov ecx,00000029
+"NMS.exe"+A9004E: 0F A3 C1                    -  bt ecx,eax
+"NMS.exe"+A90051: 73 0A                       -  jae NMS.exe+A9005D
+"NMS.exe"+A90053: F3 0F 10 0D 29 81 69 01     -  movss xmm1,[NMS.exe+2128184]
+
+
+
+
+
+
+NMS.exe+A8FE90 - 48 8B C4              - mov rax,rsp
+NMS.exe+A8FE93 - 4C 89 48 20           - mov [rax+20],r9
+NMS.exe+A8FE97 - 4C 89 40 18           - mov [rax+18],r8
+NMS.exe+A8FE9B - 48 89 50 10           - mov [rax+10],rdx
+NMS.exe+A8FE9F - 89 48 08              - mov [rax+08],ecx
+NMS.exe+A8FEA2 - 55                    - push rbp
+NMS.exe+A8FEA3 - 53                    - push rbx
+NMS.exe+A8FEA4 - 56                    - push rsi
+NMS.exe+A8FEA5 - 57                    - push rdi
+NMS.exe+A8FEA6 - 41 54                 - push r12
+NMS.exe+A8FEA8 - 41 55                 - push r13
+NMS.exe+A8FEAA - 41 56                 - push r14
+NMS.exe+A8FEAC - 41 57                 - push r15
+NMS.exe+A8FEAE - 48 8D A8 B8FDFFFF     - lea rbp,[rax-00000248]
+NMS.exe+A8FEB5 - 48 81 EC 08030000     - sub rsp,00000308 { 776
+NMS.exe+A8FEBC - 48 C7 45 60 FEFFFFFF  - mov qword ptr [rbp+60],FFFFFFFE { -2
+NMS.exe+A8FEC4 - 0F29 70 A8            - movaps [rax-58],xmm6
+NMS.exe+A8FEC8 - 49 8B F1              - mov rsi,r9
+NMS.exe+A8FECB - 4D 8B F0              - mov r14,r8
+NMS.exe+A8FECE - 4C 8B E2              - mov r12,rdx
+NMS.exe+A8FED1 - 8B D1                 - mov edx,ecx
+NMS.exe+A8FED3 - 33 DB                 - xor ebx,ebx
+NMS.exe+A8FED5 - 8B FB                 - mov edi,ebx
+NMS.exe+A8FED7 - 48 89 5D A8           - mov [rbp-58],rbx
+NMS.exe+A8FEDB - 0F57 C0               - xorps xmm0,xmm0
+NMS.exe+A8FEDE - F3 0F7F 45 B0         - movdqu [rbp-50],xmm0
+NMS.exe+A8FEE3 - 41 B1 01              - mov r9l,01 { 1
+NMS.exe+A8FEE6 - 4C 8D 45 A8           - lea r8,[rbp-58]
+NMS.exe+A8FEEA - E8 6116DDFF           - call NMS.exe+861550
+NMS.exe+A8FEEF - 48 89 5C 24 70        - mov [rsp+70],rbx
+NMS.exe+A8FEF4 - 0F57 C0               - xorps xmm0,xmm0
+NMS.exe+A8FEF7 - F3 0F7F 44 24 78      - movdqu [rsp+78],xmm0
+NMS.exe+A8FEFD - 48 89 5D 68           - mov [rbp+68],rbx
+NMS.exe+A8FF01 - F3 0F7F 45 70         - movdqu [rbp+70],xmm0
+NMS.exe+A8FF06 - C6 44 24 21 01        - mov byte ptr [rsp+21],01 { 1
+NMS.exe+A8FF0B - 88 5C 24 20           - mov [rsp+20],bl
+NMS.exe+A8FF0F - 48 89 5D A0           - mov [rbp-60],rbx
+NMS.exe+A8FF13 - 4C 8B 6D A8           - mov r13,[rbp-58]
+NMS.exe+A8FF17 - 0F57 F6               - xorps xmm6,xmm6
+NMS.exe+A8FF1A - EB 08                 - jmp NMS.exe+A8FF24
+NMS.exe+A8FF1C - 0F1F 40 00            - nop [rax+00]
+NMS.exe+A8FF20 - 48 8B 5D A0           - mov rbx,[rbp-60]
+NMS.exe+A8FF24 - 8D 47 01              - lea eax,[rdi+01]
+NMS.exe+A8FF27 - 89 45 98              - mov [rbp-68],eax
+NMS.exe+A8FF2A - 44 8B C0              - mov r8d,eax
+NMS.exe+A8FF2D - 48 8D 15 6CE43701     - lea rdx,[NMS.exe+1E0E3A0] { ("REQ%02d")
+NMS.exe+A8FF34 - 48 8D 4D F0           - lea rcx,[rbp-10]
+NMS.exe+A8FF38 - E8 F361BDFF           - call NMS.exe+666130
+NMS.exe+A8FF3D - 48 8D 55 F0           - lea rdx,[rbp-10]
+NMS.exe+A8FF41 - 48 8D 8D B0000000     - lea rcx,[rbp+000000B0]
+NMS.exe+A8FF48 - E8 E376BDFF           - call NMS.exe+667630
+NMS.exe+A8FF4D - 48 8B D0              - mov rdx,rax
+NMS.exe+A8FF50 - 45 33 C0              - xor r8d,r8d
+NMS.exe+A8FF53 - 49 8B CC              - mov rcx,r12
+NMS.exe+A8FF56 - E8 85AEB5FF           - call NMS.exe+5EADE0
+NMS.exe+A8FF5B - 4C 8B F8              - mov r15,rax
+NMS.exe+A8FF5E - 48 89 44 24 30        - mov [rsp+30],rax
+NMS.exe+A8FF63 - 48 85 C0              - test rax,rax
+NMS.exe+A8FF66 - 0F84 C1030000         - je NMS.exe+A9032D
+NMS.exe+A8FF6C - 48 8B 48 50           - mov rcx,[rax+50]
+NMS.exe+A8FF70 - C6 41 20 01           - mov byte ptr [rcx+20],01 { 1
+NMS.exe+A8FF74 - 41 8B 4E 08           - mov ecx,[r14+08]
+NMS.exe+A8FF78 - 3B F9                 - cmp edi,ecx
+NMS.exe+A8FF7A - 0F8D 89040000         - jnl NMS.exe+A90409
+NMS.exe+A8FF80 - 4C 8D 24 5B           - lea r12,[rbx+rbx*2]
+NMS.exe+A8FF84 - 4D 8B 3E              - mov r15,[r14]
+NMS.exe+A8FF87 - 33 C9                 - xor ecx,ecx
+NMS.exe+A8FF89 - 89 4C 24 40           - mov [rsp+40],ecx
+NMS.exe+A8FF8D - 48 89 4C 24 48        - mov [rsp+48],rcx
+NMS.exe+A8FF92 - 48 89 4C 24 50        - mov [rsp+50],rcx
+NMS.exe+A8FF97 - 89 4C 24 58           - mov [rsp+58],ecx
+NMS.exe+A8FF9B - 48 C7 44 24 5C 64000000 - mov qword ptr [rsp+5C],00000064 { 100
+NMS.exe+A8FFA4 - 48 C7 44 24 64 FFFFFFFF - mov qword ptr [rsp+64],FFFFFFFF { -1
+NMS.exe+A8FFAD - 4B 8B 04 E7           - mov rax,[r15+r12*8]
+NMS.exe+A8FFB1 - 48 89 44 24 48        - mov [rsp+48],rax
+NMS.exe+A8FFB6 - 4B 8B 44 E7 08        - mov rax,[r15+r12*8+08]
+NMS.exe+A8FFBB - 48 89 44 24 50        - mov [rsp+50],rax
+NMS.exe+A8FFC0 - 43 8B 44 E7 10        - mov eax,[r15+r12*8+10]
+NMS.exe+A8FFC5 - 89 44 24 40           - mov [rsp+40],eax
+NMS.exe+A8FFC9 - 8B F1                 - mov esi,ecx
+NMS.exe+A8FFCB - 8B F9                 - mov edi,ecx
+NMS.exe+A8FFCD - 4C 8B 75 B0           - mov r14,[rbp-50]
+NMS.exe+A8FFD1 - 4D 2B F5              - sub r14,r13
+NMS.exe+A8FFD4 - 49 83 C6 03           - add r14,03 { 3
+NMS.exe+A8FFD8 - 49 C1 EE 02           - shr r14,02 { 2
+NMS.exe+A8FFDC - 4C 3B 6D B0           - cmp r13,[rbp-50]
+NMS.exe+A8FFE0 - 4C 0F47 F1            - cmova r14,rcx
+NMS.exe+A8FFE4 - 49 8B DD              - mov rbx,r13
+NMS.exe+A8FFE7 - 4C 8B 2D 9A26BF01     - mov r13,[NMS.exe+2682688] { (1DF22F90010)
+NMS.exe+A8FFEE - 4D 85 F6              - test r14,r14
+NMS.exe+A8FFF1 - 74 2E                 - je NMS.exe+A90021
+NMS.exe+A8FFF3 - 0F1F 40 00            - nop [rax+00]
+NMS.exe+A8FFF7 - 66 0F1F 84 00 00000000  - nop [rax+rax+00000000]
+NMS.exe+A90000 - 4C 8D 44 24 40        - lea r8,[rsp+40]
+NMS.exe+A90005 - 8B 13                 - mov edx,[rbx]
+NMS.exe+A90007 - 49 8D 8D 900C0000     - lea rcx,[r13+00000C90]
+NMS.exe+A9000E - E8 EDD3DCFF           - call NMS.exe+85D400
+NMS.exe+A90013 - 03 F0                 - add esi,eax
+NMS.exe+A90015 - 48 83 C3 04           - add rbx,04 { 4
+NMS.exe+A90019 - 48 FF C7              - inc rdi
+NMS.exe+A9001C - 49 3B FE              - cmp rdi,r14
+NMS.exe+A9001F - 75 DF                 - jne NMS.exe+A90000
+NMS.exe+A90021 - 89 74 24 58           - mov [rsp+58],esi
+NMS.exe+A90025 - 8B 85 70020000        - mov eax,[rbp+00000270]
+NMS.exe+A9002B - 43 0FAF 44 E7 14      - imul eax,[r15+r12*8+14]
+NMS.exe+A90031 - 89 44 24 5C           - mov [rsp+5C],eax
+NMS.exe+A90035 - 80 BD 78020000 00     - cmp byte ptr [rbp+00000278],00 { 0
+NMS.exe+A9003C - 74 42                 - je NMS.exe+A90080
+NMS.exe+A9003E - 8B 05 5026BF01        - mov eax,[NMS.exe+2682694] { (3)
+NMS.exe+A90044 - 83 F8 05              - cmp eax,05 { 5
+NMS.exe+A90047 - 77 14                 - ja NMS.exe+A9005D
+NMS.exe+A90049 - B9 29000000           - mov ecx,00000029 { 41
+NMS.exe+A9004E - 0FA3 C1               - bt ecx,eax
+NMS.exe+A90051 - 73 0A                 - jae NMS.exe+A9005D
+NMS.exe+A90053 - F3 0F10 0D 29816901   - movss xmm1,[NMS.exe+2128184] { (0.50)
+NMS.exe+A9005B - EB 08                 - jmp NMS.exe+A90065
+NMS.exe+A9005D - F3 0F10 0D 1B816901   - movss xmm1,[NMS.exe+2128180] { (0.50)
+NMS.exe+A90065 - 66 43 0F6E 44 E7 14   - movd xmm0,[r15+r12*8+14]
+NMS.exe+A9006C - 0F5B C0               - cvtdq2ps xmm0,xmm0
+NMS.exe+A9006F - F3 0F59 C1            - mulss xmm0,xmm1
+NMS.exe+A90073 - E8 BA660F01           - call NMS.exe+1B86732 { -&gt;-&gt;ucrtbase.ceilf
+NMS.exe+A90078 - F3 0F2C C0            - cvttss2si eax,xmm0
+NMS.exe+A9007C - 89 44 24 5C           - mov [rsp+5C],eax
+NMS.exe+A90080 - 41 BE 01000000        - mov r14d,00000001 { 1
+NMS.exe+A90086 - 44 89 75 88           - mov [rbp-78],r14d
+NMS.exe+A9008A - 48 8B BD 80020000     - mov rdi,[rbp+00000280]
+NMS.exe+A90091 - 48 85 FF              - test rdi,rdi
+NMS.exe+A90094 - 0F84 17010000         - je NMS.exe+A901B1
+NMS.exe+A9009A - 49 8B 8D B0592900     - mov rcx,[r13+002959B0]
+NMS.exe+A900A1 - E8 4A84FAFF           - call NMS.exe+A384F0
+NMS.exe+A900A6 - 48 8B F0              - mov rsi,rax
+NMS.exe+A900A9 - 48 85 C0              - test rax,rax
+NMS.exe+A900AC - 0F84 FF000000         - je NMS.exe+A901B1
+NMS.exe+A900B2 - 48 8B 0F              - mov rcx,[rdi]
+NMS.exe+A900B5 - 8B 80 80030000        - mov eax,[rax+00000380]
+NMS.exe+A900BB - 89 45 90              - mov [rbp-70],eax
+NMS.exe+A900BE - 48 8B BE 84030000     - mov rdi,[rsi+00000384]
+NMS.exe+A900C5 - 8B 85 50020000        - mov eax,[rbp+00000250]
+NMS.exe+A900CB - 89 86 80030000        - mov [rsi+00000380],eax
+NMS.exe+A900D1 - 48 89 8E 84030000     - mov [rsi+00000384],rcx
+NMS.exe+A900D8 - 45 32 ED              - xor r13l,r13l
+NMS.exe+A900DB - 48 8B 16              - mov rdx,[rsi]
+NMS.exe+A900DE - 48 8B CE              - mov rcx,rsi
+NMS.exe+A900E1 - FF 92 C8000000        - call qword ptr [rdx+000000C8]
+NMS.exe+A900E7 - 48 8B D8              - mov rbx,rax
+NMS.exe+A900EA - 48 85 C0              - test rax,rax
+NMS.exe+A900ED - 0F84 A2000000         - je NMS.exe+A90195
+NMS.exe+A900F3 - 48 8D 8D D0000000     - lea rcx,[rbp+000000D0]
+NMS.exe+A900FA - E8 614AA8FF           - call NMS.AK::MemoryMgr::SetPoolName+8000
+NMS.exe+A900FF - 90                    - nop
+NMS.exe+A90100 - 4C 8D 85 D0000000     - lea r8,[rbp+000000D0]
+NMS.exe+A90107 - 48 8B D3              - mov rdx,rbx
+NMS.exe+A9010A - E8 419D5600           - call NMS.exe+FF9E50
+NMS.exe+A9010F - 48 8B 9D 18010000     - mov rbx,[rbp+00000118]
+NMS.exe+A90116 - 4C 8B B5 20010000     - mov r14,[rbp+00000120]
+NMS.exe+A9011D - 49 3B DE              - cmp rbx,r14
+NMS.exe+A90120 - 74 63                 - je NMS.exe+A90185
+NMS.exe+A90122 - 0F10 03               - movups xmm0,[rbx]
+NMS.exe+A90125 - 0F11 45 30            - movups [rbp+30],xmm0
+NMS.exe+A90129 - 0F10 4B 10            - movups xmm1,[rbx+10]
+NMS.exe+A9012D - 0F11 4D 40            - movups [rbp+40],xmm1
+NMS.exe+A90131 - 0F10 43 20            - movups xmm0,[rbx+20]
+NMS.exe+A90135 - 0F11 45 50            - movups [rbp+50],xmm0
+NMS.exe+A90139 - 48 8B 0D 4825BF01     - mov rcx,[NMS.exe+2682688] { (1DF22F90010)
+NMS.exe+A90140 - 48 83 C1 60           - add rcx,60 { 96
+NMS.exe+A90144 - 48 8D 55 38           - lea rdx,[rbp+38]
+NMS.exe+A90148 - E8 A3274D00           - call NMS.exe+F628F0
+NMS.exe+A9014D - 48 85 C0              - test rax,rax
+NMS.exe+A90150 - 74 2A                 - je NMS.exe+A9017C
+NMS.exe+A90152 - 80 B8 6A020000 00     - cmp byte ptr [rax+0000026A],00 { 0
+NMS.exe+A90159 - 74 21                 - je NMS.exe+A9017C
+NMS.exe+A9015B - 48 8B 88 78020000     - mov rcx,[rax+00000278]
+NMS.exe+A90162 - 48 8B 01              - mov rax,[rcx]
+NMS.exe+A90165 - 4B 39 04 E7           - cmp [r15+r12*8],rax
+NMS.exe+A90169 - 75 11                 - jne NMS.exe+A9017C
+NMS.exe+A9016B - 48 8B 41 08           - mov rax,[rcx+08]
+NMS.exe+A9016F - 4B 39 44 E7 08        - cmp [r15+r12*8+08],rax
+NMS.exe+A90174 - 75 06                 - jne NMS.exe+A9017C
+NMS.exe+A90176 - 0F2F 75 50            - comiss xmm6,[rbp+50]
+NMS.exe+A9017A - 73 06                 - jae NMS.exe+A90182
+NMS.exe+A9017C - 48 83 C3 30           - add rbx,30 { 48
+NMS.exe+A90180 - EB 9B                 - jmp NMS.exe+A9011D
+NMS.exe+A90182 - 41 B5 01              - mov r13l,01 { 1
+NMS.exe+A90185 - 48 8D 8D D0000000     - lea rcx,[rbp+000000D0]
+NMS.exe+A9018C - E8 8FE9ABFF           - call NMS.exe+54EB20
+NMS.exe+A90191 - 44 8B 75 88           - mov r14d,[rbp-78]
+NMS.exe+A90195 - 8B 45 90              - mov eax,[rbp-70]
+NMS.exe+A90198 - 89 86 80030000        - mov [rsi+00000380],eax
+NMS.exe+A9019E - 48 89 BE 84030000     - mov [rsi+00000384],rdi
+NMS.exe+A901A5 - 45 84 ED              - test r13l,r13l
+NMS.exe+A901A8 - B8 02000000           - mov eax,00000002 { 2
+NMS.exe+A901AD - 44 0F45 F0            - cmovne r14d,eax
+NMS.exe+A901B1 - 45 8B C6              - mov r8d,r14d
+NMS.exe+A901B4 - 48 8D 54 24 40        - lea rdx,[rsp+40]
+NMS.exe+A901B9 - 48 8B 4C 24 30        - mov rcx,[rsp+30]
+NMS.exe+A901BE - E8 7D18F7FF           - call NMS.exe+A01A40
+NMS.exe+A901C3 - 33 C0                 - xor eax,eax
+NMS.exe+A901C5 - 48 89 45 C0           - mov [rbp-40],rax
+NMS.exe+A901C9 - 48 89 45 C8           - mov [rbp-38],rax
+NMS.exe+A901CD - 8B F8                 - mov edi,eax
+NMS.exe+A901CF - 8B D0                 - mov edx,eax
+NMS.exe+A901D1 - 4C 8D 3D C0E13701     - lea r15,[NMS.exe+1E0E398] { ("BLANKER")
+NMS.exe+A901D8 - 0F1F 84 00 00000000   - nop [rax+rax+00000000]
+NMS.exe+A901E0 - 42 0FB6 0C 3A         - movzx ecx,byte ptr [rdx+r15]
+NMS.exe+A901E5 - 88 4C 15 C0           - mov [rbp+rdx-40],cl
+NMS.exe+A901E9 - 8D 41 9F              - lea eax,[rcx-61]
+NMS.exe+A901EC - 3C 19                 - cmp al,19 { 25
+NMS.exe+A901EE - 77 07                 - ja NMS.exe+A901F7
+NMS.exe+A901F0 - 80 E9 20              - sub cl,20 { 32
+NMS.exe+A901F3 - 88 4C 15 C0           - mov [rbp+rdx-40],cl
+NMS.exe+A901F7 - FF C7                 - inc edi
+NMS.exe+A901F9 - 48 FF C2              - inc rdx
+NMS.exe+A901FC - 83 FF 08              - cmp edi,08 { 8
+NMS.exe+A901FF - 72 DF                 - jb NMS.exe+A901E0
+NMS.exe+A90201 - 83 FF 10              - cmp edi,10 { 16
+NMS.exe+A90204 - 4C 8B 7C 24 30        - mov r15,[rsp+30]
+NMS.exe+A90209 - 7D 18                 - jnl NMS.exe+A90223
+NMS.exe+A9020B - B8 10000000           - mov eax,00000010 { 16
+NMS.exe+A90210 - 2B C7                 - sub eax,edi
+NMS.exe+A90212 - 48 63 C8              - movsxd  rcx,eax
+NMS.exe+A90215 - 48 63 C7              - movsxd  rax,edi
+NMS.exe+A90218 - 48 8D 7D C0           - lea rdi,[rbp-40]
+NMS.exe+A9021C - 48 03 F8              - add rdi,rax
+NMS.exe+A9021F - 33 C0                 - xor eax,eax
+NMS.exe+A90221 - F3 AA                 - repe stosb
+NMS.exe+A90223 - 0F28 45 C0            - movaps xmm0,[rbp-40]
+NMS.exe+A90227 - 66 0F7F 44 24 30      - movdqa [rsp+30],xmm0
+NMS.exe+A9022D - 48 8D 54 24 30        - lea rdx,[rsp+30]
+NMS.exe+A90232 - 48 8D 4D 30           - lea rcx,[rbp+30]
+NMS.exe+A90236 - E8 F573BDFF           - call NMS.exe+667630
+NMS.exe+A9023B - 4C 8B C0              - mov r8,rax
+NMS.exe+A9023E - 48 8D 55 00           - lea rdx,[rbp+00]
+NMS.exe+A90242 - 49 8B 8F B0000000     - mov rcx,[r15+000000B0]
+NMS.exe+A90249 - E8 5280BBFF           - call NMS.exe+6482A0
+NMS.exe+A9024E - 48 8D 95 80000000     - lea rdx,[rbp+00000080]
+NMS.exe+A90255 - 49 8B 8F B0000000     - mov rcx,[r15+000000B0]
+NMS.exe+A9025C - E8 5FF7BAFF           - call NMS.exe+63F9C0
+NMS.exe+A90261 - 48 8B D0              - mov rdx,rax
+NMS.exe+A90264 - 48 8D 4D 00           - lea rcx,[rbp+00]
+NMS.exe+A90268 - E8 13F7BAFF           - call NMS.exe+63F980
+NMS.exe+A9026D - 84 C0                 - test al,al
+NMS.exe+A9026F - 75 1F                 - jne NMS.exe+A90290
+NMS.exe+A90271 - 48 8D 4D 00           - lea rcx,[rbp+00]
+NMS.exe+A90275 - E8 B6D8BAFF           - call NMS.exe+63DB30
+NMS.exe+A9027A - 48 8B 78 18           - mov rdi,[rax+18]
+NMS.exe+A9027E - 48 85 FF              - test rdi,rdi
+NMS.exe+A90281 - 74 0D                 - je NMS.exe+A90290
+NMS.exe+A90283 - 48 8B 07              - mov rax,[rdi]
+NMS.exe+A90286 - 48 8B CF              - mov rcx,rdi
+NMS.exe+A90289 - FF 50 08              - call qword ptr [rax+08]
+NMS.exe+A9028C - 85 C0                 - test eax,eax
+NMS.exe+A9028E - 74 07                 - je NMS.exe+A90297
+NMS.exe+A90290 - 48 8D 3D 7906C001     - lea rdi,[NMS.exe+2690910] { (8)
+NMS.exe+A90297 - 48 89 7C 24 30        - mov [rsp+30],rdi
+NMS.exe+A9029C - 48 8D 4C 24 70        - lea rcx,[rsp+70]
+NMS.exe+A902A1 - E8 9ADBBAFF           - call NMS.exe+63DE40
+NMS.exe+A902A6 - 84 C0                 - test al,al
+NMS.exe+A902A8 - 74 27                 - je NMS.exe+A902D1
+NMS.exe+A902AA - 48 8B 4C 24 78        - mov rcx,[rsp+78]
+NMS.exe+A902AF - E8 0CDABAFF           - call NMS.exe+63DCC0
+NMS.exe+A902B4 - 48 89 38              - mov [rax],rdi
+NMS.exe+A902B7 - 48 8B 54 24 78        - mov rdx,[rsp+78]
+NMS.exe+A902BC - 4C 8B C2              - mov r8,rdx
+NMS.exe+A902BF - 48 8D 4C 24 70        - lea rcx,[rsp+70]
+NMS.exe+A902C4 - E8 17C9B7FF           - call NMS.exe+60CBE0
+NMS.exe+A902C9 - 48 83 44 24 78 08     - add qword ptr [rsp+78],08 { 8
+NMS.exe+A902CF - EB 14                 - jmp NMS.exe+A902E5
+NMS.exe+A902D1 - 4C 8D 44 24 30        - lea r8,[rsp+30]
+NMS.exe+A902D6 - 48 8B 54 24 78        - mov rdx,[rsp+78]
+NMS.exe+A902DB - 48 8D 4C 24 70        - lea rcx,[rsp+70]
+NMS.exe+A902E0 - E8 7B380200           - call NMS.exe+AB3B60
+NMS.exe+A902E5 - 8B 44 24 5C           - mov eax,[rsp+5C]
+NMS.exe+A902E9 - 39 44 24 58           - cmp [rsp+58],eax
+NMS.exe+A902ED - 7D 15                 - jnl NMS.exe+A90304
+NMS.exe+A902EF - 41 83 FE 02           - cmp r14d,02 { 2
+NMS.exe+A902F3 - 74 0F                 - je NMS.exe+A90304
+NMS.exe+A902F5 - 48 8B 47 50           - mov rax,[rdi+50]
+NMS.exe+A902F9 - C6 40 20 00           - mov byte ptr [rax+20],00 { 0
+NMS.exe+A902FD - C6 44 24 21 00        - mov byte ptr [rsp+21],00 { 0
+NMS.exe+A90302 - EB 08                 - jmp NMS.exe+A9030C
+NMS.exe+A90304 - 48 8B 47 50           - mov rax,[rdi+50]
+NMS.exe+A90308 - C6 40 20 01           - mov byte ptr [rax+20],01 { 1
+NMS.exe+A9030C - 49 8B 47 50           - mov rax,[r15+50]
+NMS.exe+A90310 - C6 40 20 00           - mov byte ptr [rax+20],00 { 0
+NMS.exe+A90314 - 48 8B B5 68020000     - mov rsi,[rbp+00000268]
+NMS.exe+A9031B - 4C 8B B5 60020000     - mov r14,[rbp+00000260]
+NMS.exe+A90322 - 4C 8B 6D A8           - mov r13,[rbp-58]
+NMS.exe+A90326 - 4C 8B A5 58020000     - mov r12,[rbp+00000258]
+NMS.exe+A9032D - 0FB6 5C 24 20         - movzx ebx,byte ptr [rsp+20]
+NMS.exe+A90332 - 8B 7D 98              - mov edi,[rbp-68]
+NMS.exe+A90335 - 48 FF 45 A0           - inc [rbp-60]
+NMS.exe+A90339 - 4D 85 FF              - test r15,r15
+NMS.exe+A9033C - 0F85 DEFBFFFF         - jne NMS.exe+A8FF20
+NMS.exe+A90342 - 80 7C 24 21 00        - cmp byte ptr [rsp+21],00 { 0
+NMS.exe+A90347 - 75 4E                 - jne NMS.exe+A90397
+NMS.exe+A90349 - 84 DB                 - test bl,bl
+NMS.exe+A9034B - 74 4A                 - je NMS.exe+A90397
+NMS.exe+A9034D - 49 8B FF              - mov rdi,r15
+NMS.exe+A90350 - 48 8B 54 24 70        - mov rdx,[rsp+70]
+NMS.exe+A90355 - 4C 8B 44 24 78        - mov r8,[rsp+78]
+NMS.exe+A9035A - 4C 2B C2              - sub r8,rdx
+NMS.exe+A9035D - 49 83 C0 07           - add r8,07 { 7
+NMS.exe+A90361 - 49 C1 E8 03           - shr r8,03 { 3
+NMS.exe+A90365 - 48 3B 54 24 78        - cmp rdx,[rsp+78]
+NMS.exe+A9036A - 4D 0F47 C7            - cmova r8,r15
+NMS.exe+A9036E - 4D 85 C0              - test r8,r8
+NMS.exe+A90371 - 74 24                 - je NMS.exe+A90397
+NMS.exe+A90373 - 0F1F 40 00            - nop [rax+00]
+NMS.exe+A90377 - 66 0F1F 84 00 00000000  - nop [rax+rax+00000000]
+NMS.exe+A90380 - 48 8B 02              - mov rax,[rdx]
+NMS.exe+A90383 - 48 8B 48 50           - mov rcx,[rax+50]
+NMS.exe+A90387 - 44 88 79 20           - mov [rcx+20],r15l
+NMS.exe+A9038B - 48 8D 52 08           - lea rdx,[rdx+08]
+NMS.exe+A9038F - 48 FF C7              - inc rdi
+NMS.exe+A90392 - 49 3B F8              - cmp rdi,r8
+NMS.exe+A90395 - 75 E9                 - jne NMS.exe+A90380
+NMS.exe+A90397 - 41 8B FF              - mov edi,r15d
+NMS.exe+A9039A - 66 0F1F 44 00 00      - nop [rax+rax+00]
+
+
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1553</ID>
+      <Description>"Always Have Conversation Item"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(conversation,NMS.exe,0F 8C 52 02 00 00)
+label(consy)
+registersymbol(consy)
+conversation:
+consy:
+  db 90 90 90 90 90 90
+
+
+[DISABLE]
+consy:
+  db 0F 8C 52 02 00 00
+unregistersymbol(consy)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "NMS.exe"+663740
+
+"NMS.exe"+663723: 75 0F                 -  jne NMS.exe+663734
+"NMS.exe"+663725: 48 3B 50 08           -  cmp rdx,[rax+08]
+"NMS.exe"+663729: 75 09                 -  jne NMS.exe+663734
+"NMS.exe"+66372B: 4C 3B 40 10           -  cmp r8,[rax+10]
+"NMS.exe"+66372F: 75 03                 -  jne NMS.exe+663734
+"NMS.exe"+663731: 03 78 18              -  add edi,[rax+18]
+"NMS.exe"+663734: 48 83 C0 30           -  add rax,30
+"NMS.exe"+663738: 48 3B C1              -  cmp rax,rcx
+"NMS.exe"+66373B: 75 E3                 -  jne NMS.exe+663720
+"NMS.exe"+66373D: 41 3B FA              -  cmp edi,r10d
+// ---------- INJECTING HERE ----------
+"NMS.exe"+663740: 0F 8C 23 02 00 00     -  jl NMS.exe+663969
+// ---------- DONE INJECTING  ----------
+"NMS.exe"+663746: 40 B6 01              -  mov sil,01
+"NMS.exe"+663749: 45 84 FF              -  test r15l,r15l
+"NMS.exe"+66374C: 0F 84 17 02 00 00     -  je NMS.exe+663969
+"NMS.exe"+663752: 49 8D 89 E0 03 00 00  -  lea rcx,[r9+000003E0]
+"NMS.exe"+663759: 89 5C 24 30           -  mov [rsp+30],ebx
+"NMS.exe"+66375D: 89 5C 24 34           -  mov [rsp+34],ebx
+"NMS.exe"+663761: 4C 8B 4C 24 30        -  mov r9,[rsp+30]
+"NMS.exe"+663766: 4C 8D 45 9F           -  lea r8,[rbp-61]
+"NMS.exe"+66376A: 48 8D 91 20 07 00 00  -  lea rdx,[rcx+00000720]
+"NMS.exe"+663771: E8 1A C2 ED FF        -  call NMS.exe+53F990
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
