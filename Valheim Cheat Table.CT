@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"Enable"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+define(address,Player:FixedUpdate)
+define(bytes,55 48 8B EC 48 81 EC B0 00 00 00)
+assert(address,bytes)
+alloc(newmem,$1000,Player:FixedUpdate)
+label(code)
+label(return)
+label(ghost stamina weight_f jump_f speed_f crafting eitr player_zdoid)
+registersymbol(ghost stamina weight_f jump_f speed_f crafting eitr player_zdoid)
+
+getmonostruct(Player)
+getmonostruct(ZNetView)
+getmonostruct(ZDO)
+
+newmem:
+  mov rax,[rcx+Player.m_nview]
+  test rax,rax
+  je @f
+  mov rax,[rax+ZNetView.m_zdo]
+  test rax,rax
+  je @f
+  mov eax,[rax+ZDO.m_uid]
+  mov [player_zdoid],eax
+
+@@:
+  cmp [stamina],1
+  jne @f
+  mov [rcx+Player.m_stamina],(float)9999.0
+
+@@:
+  cmp [eitr],1
+  jne @f
+  mov [rcx+Player.m_eitr],(float)500.0
+  mov [rcx+Player.m_maxEitr],(float)500.0
+
+@@:
+  lea rax,[ghost]
+  mov eax,[rax]
+  mov byte ptr [rcx+Player.m_ghostMode],al
+
+  lea rax,[crafting]
+  mov eax,[rax]
+  mov byte ptr [rcx+Player.m_noPlacementCost],al
+
+  lea rax,[weight_f]
+  mov eax,[rax]
+  test eax,eax
+  je @f
+  mov [rcx+Player.m_maxCarryWeight],eax
+
+@@:
+  fld1
+  cmp [speed_f],0
+  je @f
+  fmul [speed_f]
+
+@@:
+  fst [_speed_modifier]
+  fmul [_m_speed]
+  fstp [rcx+Player.m_speed]
+  fld [_speed_modifier]
+  fmul [_m_runSpeed]
+  fstp [rcx+Player.m_runSpeed]
+  fld [_speed_modifier]
+  fmul [_m_flySlowSpeed]
+  fstp [rcx+Player.m_flySlowSpeed]
+  fld [_speed_modifier]
+  fmul [_m_flyFastSpeed]
+  fstp [rcx+Player.m_flyFastSpeed]
+  fld [_speed_modifier]
+  fmul [_m_swimSpeed]
+  fstp [rcx+Player.m_swimSpeed]
+
+@@:
+  fld1
+  cmp [jump_f],0
+  je @f
+  fmul [jump_f]
+
+@@:
+  fst [_jump_modifier]
+  fmul [_m_jumpForce]
+  fstp [rcx+Player.m_jumpForce]
+  fld [_jump_modifier]
+  fmul [_m_jumpForceForward]
+  fstp [rcx+Player.m_jumpForceForward]
+
+code:
+  db bytes
+  jmp return
+
+newmem+200:
+stamina:
+dd 0
+ghost:
+dd 0
+weight_f:
+dd 0
+jump_f:
+dd 0
+speed_f:
+dd 0
+crafting:
+dd 0
+eitr:
+dd 0
+
+newmem+280:
+player_zdoid:
+dd 0
+
+newmem+300:
+_speed_modifier:
+dd (float)1.0
+_m_speed:
+dd (float)4.0
+_m_runSpeed:
+dd (float)7.0
+_m_flySlowSpeed:
+dd (float)5.0
+_m_flyFastSpeed:
+dd (float)12.0
+_m_swimSpeed:
+dd (float)2.0
+_jump_modifier:
+dd (float)1.0
+_m_jumpForce:
+dd (float)8.0
+_m_jumpForceForward:
+dd (float)2.0
+
+address:
+  jmp newmem
+  nop 6
+return:
+
+[DISABLE]
+address:
+  db bytes
+dealloc(newmem)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"Unlimited Stamina"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+stamina:
+dd 1
+
+ 
+[DISABLE]
+
+stamina:
+dd 0
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>20</ID>
+          <Description>"Ghost Mode"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+ghost:
+dd 1
+
+ 
+[DISABLE]
+
+ghost:
+dd 0
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"Unlimited Eitr"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+eitr:
+dd 1
+
+ 
+[DISABLE]
+
+eitr:
+dd 0
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>22</ID>
+          <Description>"No Crafting Requirements"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+crafting:
+dd 1
+
+ 
+[DISABLE]
+
+crafting:
+dd 0
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>23</ID>
+          <Description>"Edit Weight"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>weight_f</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"Edit Player Speed"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>speed_f</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>25</ID>
+          <Description>"Edit Jump Height"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>jump_f</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"Infinite Health"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+define(address,Character:GetHealth)
+define(bytes,55 48 8B EC 48 83 EC 40)
+assert(address,bytes)
+alloc(newmem,$1000,Character:GetHealth)
+label(code)
+label(return)
+
+getmonostruct(Character)
+
+newmem:
+  cmp [rcx+Character.m_faction],0
+  jne code
+  mov eax,#9999
+  cvtsi2ss xmm0,eax
+  ret
+code:
+  db bytes
+  jmp return
+
+address:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+address:
+  db bytes
+dealloc(newmem)
+
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"Unlimited Items"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+define(address,ItemDrop+ItemData:GetWeight)
+define(bytes,48 83 EC 18 48 89 34 24)
+assert(address,bytes)
+alloc(newmem,$1000,address)
+label(code)
+label(return)
+
+getmonostruct(ItemData) //ItemDrop+ItemData
+getmonostruct(SharedData) //ItemDrop+ItemData+SharedData
+
+newmem:
+  push rbx
+  mov eax,ItemData.m_shared
+  mov rbx,[rcx+rax]
+  test rbx,rbx
+  je @f
+  mov ebx,[rbx+SharedData.m_maxStackSize]
+  mov eax,ItemData.m_stack
+  cmp [rcx+rax],0
+  jle @f
+  mov [rcx+rax],ebx
+@@:
+  pop rbx
+
+code:
+  db bytes
+  jmp return
+
+address:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+address:
+  db bytes
+dealloc(newmem)
+
+define(address,ItemDrop+ItemData:GetWeight)
+define(bytes,55 48 8B EC 48 83 EC s1.1)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Unlimited Durability"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+define(address,ItemDrop+ItemData:GetDurabilityPercentage)
+define(bytes,55 48 8B EC 48 83 EC 30)
+assert(address,bytes)
+alloc(newmem,$1000,address)
+label(code)
+label(return)
+
+getmonostruct(ItemData) //ItemDrop+ItemData
+getmonostruct(SharedData) //ItemDrop+ItemData+SharedData
+
+newmem:
+  push rbx
+  mov eax,ItemData.m_shared
+  mov rbx,[rcx+rax]
+  test rbx,rbx
+  je @f
+  mov eax,ItemData.m_quality
+  fild [rcx+rax]
+  fmul [rbx+SharedData.m_durabilityPerLevel]
+  fsub [rbx+SharedData.m_durabilityPerLevel]
+  fadd [rbx+SharedData.m_maxDurability]
+  mov eax,ItemData.m_durability
+  fstp [rcx+rax]
+@@:
+  pop rbx
+code:
+  db bytes
+  jmp return
+
+address:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+address:
+  db bytes
+dealloc(newmem)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Max Comfort Level"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+define(address,SE_Rested:CalculateComfortLevel)
+define(bytes,55 48 8B EC 48)
+assert(address,bytes)
+address:
+  db 31 C0 B0 11 C3
+
+[DISABLE]
+
+address:
+  db bytes
+
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Player"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+define(address,Character:ApplyDamage)
+define(bytes,55 48 8B EC 48 81 EC C0 01 00 00)
+assert(address,bytes)
+alloc(newmem,$1000,Character:ApplyDamage)
+label(code)
+label(return)
+label(nodamage)
+label(dmg)
+registersymbol(nodamage)
+registersymbol(dmg)
+
+getmonostruct(Character)
+getmonostruct(HitData)
+getmonostruct(DamageTypes) //HitData+DamageTypes
+
+newmem:
+  cmp [rcx+Character.m_faction],0
+  jne notme
+  cmp [nodamage],1
+  jne code
+  ret
+
+notme:
+  cmp [dmg],1
+  jne code
+  test rdx,rdx
+  je code
+  lea rax,[rdx+HitData.m_damage]
+  lea rax,[rax-10]
+  mov [rax+DamageTypes.m_damage],(float)9999000.0
+
+code:
+  db bytes
+  jmp return
+
+newmem+200:
+nodamage:
+dd 0
+dmg:
+dd 0
+
+address:
+  jmp newmem
+  nop 6
+return:
+
+[DISABLE]
+
+address:
+  db bytes
+dealloc(newmem)
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>16</ID>
+          <Description>"No Damage"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+nodamage:
+dd 1
+
+ 
+[DISABLE]
+
+nodamage:
+dd 0
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17</ID>
+          <Description>"Easy Kills"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+dmg:
+dd 1
+
+ 
+[DISABLE]
+
+dmg:
+dd 0
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8</ID>
+      <Description>"Easy Destroy Objects"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+define(address,HitData:GetTotalDamage)
+define(bytes,55 48 8B EC 48 83 EC 30)
+assert(address,bytes)
+alloc(newmem,$1000,HitData:GetTotalDamage)
+label(code)
+label(return)
+getmonostruct(HitData)
+
+newmem:
+  cmp [rcx+HitData.m_attacker],0
+  je code
+  mov eax,[player_zdoid]
+  cmp [rcx+HitData.m_attacker],eax
+  jne code
+  lea rax,[newmem+300]
+  mov rax,[rax]
+  cmp [rsp],rax
+  jb @f
+  lea rax,[rax+Character_ApplyDamage_Size]
+  cmp [rsp],rax
+  jb code
+@@:
+  lea rax,[newmem+308]
+  mov rax,[rax]
+  cmp [rsp],rax
+  jb @f
+  lea rax,[rax+SE_Shield_OnDamaged_Size]
+  cmp [rsp],rax
+  jb code
+@@:
+  mov eax,#9999999
+  cvtsi2ss xmm0,eax
+  ret
+
+code:
+  db bytes
+  jmp return
+
+newmem+300:
+dq Character_ApplyDamage
+dq SE_Shield_OnDamaged
+
+address:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+address:
+  db bytes
+dealloc(newmem)
+
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"Fast Skill Level Up"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+define(address,Skills+Skill:Raise)
+define(bytes,55 48 8B EC 48 83 EC 40)
+assert(address,bytes)
+alloc(newmem,$1000,address)
+label(code)
+label(return)
+
+newmem:
+  mov eax,#10000
+  cvtsi2ss xmm1,eax
+code:
+  db bytes
+  jmp return
+
+newmem+200:
+skill:
+dd 0
+
+address:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+address:
+  db bytes
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Unlimited Food Effect Duration"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+aobscanregion(aobfoodtimer,Player:UpdateFood,Player:UpdateFood+200,48 33 C0 66 0F 2F C8 7A * 40 0F 97 C0) // should be unique
+alloc(newmem,$1000,aobfoodtimer)
+label(code)
+label(return)
+
+newmem:
+code:
+  xor rax,rax
+  xorpd xmm0,xmm0
+  comisd xmm1,xmm0
+  jmp return
+
+aobfoodtimer:
+  jmp newmem
+  nop 2
+return:
+registersymbol(aobfoodtimer)
+
+[DISABLE]
+
+aobfoodtimer:
+  db 48 33 C0 66 0F 2F C8
+
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Unlimited Rested Effect Duration"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+define(address,SE_Rested:UpdateStatusEffect)
+define(bytes,55 48 8B EC 48 83 EC 30)
+assert(address,bytes)
+alloc(newmem,$1000,SE_Rested:UpdateStatusEffect)
+label(code)
+label(return)
+
+getmonostruct(SE_Rested)
+
+newmem:
+  mov [rcx+SE_Rested.m_time],0
+code:
+  db bytes
+  jmp return
+
+address:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+address:
+  db bytes
+
+dealloc(newmem)
+
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>15</ID>
+      <Description>"No Death Penalty"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+define(address,Skills:OnDeath)
+define(bytes,55)
+assert(address,bytes)
+address:
+  db C3
+
+[DISABLE]
+
+address:
+  db bytes
+
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>13</ID>
+      <Description>"Freeze Daytime"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+[ENABLE]
+aobscanregion(aobdaytime,ZNet:UpdateNetTime,ZNet:UpdateNetTime+200,F3 0F 5A C9 F2 0F 58 C1 F2 0F 11 * * * 00 00) // should be unique
+alloc(newmem,$1000,aobdaytime)
+label(code)
+label(return)
+label(timespeed_f)
+registersymbol(timespeed_f)
+
+newmem:
+  comiss xmm1,[min_value]
+  jbe code
+  comiss xmm1,[max_value]
+  jae code
+  cmp [timespeed_f],0
+  je @f
+  mulss xmm1,[timespeed_f]
+@@:
+  xorps xmm1,xmm1
+code:
+  cvtss2sd xmm1,xmm1
+  addsd xmm0,xmm1
+  jmp return
+
+newmem+200:
+timespeed_f:
+dd 0
+
+newmem+300:
+min_value:
+dd 0
+max_value:
+dd (float)5
+
+aobdaytime:
+  jmp newmem
+  nop 3
+return:
+registersymbol(aobdaytime)
+
+[DISABLE]
+aobdaytime:
+  db F3 0F 5A C9 F2 0F 58 C1
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
