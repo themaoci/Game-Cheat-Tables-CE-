@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>52</ID>
+      <Description>"Enable"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>//Send
+[ENABLE]
+{$lua}
+mono_initialize()
+LaunchMonoDataCollector()
+{$asm}
+
+
+aobscanmodule(aska,GameAssembly.dll,48 8B 89 40 01 00 00 48 85 C9 74 18)
+alloc(newmem,$1000,aska)
+registersymbol(player)
+label(player)
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [player],rcx
+  mov rcx,[rcx+00000140]
+  jmp return
+
+player:
+dq 0
+
+aska:
+  jmp newmem
+  nop 2
+return:
+registersymbol(aska)
+
+aobscanmodule(stamina,GameAssembly.dll,8E FF CC CC 48 89 5C 24 18)
+alloc(newmem2,$1000,stamina)
+registersymbol(stamina1)
+label(code2)
+label(return2)
+
+newmem2:
+
+code2:
+  mov [stamina1],rbx
+  mov [rsp+18],rbx
+  jmp return2
+
+stamina1:
+dq 0
+
+stamina+04:
+  jmp newmem2
+return2:
+registersymbol(stamina)
+
+[DISABLE]
+
+aska:
+  db 48 8B 89 40 01 00 00
+stamina+04:
+  db 48 89 5C 24 18
+
+unregistersymbol(*)
+dealloc(*)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>49</ID>
+          <Description>"Infinite Health"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>//Send
+[ENABLE]
+
+aobscanmodule(health,GameAssembly.dll,F3 0F 11 73 28 48 85 C0)
+alloc(newmem,$1000,health)
+
+label(code)
+label(return)
+
+newmem:
+cmp [rbx+44],(float)160
+cmp [rbx+44],(float)165
+jne code
+mov [rbx+28],(float)165
+jmp return
+
+code:
+  movss [rbx+28],xmm6
+  jmp return
+
+health:
+  jmp newmem
+return:
+registersymbol(health)
+
+[DISABLE]
+
+health:
+  db F3 0F 11 73 28
+
+unregistersymbol(health)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: GameAssembly.dll+28D84DA
+
+GameAssembly.dll+28D84B7: 48 8B 43 30     - mov rax,[rbx+30]
+GameAssembly.dll+28D84BB: 48 85 C0        - test rax,rax
+GameAssembly.dll+28D84BE: 74 4B           - je GameAssembly.dll+28D850B
+GameAssembly.dll+28D84C0: 48 8B 50 28     - mov rdx,[rax+28]
+GameAssembly.dll+28D84C4: 48 8B 48 40     - mov rcx,[rax+40]
+GameAssembly.dll+28D84C8: 0F 28 74 24 20  - movaps xmm6,[rsp+20]
+GameAssembly.dll+28D84CD: 48 83 C4 30     - add rsp,30
+GameAssembly.dll+28D84D1: 5B              - pop rbx
+GameAssembly.dll+28D84D2: 48 FF 60 18     - jmp qword ptr [rax+18]
+GameAssembly.dll+28D84D6: 48 8B 43 18     - mov rax,[rbx+18]
+// ---------- INJECTING HERE ----------
+GameAssembly.dll+28D84DA: F3 0F 11 73 28  - movss [rbx+28],xmm6
+// ---------- DONE INJECTING  ----------
+GameAssembly.dll+28D84DF: 48 85 C0        - test rax,rax
+GameAssembly.dll+28D84E2: 74 0B           - je GameAssembly.dll+28D84EF
+GameAssembly.dll+28D84E4: 48 8B 50 28     - mov rdx,[rax+28]
+GameAssembly.dll+28D84E8: 48 8B 48 40     - mov rcx,[rax+40]
+GameAssembly.dll+28D84EC: FF 50 18        - call qword ptr [rax+18]
+GameAssembly.dll+28D84EF: 48 8B 43 20     - mov rax,[rbx+20]
+GameAssembly.dll+28D84F3: 48 85 C0        - test rax,rax
+GameAssembly.dll+28D84F6: 74 13           - je GameAssembly.dll+28D850B
+GameAssembly.dll+28D84F8: 4C 8B 48 28     - mov r9,[rax+28]
+GameAssembly.dll+28D84FC: F3 0F 10 53 28  - movss xmm2,[rbx+28]
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"Dead (Yes/No)"</Description>
+          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <VariableType>Byte</VariableType>
+          <Address>[player]+184</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>43</ID>
+          <Description>"PVP Status (On/Off)"</Description>
+          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:Off
+1:On
+</DropDownList>
+          <VariableType>Byte</VariableType>
+          <Address>[player]+384</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>44</ID>
+          <Description>"Freeze Time Of Day"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+GameAssembly.dll+9FE135:
+db 90 90 90 90 90
+
+[DISABLE]
+GameAssembly.dll+9FE135:
+db F3 0F 11 73 14
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>54</ID>
+          <Description>"Current Stamina (Set 10,000)"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[stamina1]+30</Address>
+          <Offsets>
+            <Offset>28</Offset>
+            <Offset>128</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>53</ID>
+          <Description>"Max Stamina (Set 10,000)"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[stamina1]+30</Address>
+          <Offsets>
+            <Offset>30</Offset>
+            <Offset>128</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>55</ID>
+          <Description>"Stamina Regeneration 1 (Set 10,000)"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[stamina1]+30</Address>
+          <Offsets>
+            <Offset>28</Offset>
+            <Offset>138</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>56</ID>
+          <Description>"Stamina Regeneration 2 (Set 100,000)"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[stamina1]+30</Address>
+          <Offsets>
+            <Offset>30</Offset>
+            <Offset>138</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>42</ID>
+          <Description>"[ Expertise Multipliers ]"</Description>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>8</ID>
+              <Description>"Melee: Expertise Multiplier"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+190</Address>
+              <Offsets>
+                <Offset>6C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>12</ID>
+              <Description>"Ranged: Expertise Multiplier"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+198</Address>
+              <Offsets>
+                <Offset>F0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>10</ID>
+              <Description>"Ranged: Critical Expertise Multiplier"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+198</Address>
+              <Offsets>
+                <Offset>F8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>11</ID>
+              <Description>"Ranged: Max Expertise Gain"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+198</Address>
+              <Offsets>
+                <Offset>F4</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>41</ID>
+          <Description>"[ Survival ]"</Description>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>26</ID>
+              <Description>"Food: Min (Set 100)"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>40</Offset>
+                <Offset>78</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>27</ID>
+              <Description>"Food: Max (Set 1)"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>44</Offset>
+                <Offset>78</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>16</ID>
+              <Description>"Water (Set 0)"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>40</Offset>
+                <Offset>90</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>18</ID>
+              <Description>"Thirst (Set 100)"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>28</Offset>
+                <Offset>98</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>19</ID>
+              <Description>"Rain"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>28</Offset>
+                <Offset>A8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>20</ID>
+              <Description>"Rain Protection"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>28</Offset>
+                <Offset>B0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24</ID>
+              <Description>"Wetness"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>28</Offset>
+                <Offset>B8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>22</ID>
+              <Description>"Blizzard"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>28</Offset>
+                <Offset>C8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>23</ID>
+              <Description>"Frost"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>28</Offset>
+                <Offset>D0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>28</ID>
+              <Description>"Freezing (Yes/No)"</Description>
+              <DropDownListLink>Dehydrated (Yes/No)</DropDownListLink>
+              <VariableType>Byte</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>150</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>29</ID>
+              <Description>"Starving (Yes/No)"</Description>
+              <DropDownListLink>Dehydrated (Yes/No)</DropDownListLink>
+              <VariableType>Byte</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>151</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>30</ID>
+              <Description>"Dehydrated (Yes/No)"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <VariableType>Byte</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>152</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>40</ID>
+          <Description>"[ Time / Weather ]"</Description>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>39</ID>
+              <Description>"Time Of Day"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>14</Offset>
+                <Offset>128</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>38</ID>
+              <Description>"Day"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>1C</Offset>
+                <Offset>128</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>37</ID>
+              <Description>"Year"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>20</Offset>
+                <Offset>128</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>35</ID>
+              <Description>"Weather Temperature"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>28</Offset>
+                <Offset>128</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>33</ID>
+              <Description>"Wind"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>30</Offset>
+                <Offset>128</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>31</ID>
+              <Description>"Blood Moon"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>38</Offset>
+                <Offset>128</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>32</ID>
+              <Description>"Blizzard"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>34</Offset>
+                <Offset>128</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>34</ID>
+              <Description>"Rain"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[player]+348</Address>
+              <Offsets>
+                <Offset>2C</Offset>
+                <Offset>128</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
