@@ -11,6 +11,7 @@ THIS REPO CONTAIN CHEAT TABLES FOR:
 - [Last Epoch](https://github.com/themaoci/Game-Cheat-Tables-CE-/blob/main/Last%20Epoch%20Cheat%20Table.CT)
 - [No Man's Sky (No Mans Sky)](https://github.com/themaoci/Game-Cheat-Tables-CE-/blob/main/No%20Man's%20Sky%20Cheat%20Table.CT)
 - [Path Of Exile (simple unzoom and such)](https://github.com/themaoci/Game-Cheat-Tables-CE-/blob/main/Path%20of%20Exile.CT)
+- [Path Of Exile 2 (simple unzoom and such)](https://github.com/themaoci/Game-Cheat-Tables-CE-/blob/main/Path%20of%20Exile%202.CT)
 - [Remnant 2 (Remnant2)](https://github.com/themaoci/Game-Cheat-Tables-CE-/blob/main/Remnant%202%20Cheat%20Table.CT)
 - [Satisfactory (Steam Version)](https://github.com/themaoci/Game-Cheat-Tables-CE-/blob/main/Satisfactory-Steam-CheatTable.CT)
 - [Valheim](https://github.com/themaoci/Game-Cheat-Tables-CE-/blob/main/Valheim%20Cheat%20Table.CT)
