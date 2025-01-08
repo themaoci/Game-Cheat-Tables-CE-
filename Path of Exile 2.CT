@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>21</ID>
+      <Description>"Zoom Address Getter"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>/*
+   ZoomHack
+   - Made by: Maoci
+   - Version: Poe2 EA
+
+	max zoom = 1.0
+	min zoom = 0.0
+    Location: PathOfExile.exe+F0979
+*/
+
+[ENABLE]
+
+aobscanmodule(ZoomLimitAob, PathOfExile.exe, F3 0F 10 B3 ? ? 00 00 F3 0F 10 80 ? ? 00 00 41)
+alloc(ZoomLimitAobOriginal, $16)
+registersymbol(ZoomLimitAob)
+registersymbol(ZoomLimitAobOriginal)
+label(myValue)
+ZoomLimitAobOriginal:
+   readmem(ZoomLimitAob, 16)
+alloc(Handler, $1000, ZoomLimitAob)
+
+Handler:
+   movss xmm6,[rbx+000004B0] // restore bytes
+   movss xmm0,[rax+00001788] // restore bytes
+   mov [myValue], rbx // save address
+   jmp Return // go back
+
+myValue:
+ dd 0
+
+ZoomLimitAob:
+   jmp Handler
+   db 90 90 90
+Return:
+
+
+registersymbol(myValue)
+
+[DISABLE]
+ZoomLimitAob:
+   readmem(ZoomLimitAobOriginal, 16)
+dealloc(ZoomLimitAobOriginal)
+dealloc(Handler)
+unregistersymbol(ZoomLimitAob)
+unregistersymbol(ZoomLimitAobOriginal)
+
+/*
+PathOfExile.exe+F0953 - 48 8B 01              - mov rax,[rcx]
+PathOfExile.exe+F0956 - FF 90 C8020000        - call qword ptr [rax+000002C8]
+PathOfExile.exe+F095C - 0F28 F8               - movaps xmm7,xmm0
+PathOfExile.exe+F095F - F3 0F10 B3 AC040000   - movss xmm6,[rbx+000004AC]
+PathOfExile.exe+F0967 - 41 0F2F F0            - comiss xmm6,xmm8
+PathOfExile.exe+F096B - F3 41 0F59 F9         - mulss xmm7,xmm9
+PathOfExile.exe+F0970 - 73 21                 - jae PathOfExile.exe+F0993
+PathOfExile.exe+F0972 - 48 8B 83 A0000000     - mov rax,[rbx+000000A0]
+
+PathOfExile.exe+F0979 - F3 0F10 B3 B0040000   - movss xmm6,[rbx+000004B0]
+
+PathOfExile.exe+F0981 - F3 0F10 80 88170000   - movss xmm0,[rax+00001788]
+PathOfExile.exe+F0989 - 41 0F2F C0            - comiss xmm0,xmm8
+PathOfExile.exe+F098D - 72 04                 - jb PathOfExile.exe+F0993
+PathOfExile.exe+F098F - F3 0F59 F0            - mulss xmm6,xmm0
+PathOfExile.exe+F0993 - 48 8B 8B A0000000     - mov rcx,[rbx+000000A0]
+PathOfExile.exe+F099A - F3 44 0F10 9B A8040000  - movss xmm11,[rbx+000004A8]
+PathOfExile.exe+F09A3 - 48 8B 01              - mov rax,[rcx]
+PathOfExile.exe+F09A6 - FF 90 C8020000        - call qword ptr [rax+000002C8]
+
+*/
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>22</ID>
+          <Description>"Zoom (Default: [0-1])"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>myValue</Address>
+          <Offsets>
+            <Offset>4b0</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>34</ID>
+      <Description>"No Fog (Safe)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>/*
+   No Fog
+   - Made by: Maoci, d2k2
+   - Version: Poe2 EA
+   Location:PathOfExile.exe+8BABE8
+*/
+
+[ENABLE]
+
+aobscanmodule(foundAob, PathOfExile.exe, 83 B8 ?? ?? 00 00 25 75 0F 0F B6 ?? ?? ?? 00 00)
+alloc(backupBytes, $5)
+registersymbol(foundAob)
+registersymbol(backupBytes)
+
+backupBytes:
+   readmem(foundAob+0x13, 5)
+
+foundAob+0x13:
+   nop
+   nop
+   nop
+   nop
+   nop
+
+
+[DISABLE]
+foundAob+0x13:
+   readmem(backupBytes, 5)
+dealloc(*)
+unregistersymbol(*)
+
+/*
+PathOfExile.exe+8BABB0 - 40 57                 - push rdi
+PathOfExile.exe+8BABB2 - 48 83 EC 20           - sub rsp,20 { 32 }
+PathOfExile.exe+8BABB6 - 80 B9 51190000 00     - cmp byte ptr [rcx+00001951],00 { 0 }
+PathOfExile.exe+8BABBD - 48 8B F9              - mov rdi,rcx
+PathOfExile.exe+8BABC0 - 0F85 BC000000         - jne PathOfExile.exe+8BAC82
+PathOfExile.exe+8BABC6 - 48 89 5C 24 30        - mov [rsp+30],rbx
+PathOfExile.exe+8BABCB - 48 89 74 24 38        - mov [rsp+38],rsi
+PathOfExile.exe+8BABD0 - C6 81 51190000 01     - mov byte ptr [rcx+00001951],01 { 1 }
+PathOfExile.exe+8BABD7 - E8 44FEFFFF           - call PathOfExile.exe+8BAA20
+PathOfExile.exe+8BABDC - 48 8B 87 88000000     - mov rax,[rdi+00000088]
+PathOfExile.exe+8BABE3 - 48 85 C0              - test rax,rax
+PathOfExile.exe+8BABE6 - 74 18                 - je PathOfExile.exe+8BAC00
+
+PathOfExile.exe+8BABE8 - 83 B8 BC010000 25     - cmp dword ptr [rax+000001BC],25 { 37 }
+
+PathOfExile.exe+8BABEF - 75 0F                 - jne PathOfExile.exe+8BAC00
+PathOfExile.exe+8BABF1 - 0FB6 97 FB140000      - movzx edx,byte ptr [rdi+000014FB]
+PathOfExile.exe+8BABF8 - 48 8B CF              - mov rcx,rdi
+
+PathOfExile.exe+8BABFB - E8 30EAFFFF           - call PathOfExile.exe+8B9630 &lt;&lt; we remove this
+
+PathOfExile.exe+8BAC00 - 48 8B 9F A81C0000     - mov rbx,[rdi+00001CA8]
+PathOfExile.exe+8BAC07 - 48 8B B7 B81C0000     - mov rsi,[rdi+00001CB8]
+PathOfExile.exe+8BAC0E - 48 C1 E6 05           - shl rsi,05 { 5 }
+PathOfExile.exe+8BAC12 - 48 03 F3              - add rsi,rbx
+PathOfExile.exe+8BAC15 - 48 3B DE              - cmp rbx,rsi
+PathOfExile.exe+8BAC18 - 74 1E                 - je PathOfExile.exe+8BAC38
+PathOfExile.exe+8BAC1A - 66 0F1F 44 00 00      - nop word ptr [rax+rax+00]
+PathOfExile.exe+8BAC20 - 0FB6 97 FB140000      - movzx edx,byte ptr [rdi+000014FB]
+PathOfExile.exe+8BAC27 - 48 8B CB              - mov rcx,rbx
+
+*/
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"No Atlas Fog"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>/*
+   ZoomHack
+   - Made by: Taiga74164
+   - Version: Poe2 EA
+
+    Location: PathOfExile.exe+166927
+*/
+
+[ENABLE]
+aobscanmodule(atlasfog,PathOfExile.exe,f3 0f 59 51 ? f3 0f 58 c1)
+registersymbol(atlasfog)
+atlasfog:
+  nop 5
+
+
+[DISABLE]
+atlasfog:
+  mulss xmm2,[rcx+08]
+
+unregistersymbol(*)
+
+/*
+PathOfExile.exe+166910 - F3 0F10 42 04         - movss xmm0,[rdx+04]
+PathOfExile.exe+166915 - F3 0F59 41 04         - mulss xmm0,[rcx+04]
+PathOfExile.exe+16691A - F3 0F10 0A            - movss xmm1,[rdx]
+PathOfExile.exe+16691E - F3 0F59 09            - mulss xmm1,[rcx]
+PathOfExile.exe+166922 - F3 0F10 52 08         - movss xmm2,[rdx+08]
+
+PathOfExile.exe+166927 - F3 0F59 51 08         - mulss xmm2,[rcx+08]
+
+PathOfExile.exe+16692C - F3 0F58 C1            - addss xmm0,xmm1
+PathOfExile.exe+166930 - F3 0F58 C2            - addss xmm0,xmm2
+PathOfExile.exe+166934 - C3                    - ret
+PathOfExile.exe+166935 - CC                    - int 3
+PathOfExile.exe+166936 - CC                    - int 3
+PathOfExile.exe+166937 - CC                    - int 3
+PathOfExile.exe+166938 - CC                    - int 3
+
+*/
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"MapHack (works only on game login screen??)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+aobscanmodule(visibility_fully_revealed,PathOfExile.exe,41 ?? ?? ?? ?? 74 ?? 0f ?? ?? eb ?? 41 ?? ?? ?? ba ?? ?? ?? ?? 48 ?? ?? ?? ?? ?? ?? e8 ?? ?? ?? ?? 8b ?? 49 ?? ?? e8 ?? ?? ?? ?? 48 ?? ?? 74 ?? 4C ?? ?? EB ?? 4C ?? ?? 41 ?? ?? ?? ?? 74 ??)
+registersymbol(visibility_fully_revealed)
+
+visibility_fully_revealed+5:
+  db 75
+
+visibility_fully_revealed+3D:
+  db 75
+
+[DISABLE]
+
+visibility_fully_revealed+5:
+  db 74
+
+visibility_fully_revealed+3D:
+  db 74
+
+unregistersymbol(visibility_fully_revealed)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24</ID>
+      <Description>"Icons on minimap dont disapear"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(icon,PathOfExile.exe,41 88 83 ? ? ? ? 0f b6 83 ? ? ? ? 41 88 83 ? ? ? ? 49 8b c3)
+registersymbol(icon)
+alloc(newmem,1024,PathOfExile.exe)
+label(return)
+label(val_r11)
+
+newmem:
+  mov [r11+000000B0],#1
+  mov eax,[rbx+B1]
+  mov [r11+000000B1],#1
+  mov [val_r11], rbx // save address
+  jmp return
+
+val_r11:
+ dd 0
+
+icon:
+  jmp newmem
+  nop 2
+  nop 7
+  nop 7
+return:
+registersymbol(val_r11)
+[DISABLE]
+icon:
+  db 41 88 83 B0 00 00 00 0F B6 83 B1 00 00 00 41 88 83 B1 00 00 00
+
+unregistersymbol(*)
+dealloc(*)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"r11 address"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Array of byte</VariableType>
+          <ByteLength>10</ByteLength>
+          <Address>val_r11</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>27</ID>
+              <Description>"+A8"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+A8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>33</ID>
+              <Description>"+AC"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+AC</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>32</ID>
+              <Description>"+AD"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+AD</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>31</ID>
+              <Description>"+AE"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+AE</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>30</ID>
+              <Description>"+AF"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+AF</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>29</ID>
+              <Description>"+B0"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+B0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>28</ID>
+              <Description>"+B1"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>+B1</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>35</ID>
+      <Description>"No description"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>Array of byte</VariableType>
+      <ByteLength>16</ByteLength>
+      <Address>PathOfExile.exe+8BABE8</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Comments>Info about this table:
+</Comments>
+</CheatTable>
