@@ -287,64 +287,21 @@ PathOfExile.exe+8BAC27 - 48 8B CB              - mov rcx,rbx
 </AssemblerScript>
     </CheatEntry>
     <CheatEntry>
-      <ID>43</ID>
-      <Description>"Other Tests (mostly doesnt work)"</Description>
-      <Options moHideChildren="1"/>
-      <GroupHeader>1</GroupHeader>
-      <CheatEntries>
-        <CheatEntry>
-          <ID>35</ID>
-          <Description>"No description"</Description>
-          <ShowAsHex>1</ShowAsHex>
-          <VariableType>Array of byte</VariableType>
-          <ByteLength>16</ByteLength>
-          <Address>PathOfExile.exe+8BABE8</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>36</ID>
-          <Description>"No description"</Description>
-          <ShowAsHex>1</ShowAsHex>
-          <VariableType>Array of byte</VariableType>
-          <ByteLength>17</ByteLength>
-          <Address>PathOfExile.exe+10F3A9</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>38</ID>
-          <Description>"No description"</Description>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Float</VariableType>
-          <Address>PathOfExile.exe+313eD94</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>41</ID>
-          <Description>"No description"</Description>
-          <ShowAsHex>1</ShowAsHex>
-          <VariableType>Array of byte</VariableType>
-          <ByteLength>26</ByteLength>
-          <Address>PathOfExile.exe+FF6623</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>1</ID>
-          <Description>"MapHack (works only on game login screen??)"</Description>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>[ENABLE]
+      <ID>1</ID>
+      <Description>"MapHack (works only on game login screen??)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
 
-aobscanmodule(visibility_fully_revealed,PathOfExile.exe,41 80 7F 59 00 74 05)
+aobscanmodule(visibility_fully_revealed,PathOfExile.exe,41 80 7F 58 00 74 05)
 registersymbol(visibility_fully_revealed)
 
-visibility_fully_revealed+5:
-  db 75
-
-visibility_fully_revealed+32:
-  db 75
+visibility_fully_revealed+4:
+  db 01
 
 [DISABLE]
 
-visibility_fully_revealed+5:
-  db 74
-
-visibility_fully_revealed+32:
-  db 74
+visibility_fully_revealed+4:
+  db 00
 
 unregistersymbol(visibility_fully_revealed)
 
@@ -354,58 +311,63 @@ unregistersymbol(visibility_fully_revealed)
 140FF6684
 */
 </AssemblerScript>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>42</ID>
-          <Description>"MapHack (works only on game login screen??)  2"</Description>
-          <VariableType>Auto Assembler Script</VariableType>
-          <AssemblerScript>[ENABLE]
+    </CheatEntry>
+    <CheatEntry>
+      <ID>42</ID>
+      <Description>"Map Reveal Hack (does not reveal objects)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(injectpoint,PathOfExile.exe,41 0F 28 D1 48 8B 8D 58 0B 00 00)
+registersymbol(injectpoint)
+alloc(backupBytes, $11)
+registersymbol(backupBytes)
 
-aobscanmodule(visibility_fully_revealed2,PathOfExile.exe,E8 ?? ?? ?? ?? 48 85 DB 74 0C 48 8B 03 48 89 85 58 0B 00 00 EB 07 48 89 B5 58 0B 00 00 41 80 7F 5A 00)
-registersymbol(visibility_fully_revealed2)
+alloc(newmem,1024,PathOfExile.exe)
+label(return)
+label(float_value)
 
-visibility_fully_revealed2+8:
-  db 75
+backupBytes:
+  readmem(injectpoint, 11)
+
+newmem:
+  movaps xmm2, xmm9  // original
+  mov rcx, [rbp+0B58]  // original (offset 0B58 as per hex)
+  //movss [float_value], xmm2  // test
+  movss xmm2, [float_value]  // override to 10.0f
+  jmp return
+
+float_value:
+  dd (float)15.0
+
+injectpoint:
+  jmp newmem
+  nop 6  // cover remaining 6 bytes after jmp (total hook space 11 bytes, jmp uses 5)
+return:
+
+registersymbol(float_value)
 
 [DISABLE]
+injectpoint:
+  readmem(backupBytes, 11)
 
-visibility_fully_revealed2+8:
-  db 74
-
-unregistersymbol(visibility_fully_revealed2)
-
-/*
-140FF6638
-140FF666A
-140FF6684
-*/
+unregistersymbol(*)
+dealloc(*)
 </AssemblerScript>
-        </CheatEntry>
+      <CheatEntries>
         <CheatEntry>
-          <ID>37</ID>
-          <Description>"Poe1"</Description>
+          <ID>49</ID>
+          <Description>"Reveal Amount (default: 4.8)"</Description>
           <ShowAsSigned>0</ShowAsSigned>
           <VariableType>Float</VariableType>
-          <Address>PathOfExile.exe+313ebc8</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>44</ID>
-          <Description>"No description"</Description>
-          <ShowAsHex>1</ShowAsHex>
-          <VariableType>Array of byte</VariableType>
-          <ByteLength>7</ByteLength>
-          <Address>PathOfExile.exe+FF6638</Address>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>46</ID>
-          <Description>"No description"</Description>
-          <ShowAsHex>1</ShowAsHex>
-          <ShowAsSigned>0</ShowAsSigned>
-          <VariableType>Array of byte</VariableType>
-          <ByteLength>100</ByteLength>
-          <Address>PathOfExile.exe+FF667F</Address>
+          <Address>float_value</Address>
         </CheatEntry>
       </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>43</ID>
+      <Description>"Other Tests (mostly doesnt work)"</Description>
+      <Options moHideChildren="1"/>
+      <GroupHeader>1</GroupHeader>
     </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
