@@ -22,6 +22,7 @@ alloc(ZoomLimitAobOriginal, $8)
 registersymbol(ZoomLimitAob)
 registersymbol(ZoomLimitAobOriginal)
 label(myValue)
+label(myValue2)
 ZoomLimitAobOriginal:
    readmem(ZoomLimitAob, 8)
 alloc(Handler, $1000, ZoomLimitAob)
@@ -30,16 +31,13 @@ Handler:
    readmem(ZoomLimitAob, 8)
    //movss xmm6,[rbx+00000508] // we read this
    mov [myValue], rbx // save address
-   mov [myValue+10], rax // save address
    jmp Return // go back
 
 myValue:
-   dd 0
+   dq 0
 
-myValue+8:
-   readmem(ZoomLimitAob+4, 2)
-myValue+10:
-   dd 0
+myValue2:
+   readmem(ZoomLimitAob + 4, 2)
 
 ZoomLimitAob:
    jmp Handler
@@ -48,6 +46,7 @@ Return:
 
 
 registersymbol(myValue)
+registersymbol(myValue2)
 
 [DISABLE]
 ZoomLimitAob:
@@ -79,7 +78,6 @@ PathOfExile.exe+F09A3 - 48 8B 01              - mov rax,[rcx]
 PathOfExile.exe+F09A6 - FF 90 C8020000        - call qword ptr [rax+000002C8]
 
 */
-
 </AssemblerScript>
       <CheatEntries>
         <CheatEntry>
@@ -89,7 +87,7 @@ PathOfExile.exe+F09A6 - FF 90 C8020000        - call qword ptr [rax+000002C8]
           <VariableType>Float</VariableType>
           <Address>myValue</Address>
           <Offsets>
-            <Offset>[myValue+8]</Offset>
+            <Offset>[myValue2]</Offset>
           </Offsets>
         </CheatEntry>
         <CheatEntry>
@@ -99,17 +97,8 @@ PathOfExile.exe+F09A6 - FF 90 C8020000        - call qword ptr [rax+000002C8]
           <VariableType>Float</VariableType>
           <Address>myValue</Address>
           <Offsets>
-            <Offset>[myValue+8]-4</Offset>
+            <Offset>[myValue2]-4</Offset>
           </Offsets>
-        </CheatEntry>
-        <CheatEntry>
-          <ID>39</ID>
-          <Description>"Offset (read only for Zoom above)"</Description>
-          <ShowAsHex>1</ShowAsHex>
-          <ShowAsSigned>0</ShowAsSigned>
-          <Color>808040</Color>
-          <VariableType>2 Bytes</VariableType>
-          <Address>myValue+8</Address>
         </CheatEntry>
       </CheatEntries>
     </CheatEntry>
