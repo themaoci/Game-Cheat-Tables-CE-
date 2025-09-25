@@ -107,7 +107,13 @@ PathOfExile.exe+F09A6 - FF 90 C8020000        - call qword ptr [rax+000002C8]
       <Description>"Icons on minimap dont disapear"</Description>
       <Options moHideChildren="1"/>
       <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>[ENABLE]
+      <AssemblerScript>/*
+   IconsHack
+   - Made by: Maoci
+   - Version: Poe2 EA
+*/
+	  
+[ENABLE]
 aobscanmodule(icon,PathOfExile.exe,41 88 83 ? ? ? ? 0f b6 83 ? ? ? ? 41 88 83 ? ? ? ? 49 8b c3)
 registersymbol(icon)
 alloc(backupBytes, $22)
@@ -279,7 +285,13 @@ PathOfExile.exe+8BAC27 - 48 8B CB              - mov rcx,rbx
       <ID>1</ID>
       <Description>"MapHack (works only on game login screen??)"</Description>
       <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>[ENABLE]
+      <AssemblerScript>/*
+   MapHack
+   - Made by: Maoci
+   - Version: Poe2 EA
+*/
+	  
+[ENABLE]
 
 aobscanmodule(visibility_fully_revealed,PathOfExile.exe,41 80 7F 58 00 74 05)
 registersymbol(visibility_fully_revealed)
@@ -305,7 +317,13 @@ unregistersymbol(visibility_fully_revealed)
       <ID>42</ID>
       <Description>"Map Reveal Hack (does not reveal objects)"</Description>
       <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>[ENABLE]
+      <AssemblerScript>/*
+   Map Reveal Hack
+   - Made by: Maoci
+   - Version: Poe2 EA
+*/
+	  
+[ENABLE]
 aobscanmodule(injectpoint,PathOfExile.exe,41 0F 28 D1 48 8B 8D 58 0B 00 00)
 registersymbol(injectpoint)
 alloc(backupBytes, $11)
@@ -321,8 +339,10 @@ backupBytes:
 newmem:
   movaps xmm2, xmm9  // original
   mov rcx, [rbp+0B58]  // original (offset 0B58 as per hex)
-  //movss [float_value], xmm2  // test
+  //mov [float_value], rbp
+  //movss [float_value], xmm9  // test
   movss xmm2, [float_value]  // override to 10.0f
+  movss xmm9, [float_value]  // override to 10.0f
   jmp return
 
 float_value:
@@ -353,10 +373,418 @@ dealloc(*)
       </CheatEntries>
     </CheatEntry>
     <CheatEntry>
+      <ID>50</ID>
+      <Description>"Test #1 reveal map shits"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>
+[ENABLE]
+aobscanmodule(injectpoint2,PathOfExile.exe,F3 0F 58 D1 0F 2F 15 ?? ?? ?? ?? 0F 97 85)
+registersymbol(injectpoint2)
+alloc(backupBytes, $11)
+registersymbol(backupBytes)
+
+alloc(newmem,1024,PathOfExile.exe)
+label(return)
+label(float_value2)
+
+backupBytes:
+  readmem(injectpoint2, 11)
+
+newmem:
+  addss   xmm2, xmm1  // original
+  comiss  xmm2, [PathOfExile.exe+314729c]  // original (offset 0B58 as per hex)
+ // movss [float_value2], xmm2   // override to 10.0f
+  movss xmm2, [float_value]
+  //movss [float_value], xmm2  // test
+  //movss xmm2, [float_value]  // override to 10.0f
+  jmp return
+
+float_value2:
+  dd (float)15.0
+
+injectpoint2:
+  jmp newmem
+  nop 6  // cover remaining 6 bytes after jmp (total hook space 11 bytes, jmp uses 5)
+return:
+
+registersymbol(float_value2)
+
+[DISABLE]
+injectpoint2:
+  readmem(backupBytes, 11)
+
+unregistersymbol(*)
+dealloc(*)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>51</ID>
+          <Description>"Reveal Amount (default: ??)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>float_value2</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>54</ID>
+      <Description>"Test #2"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(injectpoint2,PathOfExile.exe,41 0F 10 87 ?? 00 00 00 0F 29 ?? ?? ?? EB)
+registersymbol(injectpoint2)
+alloc(backupBytes, $11)
+registersymbol(backupBytes)
+
+alloc(newmem,1024,PathOfExile.exe)
+label(return)
+label(float_value2)
+
+backupBytes:
+  readmem(injectpoint2, 11)
+
+newmem:
+  movups xmm0, [r15+90]  // original
+  movss [float_value2], xmm0   // override to 10.0f
+  movaps [rsp+70], xmm0 // original (offset 0B58 as per hex)
+  jmp return
+
+float_value2:
+  dd (float)15.0
+
+injectpoint2:
+  jmp newmem
+  nop 6  // cover remaining 6 bytes after jmp (total hook space 11 bytes, jmp uses 5)
+return:
+
+registersymbol(float_value2)
+
+[DISABLE]
+injectpoint2:
+  readmem(backupBytes, 11)
+
+unregistersymbol(*)
+dealloc(*)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>55</ID>
+          <Description>"Reveal Amount (default: ??)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>float_value2</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
       <ID>43</ID>
       <Description>"Other Tests (mostly doesnt work)"</Description>
       <Options moHideChildren="1"/>
       <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>57</ID>
+          <Description>"No description"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Array of byte</VariableType>
+          <ByteLength>50</ByteLength>
+          <Address>PathOfExile.exe+CE7DC1</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>60</ID>
+          <Description>"Icons Dont Disapear Sig Area"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <VariableType>Array of byte</VariableType>
+          <ByteLength>24</ByteLength>
+          <Address>PathOfExile.exe+1EE4950</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>61</ID>
+          <Description>"Visibility Fully Revealed"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <VariableType>Array of byte</VariableType>
+          <ByteLength>12</ByteLength>
+          <Address>PathOfExile.exe+24DA28F</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>65</ID>
+          <Description>"No description"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <VariableType>Array of byte</VariableType>
+          <ByteLength>11</ByteLength>
+          <Address>PathOfExile.exe+FFB5D0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>66</ID>
+          <Description>"No description"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Array of byte</VariableType>
+          <ByteLength>10</ByteLength>
+          <Address>PathOfExile.exe+f90c9e</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>80</ID>
+          <Description>"Stats_Base"</Description>
+          <Options moHideChildren="1"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <GroupHeader>1</GroupHeader>
+          <Address>"PathOfExile.exe"+040A6168</Address>
+          <Offsets>
+            <Offset>0</Offset>
+            <Offset>68</Offset>
+            <Offset>98</Offset>
+          </Offsets>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>82</ID>
+              <Description>"Health Current"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+454</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>81</ID>
+              <Description>"Mana Current"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+454+500</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>106</ID>
+          <Description>"Stat Base"</Description>
+          <Options moHideChildren="1"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>5FC02980B84-364</Address>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>107</ID>
+              <Description>"Current HP"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+360</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>108</ID>
+              <Description>"Max HP"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+364</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>109</ID>
+              <Description>"Max HP 2"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+368</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>110</ID>
+              <Description>"Current ES"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+36C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111</ID>
+              <Description>"Max ES"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+370</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>115</ID>
+              <Description>"Max ES 2"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+358</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>117</ID>
+              <Description>"Mana Max"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+358+400</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>118</ID>
+              <Description>"empty"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+75C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>119</ID>
+              <Description>"Mana Current"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+760</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>120</ID>
+              <Description>"Mana"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+764</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>121</ID>
+              <Description>"Mana"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+768</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>123</ID>
+      <Description>"Character Stats"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>/*
+   Character Stats
+   - Made by: Maoci
+   - Version: Poe2 EA
+*/
+[ENABLE]
+aobscanmodule(injectpoint2,PathOfExile.exe,45 8B F8 45 2B F9 40 38)
+registersymbol(injectpoint2)
+alloc(backupBytes, 6)
+registersymbol(backupBytes)
+alloc(newmem, 1024, PathOfExile.exe)
+alloc(originalcode, 6, PathOfExile.exe)  // Alloc for original bytes (executable)
+label(return)
+label(character_pointer)
+
+backupBytes:
+  readmem(injectpoint2, 6)
+
+newmem:
+  readmem(injectpoint2, 6)
+  // Your custom code (store rdi)
+  mov [character_pointer],rcx
+  // Jump to execute original backed up code
+  jmp return
+
+character_pointer:
+  dq 0 // 8-byte address
+
+injectpoint2: // moving to section "48 8B 07 48 8D 55 60"
+  jmp newmem // size:5
+  nop // size:1
+return:
+
+registersymbol(character_pointer)
+
+[DISABLE]
+injectpoint2:
+  readmem(backupBytes, 6)
+
+unregistersymbol(injectpoint2)
+unregistersymbol(backupBytes)
+unregistersymbol(character_pointer)
+dealloc(newmem)
+dealloc(originalcode)
+dealloc(backupBytes)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>138</ID>
+          <Description>"Character Address &lt;&lt; Check box to show"</Description>
+          <Options moHideChildren="1"/>
+          <ShowAsSigned>0</ShowAsSigned>
+          <GroupHeader>1</GroupHeader>
+          <Address>character_pointer</Address>
+          <Offsets>
+            <Offset>-400</Offset>
+          </Offsets>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>128</ID>
+              <Description>"Current HP"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+360</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>129</ID>
+              <Description>"Max HP"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+364</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>130</ID>
+              <Description>"Max HP 2"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+368</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>131</ID>
+              <Description>"Current ES"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+36C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>132</ID>
+              <Description>"Max ES"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+370</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>133</ID>
+              <Description>"Max ES 2"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+358</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>134</ID>
+              <Description>"Mana Max"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+358+400</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>135</ID>
+              <Description>"Mana Current"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+760</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>136</ID>
+              <Description>"Mana"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+764</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>137</ID>
+              <Description>"Mana"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+768</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>127</ID>
+      <Description>"Injection For Character Stats"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>Array of byte</VariableType>
+      <ByteLength>8</ByteLength>
+      <Address>PathOfExile.exe+24354F</Address>
     </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
